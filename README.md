@@ -40,5 +40,5 @@ page(
 )
 
 ```
-If you just want to escape characters `{` and `}` you just write `\{`, `\}` and that's it.
+If you want to escape characters `{` and `}` you just write `\{`, `\}` and that's it.
 
