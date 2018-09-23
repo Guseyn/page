@@ -11,9 +11,9 @@ Let's say we have templates: `./files/html/template1.html`, `./files/html/templa
 
 ```html
 <div class="template1">
-   ${text}
+   {text}
   <div class="place-for-template2">
-    ${innerTemplate}
+    {innerTemplate}
   </div>
 </div>
 
@@ -24,7 +24,7 @@ Let's say we have templates: `./files/html/template1.html`, `./files/html/templa
 
 ```html
 <div class="template2">
-   ${text}
+   {text}
 </div>
 
 ```
