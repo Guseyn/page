@@ -5,40 +5,4 @@ UI framework with pure OOP approach in design.  Has no unnecessary complexity: o
 
 # Mapping between 'gen-js' and html:
 
-Let's say we have templates: `./files/html/template1.html`, `./files/html/template2.html`,
-
-## template1.html
-
-```html
-<div class="template1">
-   {text}
-  <div class="place-for-template2">
-    {innerTemplate}
-  </div>
-</div>
-
-```
-
-
-## template2.html
-
-```html
-<div class="template2">
-   {text}
-</div>
-
-```
-
-## gen.js
-
-```js
-const template1 = // define how template is created -> need to be considered
-const template2 = // define how template is created -> need to be considered
-
-page(
-  template1('text1', template2('text2'))
-)
-
-```
-If you want to escape characters `{` and `}` you just write `\{`, `\}` and that's it.
-
+It's based on [page-static-generator](https://github.com/Guseyn/page-static-generator).
