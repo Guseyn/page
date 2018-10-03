@@ -1,0 +1,25 @@
+{
+  "name": "@page-libs/page",
+  "version": "1.0.0",
+  "description": "UI framework with pure OOP approach in design.  Has no unnecessary complexity: only html, css and js. It's based on the [Async Tree Pattern](https://github.com/Guseyn/async-tree-patern/blob/master/Async_Tree_Patern.pdf).",
+  "main": "index.js",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Guseyn/page.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Guseyn/page/issues"
+  },
+  "homepage": "https://github.com/Guseyn/page#readme",
+  "dependencies": {
+    "@cuties/rest": "^1.1.2"
+  }
+}
