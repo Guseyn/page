@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/Guseyn/page#readme",
   "dependencies": {
-    "@cuties/rest": "^1.1.2"
+    "@cuties/rest": "^1.1.2",
+    "@page-libs/static-generator": "^1.0.1"
   }
 }
