@@ -2,5 +2,7 @@
   "port": 8000,
   "host": "127.0.0.1",
   "clusterMode": true,
-  "staticGeneratorsDirectory": "./pages"
+  "staticGeneratorsDirectory": "./pages",
+  "templatesDirectory": "./templates",
+  "staticHtmlFilesFirectory": "./static/html"
 }
