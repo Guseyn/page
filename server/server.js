@@ -3,7 +3,7 @@
 const path = require('path');
 const cluster = require('cluster');
 const { as } = require('@cuties/cutie');
-const { If, Else, ElseIf } = require('@cuties/if-else');
+const { If, Else } = require('@cuties/if-else');
 const { IsMaster, ClusterWithForkedWorkers } = require('@cuties/cluster');
 const { ReadDataByPath } = require('@cuties/fs');
 const { ParsedJSON, Value } = require('@cuties/json');
