@@ -1,17 +1,30 @@
 'use strict'
 
-const { Event } = require('@cuties/cutie');
+const { AsyncObject, as } = require('@cuties/cutie');
 const { ExecutedScripts } = require('@cuties/scripts');
+const { Value } = require('@cuties/json');
+const { DoesFileExistSync, StatsByPath, IsFile } = require('@cuties/fs');
+const { JoinedPaths } = require('@cuties/path');
+const { If, Else } = require('@cuties/if-else');
 
-// TODO: implement #54
-class OnStaticGeneratorsChangeEvent extends Event {
+class OnStaticGeneratorsChangeEvent extends AsyncObject {
 
-  constructor() {
-    super();
+  constructor(config) {
+    super(config);
   }
 
-  definedBody(eventType, fileName) {
-    console.log(`${fileName} ${eventType}`);
+  definedSyncCall() {
+    return (config) => {
+      return (eventType, fileName) => {
+        if (eventType === 'change') {
+          new ExecutedScripts(
+            new JoinedPaths(
+              new Value(config, 'staticGeneratorsDirectory'), fileName
+            )
+          ).call();
+        }
+      }
+    }
   }
 
 }

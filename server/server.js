@@ -40,7 +40,7 @@ new ParsedJSON(
       new WatcherWithEventTypeAndFilenameListener(
         new Value(as('config'), 'staticGeneratorsDirectory'),
         { persistent: true, recursive: true, encoding: 'utf8' },
-        new OnStaticGeneratorsChangeEvent()
+        new OnStaticGeneratorsChangeEvent(as('config'))
       ).after(
         new WatcherWithEventTypeAndFilenameListener(
           new Value(as('config'), 'templatesDirectory'),
