@@ -4,5 +4,5 @@
   "clusterMode": true,
   "staticGeneratorsDirectory": "./pages",
   "templatesDirectory": "./templates",
-  "staticHtmlFilesFirectory": "./static/html"
+  "staticHtmlFilesDirectory": "./static/html"
 }
