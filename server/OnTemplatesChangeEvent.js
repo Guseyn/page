@@ -1,17 +1,23 @@
 'use strict'
 
-const { Event } = require('@cuties/cutie');
+const { AsyncObject } = require('@cuties/cutie');
 const { ExecutedScripts } = require('@cuties/scripts');
+const { Value } = require('@cuties/json');
 
-// TODO: implement #53
-class OnTemplatesChangeEvent extends Event {
+class OnTemplatesChangeEvent extends AsyncObject {
 
-  constructor() {
-    super();
+  constructor(config) {
+    super(config);
   }
 
-  definedBody(eventType, fileName) {
-    console.log(`${fileName} ${eventType}`);
+  definedSyncCall() {
+    return (config) => {
+      return (eventType, fileName) => {
+        new ExecutedScripts(
+          new Value(config, 'staticGeneratorsDirectory')
+        ).call();
+      }
+    }
   }
 
 }
