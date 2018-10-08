@@ -1,4 +1,6 @@
 {
+  "pageVersion": "1.0.0",
+  "pageLogo": "./static/txt/logo.txt",
   "port": 8000,
   "host": "127.0.0.1",
   "clusterMode": true,

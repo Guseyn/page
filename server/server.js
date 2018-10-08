@@ -1,18 +1,18 @@
-'use strictuse str '
+'use strict'
 
 const path = require('path');
 const cluster = require('cluster');
 const { as } = require('@cuties/cutie');
 const { If, Else } = require('@cuties/if-else');
 const { IsMaster, ClusterWithForkedWorkers } = require('@cuties/cluster');
-const { ReadDataByPath } = require('@cuties/fs');
 const { ParsedJSON, Value } = require('@cuties/json');
 const { ExecutedScripts } = require('@cuties/scripts');
 const { Backend, RestApi, ServingFiles, CachedServingFiles } = require('@cuties/rest');
-const { WatcherWithEventTypeAndFilenameListener } = require('@cuties/fs');
+const { ReadDataByPath, WatcherWithEventTypeAndFilenameListener } = require('@cuties/fs');
 const CustomNotFoundMethod = require('./CustomNotFoundMethod');
 const OnStaticGeneratorsChangeEvent = require('./OnStaticGeneratorsChangeEvent');
 const OnTemplatesChangeEvent = require('./OnTemplatesChangeEvent');
+const PrintedToConsolePageLogo = require('./PrintedToConsolePageLogo');
 
 const numCPUs = require('os').cpus().length;
 const notFoundMethod = new CustomNotFoundMethod(new RegExp(/\/not-found/));
@@ -34,18 +34,25 @@ new ParsedJSON(
 ).as('config').after(
   new If(
     new IsMaster(cluster),
-    new ExecutedScripts(
-      new Value(as('config'), 'staticGeneratorsDirectory')
+    new PrintedToConsolePageLogo(
+      new ReadDataByPath(
+        new Value(as('config'), 'pageLogo')
+      ),
+      new Value(as('config'), 'pageVersion')
     ).after(
-      new WatcherWithEventTypeAndFilenameListener(
-        new Value(as('config'), 'staticGeneratorsDirectory'),
-        { persistent: true, recursive: true, encoding: 'utf8' },
-        new OnStaticGeneratorsChangeEvent(as('config'))
+      new ExecutedScripts(
+        new Value(as('config'), 'staticGeneratorsDirectory')
       ).after(
         new WatcherWithEventTypeAndFilenameListener(
-          new Value(as('config'), 'templatesDirectory'),
+          new Value(as('config'), 'staticGeneratorsDirectory'),
           { persistent: true, recursive: true, encoding: 'utf8' },
-          new OnTemplatesChangeEvent(as('config'))
+          new OnStaticGeneratorsChangeEvent(as('config'))
+        ).after(
+          new WatcherWithEventTypeAndFilenameListener(
+            new Value(as('config'), 'templatesDirectory'),
+            { persistent: true, recursive: true, encoding: 'utf8' },
+            new OnTemplatesChangeEvent(as('config'))
+          )
         )
       )
     )

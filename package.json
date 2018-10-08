@@ -26,7 +26,7 @@
     "@cuties/json": "1.0.0",
     "@cuties/path": "^1.0.3",
     "@cuties/rest": "^1.1.2",
-    "@cuties/scripts": "^1.0.2",
+    "@cuties/scripts": "^1.0.3",
     "@page-libs/static-generator": "^1.0.1"
   }
 }
