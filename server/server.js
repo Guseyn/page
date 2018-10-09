@@ -36,7 +36,7 @@ new ParsedJSON(
     new IsMaster(cluster),
     new PrintedToConsolePageLogo(
       new ReadDataByPath(
-        new Value(as('config'), 'pageLogo')
+        new Value(as('config'), 'pageLogoText')
       ),
       new Value(as('config'), 'pageVersion')
     ).after(
