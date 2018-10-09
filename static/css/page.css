@@ -1,27 +1,39 @@
 .page {
   font-size: 25px;
-  width: 340px;
+  width: 540px;
   height: 260px;
   padding: 10px;
   z-index: 15;
   margin: 30px auto;
-  background: #f5f5f5;
-  border: 1px solid deepskyblue;
   text-align: center;
   font-family: Arial, Verdana, sans-serif;
 }
 
+.logo {
+  width: 154px;
+  height: 41px;
+}
+
+.version {
+  width: 100%;
+  font-size: 14px;
+  padding: 2px;
+}
+
 .slogan {
   width: 100%;
-  font-size: 22px;
+  font-size: 20px;
+  padding: 8px;
+  border-bottom: 1px solid deepskyblue;
 }
 
 .features {
   text-align: left;
   font-size: 18px;
-  margin: 15px 15px;
+  padding: 15px 15px;
 }
 
 .list-of-features {
   font-size: 15px;
+  padding: 7px;
 }
