@@ -17,14 +17,14 @@ const PrintedToConsolePageLogo = require('./PrintedToConsolePageLogo');
 const numCPUs = require('os').cpus().length;
 const notFoundMethod = new CustomNotFoundMethod(new RegExp(/\/not-found/));
 const mapper = (url) => {
-  return url.split('/').filter(path => path !== '').join(...paths);
+  return path.join(...url.split('/').filter(path => path !== ''));
 }
 
 const launchedBackend = new Backend(
   new Value(as('config'), 'port'),
   new Value(as('config'), 'host'),
   new RestApi(
-    new CachedServingFiles(new RegExp(/\/static/), mapper, notFoundMethod),
+    new ServingFiles(new RegExp(/\/static/), mapper, notFoundMethod),
     notFoundMethod
   )
 );
