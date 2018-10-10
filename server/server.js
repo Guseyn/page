@@ -1,25 +1,21 @@
 'use strict'
 
-const path = require('path');
 const cluster = require('cluster');
 const { as } = require('@cuties/cutie');
 const { If, Else } = require('@cuties/if-else');
 const { IsMaster, ClusterWithForkedWorkers } = require('@cuties/cluster');
 const { ParsedJSON, Value } = require('@cuties/json');
 const { ExecutedScripts } = require('@cuties/scripts');
-const { Backend, RestApi, ServingFiles, CachedServingFiles } = require('@cuties/rest');
+const { Backend, RestApi, CreatedServingFilesMethod, CreatedCachedServingFilesMethod } = require('@cuties/rest');
 const { ReadDataByPath, WatcherWithEventTypeAndFilenameListener } = require('@cuties/fs');
 const CustomNotFoundMethod = require('./CustomNotFoundMethod');
 const CreatedCustomIndex = require('./CreatedCustomIndex');
 const OnStaticGeneratorsChangeEvent = require('./OnStaticGeneratorsChangeEvent');
 const OnTemplatesChangeEvent = require('./OnTemplatesChangeEvent');
+const UrlToFSPathMapper = require('./UrlToFSPathMapper');
 const PrintedToConsolePageLogo = require('./PrintedToConsolePageLogo');
-
-const numCPUs = require('os').cpus().length;
 const notFoundMethod = new CustomNotFoundMethod(new RegExp(/^\/not-found/));
-const mapper = (url) => {
-  return path.join(...url.split('/').filter(path => path !== ''));
-}
+const numCPUs = require('os').cpus().length;
 
 const launchedBackend = new Backend(
   new Value(as('config'), 'port'),
@@ -29,7 +25,13 @@ const launchedBackend = new Backend(
       new Value(as('config'), 'indexPage'),
       notFoundMethod
     ),
-    new ServingFiles(new RegExp(/^\/static/), mapper, notFoundMethod),
+    new CreatedServingFilesMethod(
+      new RegExp(/^\/(css|html|image|js|txt)/),
+      new UrlToFSPathMapper(
+        new Value(as('config'), 'staticDirectory')
+      ), 
+      notFoundMethod
+    ),
     notFoundMethod
   )
 );
