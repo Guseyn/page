@@ -15,8 +15,8 @@ new ParsedJSON(
         'xmlns="http://www.w3.org/1999/xhtml" lang="en"',
         new Head(
           new Meta('charset="UTF-8"'),
-          new Style('/../static/css/normalize.css', 'type="text/css"'),
-          new Style('/../static/css/page.css', 'type="text/css"')
+          new Style('/../css/normalize.css', 'type="text/css"'),
+          new Style('/../css/page.css', 'type="text/css"')
         ),
         new Body(
           'class="main"',
