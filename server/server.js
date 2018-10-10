@@ -7,9 +7,8 @@ const { If, Else } = require('@cuties/if-else');
 const { IsMaster, ClusterWithForkedWorkers } = require('@cuties/cluster');
 const { ParsedJSON, Value } = require('@cuties/json');
 const { ExecutedScripts } = require('@cuties/scripts');
-const { Backend, ServingFiles, CachedServingFiles } = require('@cuties/rest');
+const { Backend, RestApi, ServingFiles, CachedServingFiles } = require('@cuties/rest');
 const { ReadDataByPath, WatcherWithEventTypeAndFilenameListener } = require('@cuties/fs');
-const CreatedRestApi = require('./CreatedRestApi');
 const CustomNotFoundMethod = require('./CustomNotFoundMethod');
 const CreatedCustomIndex = require('./CreatedCustomIndex');
 const OnStaticGeneratorsChangeEvent = require('./OnStaticGeneratorsChangeEvent');
@@ -25,7 +24,7 @@ const mapper = (url) => {
 const launchedBackend = new Backend(
   new Value(as('config'), 'port'),
   new Value(as('config'), 'host'),
-  new CreatedRestApi(
+  new RestApi(
     new CreatedCustomIndex(
       new Value(as('config'), 'indexPage'),
       notFoundMethod
