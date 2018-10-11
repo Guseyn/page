@@ -3,7 +3,8 @@
 const cluster = require('cluster');
 const { as } = require('@cuties/cutie');
 const { If, Else } = require('@cuties/if-else');
-const { IsMaster, ClusterWithForkedWorkers } = require('@cuties/cluster');
+const { ProcessWithExitEvent, KilledProcess } = require('@cuties/process');
+const { IsMaster, ClusterWithForkedWorkers, ClusterWithExitEvent } = require('@cuties/cluster');
 const { ParsedJSON, Value } = require('@cuties/json');
 const { ExecutedScripts } = require('@cuties/scripts');
 const { Backend, RestApi, CreatedServingFilesMethod, CreatedCachedServingFilesMethod } = require('@cuties/rest');
@@ -12,6 +13,7 @@ const CustomNotFoundMethod = require('./CustomNotFoundMethod');
 const CreatedCustomIndex = require('./CreatedCustomIndex');
 const OnStaticGeneratorsChangeEvent = require('./OnStaticGeneratorsChangeEvent');
 const OnTemplatesChangeEvent = require('./OnTemplatesChangeEvent');
+const ReloadedBackendOnFailedWorkerEvent = require('./ReloadedBackendOnFailedWorkerEvent');
 const UrlToFSPathMapper = require('./UrlToFSPathMapper');
 const PrintedToConsolePageLogo = require('./PrintedToConsolePageLogo');
 const notFoundMethod = new CustomNotFoundMethod(new RegExp(/^\/not-found/));
@@ -70,6 +72,11 @@ new ParsedJSON(
         new IsMaster(cluster),
         new ClusterWithForkedWorkers(
           cluster, numCPUs
+        ).after(
+          new ClusterWithExitEvent(
+            cluster, 
+            new ReloadedBackendOnFailedWorkerEvent()
+          )
         ),
         new Else(
           launchedBackend
