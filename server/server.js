@@ -71,12 +71,10 @@ new ParsedJSON(
       new If(
         new IsMaster(cluster),
         new ClusterWithForkedWorkers(
-          cluster, numCPUs
-        ).after(
           new ClusterWithExitEvent(
             cluster, 
             new ReloadedBackendOnFailedWorkerEvent()
-          )
+          ), numCPUs
         ),
         new Else(
           launchedBackend
