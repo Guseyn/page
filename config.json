@@ -6,10 +6,32 @@
   "indexPage": "./static/html/page.html",
   "indexPageHref": "/../html/page.html",
   "staticDirectory": "static",
-  "port": 8000,
-  "host": "127.0.0.1",
-  "clusterMode": true,
   "staticGeneratorsDirectory": "./pages",
   "templatesDirectory": "./templates",
-  "staticHtmlFilesDirectory": "./static/html"
+  "staticHtmlFilesDirectory": "./static/html",
+  "local": {
+    "port": 8000,
+    "host": "127.0.0.1",
+    "clusterMode": true
+  },
+  "dev": {
+    "port": 8000,
+    "host": "127.0.0.1",
+    "clusterMode": true
+  },
+  "test": {
+    "port": 8000,
+    "host": "127.0.0.1",
+    "clusterMode": true
+  },
+  "stage": {
+    "port": 8000,
+    "host": "127.0.0.1",
+    "clusterMode": true
+  },
+  "prod": {
+    "port": 8000,
+    "host": "127.0.0.1",
+    "clusterMode": true
+  }
 }
