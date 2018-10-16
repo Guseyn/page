@@ -9,17 +9,17 @@ const { If, Else } = require('@cuties/if-else');
 
 class OnStaticGeneratorsChangeEvent extends AsyncObject {
 
-  constructor(config) {
-    super(config);
+  constructor(staticGeneratorsDirectoryPath) {
+    super(staticGeneratorsDirectoryPath);
   }
 
   definedSyncCall() {
-    return (config) => {
+    return (staticGeneratorsDirectoryPath) => {
       return (eventType, fileName) => {
         if (eventType === 'change') {
           new ExecutedScripts(
             new JoinedPaths(
-              new Value(config, 'staticGeneratorsDirectory'), fileName
+              staticGeneratorsDirectoryPath, fileName
             )
           ).call();
         }

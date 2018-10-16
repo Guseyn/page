@@ -6,15 +6,15 @@ const { Value } = require('@cuties/json');
 
 class OnTemplatesChangeEvent extends AsyncObject {
 
-  constructor(config) {
-    super(config);
+  constructor(staticGeneratorsDirectoryPath) {
+    super(staticGeneratorsDirectoryPath);
   }
 
   definedSyncCall() {
-    return (config) => {
+    return (staticGeneratorsDirectoryPath) => {
       return (eventType, fileName) => {
         new ExecutedScripts(
-          new Value(config, 'staticGeneratorsDirectory')
+          staticGeneratorsDirectoryPath
         ).call();
       }
     }
