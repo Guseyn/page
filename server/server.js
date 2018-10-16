@@ -18,10 +18,11 @@ const UrlToFSPathMapper = require('./UrlToFSPathMapper');
 const PrintedToConsolePageLogo = require('./PrintedToConsolePageLogo');
 const notFoundMethod = new CustomNotFoundMethod(new RegExp(/^\/not-found/));
 const numCPUs = require('os').cpus().length;
+const env = process.env.NODE_ENV || 'local';
 
 const launchedBackend = new Backend(
-  new Value(as('config'), 'port'),
-  new Value(as('config'), 'host'),
+  new Value(as('config'), `${env}.port`),
+  new Value(as('config'), `${env}.host`),
   new RestApi(
     new CreatedCustomIndex(
       new Value(as('config'), 'indexPage'),
@@ -71,7 +72,7 @@ new ParsedJSON(
     )
   ).after(
     new If(
-      new Value(as('config'), 'clusterMode'),
+      new Value(as('config'), `${env}.clusterMode`),
       new If(
         new IsMaster(cluster),
         new ClusterWithForkedWorkers(
