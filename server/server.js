@@ -66,28 +66,25 @@ new ParsedJSON(
             new OnTemplatesChangeEvent(
               new Value(as('config'), 'staticGeneratorsDirectory')
             )
+          ).after(
+            new If(
+              new Value(as('config'), `${env}.clusterMode`),
+              new ClusterWithForkedWorkers(
+                new ClusterWithExitEvent(
+                  cluster, 
+                  new ReloadedBackendOnFailedWorkerEvent()
+                ), numCPUs
+              ),
+              new Else(
+                launchedBackend
+              )
+            )
           )
         )
       )
-    )
-  ).after(
-    new If(
-      new Value(as('config'), `${env}.clusterMode`),
-      new If(
-        new IsMaster(cluster),
-        new ClusterWithForkedWorkers(
-          new ClusterWithExitEvent(
-            cluster, 
-            new ReloadedBackendOnFailedWorkerEvent()
-          ), numCPUs
-        ),
-        new Else(
-          launchedBackend
-        )
-      ),
-      new Else(
-        launchedBackend
-      )
+    ),
+    new Else(
+      launchedBackend
     )
   )
 ).call();
