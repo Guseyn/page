@@ -20,13 +20,14 @@
   },
   "homepage": "https://github.com/Guseyn/page#readme",
   "dependencies": {
-    "@cuties/cluster": "^1.0.2",
+    "@cuties/cluster": "^1.0.3",
+    "@cuties/cutie": "^1.4.4",
     "@cuties/fs": "^1.1.2",
     "@cuties/if-else": "^1.0.5",
     "@cuties/json": "1.0.0",
     "@cuties/path": "^1.0.3",
     "@cuties/rest": "^1.1.6",
-    "@cuties/scripts": "^1.0.3",
+    "@cuties/scripts": "^1.0.4",
     "@page-libs/static-generator": "^1.0.1"
   }
 }

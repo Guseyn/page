@@ -15,7 +15,7 @@ class PrintedToConsolePageLogo extends AsyncObject {
 
   definedSyncCall() {
     return (logo, version) => {
-      console.log(`${logo}${version}`);
+      console.log(`${logo}${version}\n`);
       return logo;
     }
   }
