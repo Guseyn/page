@@ -7,7 +7,7 @@ function itemOfLocalStorage(localStorage, key) {
   return localStorage.getItem(key);
 }
 
-function sessionLocalWithRemovedItem(localStorage, key) {
+function localStorageWithRemovedItem(localStorage, key) {
   localStorage.removeItem(key);
   return localStorage;
 }
