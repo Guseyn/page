@@ -28,6 +28,7 @@
     "@cuties/path": "^1.0.3",
     "@cuties/rest": "^1.1.6",
     "@cuties/scripts": "^1.0.4",
+    "@page-libs/md2html": "^1.0.0",
     "@page-libs/static-generator": "^1.0.1"
   }
 }

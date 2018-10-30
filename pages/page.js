@@ -4,6 +4,7 @@ const { as } = require('@cuties/cutie');
 const { SavedPage, PrettyPage, Page, Head, Meta, Body, Script, Style, TemplateWithParams, Template } = require('@page-libs/static-generator');
 const { ParsedJSON, Value } = require('@cuties/json');
 const { ReadDataByPath } = require('@cuties/fs');
+const { HtmlFromMd } = require('@page-libs/md2html');
 
 new ParsedJSON(
   new ReadDataByPath('./config.json')
@@ -30,7 +31,11 @@ new ParsedJSON(
               as('config'), 'pageVersion'
             ),
             'The framework you can trust',
-            new ReadDataByPath('./static/txt/features.txt')
+            new HtmlFromMd(
+              new ReadDataByPath(
+                './Readme.md', {encoding: 'utf8'}
+              )
+            )
           )
         )
       )
