@@ -1,1 +1,3 @@
-// this file will contain minified version of all files in /static/js/page directory
+// first line
+// second line
+// third line

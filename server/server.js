@@ -8,9 +8,12 @@ const { IsMaster, ClusterWithForkedWorkers, ClusterWithExitEvent } = require('@c
 const { ParsedJSON, Value } = require('@cuties/json');
 const { ExecutedScripts } = require('@cuties/scripts');
 const { Backend, RestApi, CreatedServingFilesMethod, CreatedCachedServingFilesMethod } = require('@cuties/rest');
-const { ReadDataByPath, WatcherWithEventTypeAndFilenameListener } = require('@cuties/fs');
+const { ReadDataByPath, ReadDataFromFiles, ReadFilesOfDirectoryRecursively, WrittenFile, WatcherWithEventTypeAndFilenameListener } = require('@cuties/fs');
+const ConcatenatedData = require('./ConcatenatedData');
+const LoggedWrittenPageBundleJsFile = require('./LoggedWrittenPageBundleJsFile');
 const CustomNotFoundMethod = require('./CustomNotFoundMethod');
 const CreatedCustomIndex = require('./CreatedCustomIndex');
+const OnPageStaticJsFilesChangeEvent = require('./OnPageStaticJsFilesChangeEvent');
 const OnStaticGeneratorsChangeEvent = require('./OnStaticGeneratorsChangeEvent');
 const OnTemplatesChangeEvent = require('./OnTemplatesChangeEvent');
 const ReloadedBackendOnFailedWorkerEvent = require('./ReloadedBackendOnFailedWorkerEvent');
@@ -53,30 +56,52 @@ new ParsedJSON(
       new ExecutedScripts(
         new Value(as('config'), 'staticGeneratorsDirectory')
       ).after(
-        new WatcherWithEventTypeAndFilenameListener(
-          new Value(as('config'), 'staticGeneratorsDirectory'),
-          { persistent: true, recursive: true, encoding: 'utf8' },
-          new OnStaticGeneratorsChangeEvent(
-            new Value(as('config'), 'staticGeneratorsDirectory')
+        new LoggedWrittenPageBundleJsFile(
+          new WrittenFile(
+            new Value(as('config'), 'pageBundleJsFile'),
+            new ConcatenatedData(
+              new ReadDataFromFiles(
+                new ReadFilesOfDirectoryRecursively(
+                  new Value(as('config'), 'pageStaticJsFilesDirectory')
+                )
+              )
+            )
           )
         ).after(
           new WatcherWithEventTypeAndFilenameListener(
-            new Value(as('config'), 'templatesDirectory'),
+            new Value(as('config'), 'staticGeneratorsDirectory'),
             { persistent: true, recursive: true, encoding: 'utf8' },
-            new OnTemplatesChangeEvent(
+            new OnStaticGeneratorsChangeEvent(
               new Value(as('config'), 'staticGeneratorsDirectory')
             )
           ).after(
-            new If(
-              new Value(as('config'), `${env}.clusterMode`),
-              new ClusterWithForkedWorkers(
-                new ClusterWithExitEvent(
-                  cluster, 
-                  new ReloadedBackendOnFailedWorkerEvent()
-                ), numCPUs
-              ),
-              new Else(
-                launchedBackend
+            new WatcherWithEventTypeAndFilenameListener(
+              new Value(as('config'), 'templatesDirectory'),
+              { persistent: true, recursive: true, encoding: 'utf8' },
+              new OnTemplatesChangeEvent(
+                new Value(as('config'), 'staticGeneratorsDirectory')
+              )
+            ).after(
+              new WatcherWithEventTypeAndFilenameListener(
+                new Value(as('config'), 'pageStaticJsFilesDirectory'),
+                { persistent: true, recursive: true, encoding: 'utf8' },
+                new OnPageStaticJsFilesChangeEvent(
+                  new Value(as('config'), 'pageStaticJsFilesDirectory'),
+                  new Value(as('config'), 'pageBundleJsFile')
+                )
+              ).after(
+                new If(
+                  new Value(as('config'), `${env}.clusterMode`),
+                  new ClusterWithForkedWorkers(
+                    new ClusterWithExitEvent(
+                      cluster, 
+                      new ReloadedBackendOnFailedWorkerEvent()
+                    ), numCPUs
+                  ),
+                  new Else(
+                    launchedBackend
+                  )
+                )
               )
             )
           )
