@@ -27,13 +27,8 @@
   border-bottom: 1px solid deepskyblue;
 }
 
-.features {
+.readme {
   text-align: left;
-  font-size: 18px;
-  padding: 15px 15px;
-}
-
-.list-of-features {
   font-size: 15px;
   padding: 7px;
 }
