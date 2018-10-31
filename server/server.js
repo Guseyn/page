@@ -8,9 +8,7 @@ const { IsMaster, ClusterWithForkedWorkers, ClusterWithExitEvent } = require('@c
 const { ParsedJSON, Value } = require('@cuties/json');
 const { ExecutedScripts } = require('@cuties/scripts');
 const { Backend, RestApi, CreatedServingFilesMethod, CreatedCachedServingFilesMethod } = require('@cuties/rest');
-const { ReadDataByPath, ReadDataFromFiles, ReadFilesOfDirectoryRecursively, WrittenFile, WatcherWithEventTypeAndFilenameListener } = require('@cuties/fs');
-const ConcatenatedData = require('./ConcatenatedData');
-const LoggedWrittenPageBundleJsFile = require('./LoggedWrittenPageBundleJsFile');
+const { ReadDataByPath, WatcherWithEventTypeAndFilenameListener } = require('@cuties/fs');
 const CustomNotFoundMethod = require('./CustomNotFoundMethod');
 const CreatedCustomIndex = require('./CreatedCustomIndex');
 const OnPageStaticJsFilesChangeEvent = require('./OnPageStaticJsFilesChangeEvent');
@@ -24,17 +22,29 @@ const numCPUs = require('os').cpus().length;
 const env = process.env.NODE_ENV || 'local';
 
 const launchedBackend = new Backend(
-  new Value(as('config'), `${env}.port`),
-  new Value(as('config'), `${env}.host`),
+  new Value(
+    as('config'), 
+    `${env}.port`
+  ),
+  new Value(
+    as('config'),
+    `${env}.host`
+  ),
   new RestApi(
     new CreatedCustomIndex(
-      new Value(as('config'), 'indexPage'),
+      new Value(
+        as('config'),
+        'indexPage'
+      ),
       notFoundMethod
     ),
     new CreatedServingFilesMethod(
       new RegExp(/^\/(css|html|image|js|txt)/),
       new UrlToFSPathMapper(
-        new Value(as('config'), 'staticDirectory')
+        new Value(
+          as('config'),
+          'staticDirectory'
+        )
       ), 
       notFoundMethod
     ),
@@ -49,58 +59,90 @@ new ParsedJSON(
     new IsMaster(cluster),
     new PrintedToConsolePageLogo(
       new ReadDataByPath(
-        new Value(as('config'), 'pageLogoText')
+        new Value(
+          as('config'),
+          'pageLogoText'
+        )
       ),
-      new Value(as('config'), 'pageVersion')
+      new Value(
+        as('config'),
+        'pageVersion'
+      )
     ).after(
       new ExecutedScripts(
-        new Value(as('config'), 'staticGeneratorsDirectory')
+        new Value(
+          as('config'),
+          'staticGeneratorsDirectory'
+        )
       ).after(
-        new LoggedWrittenPageBundleJsFile(
-          new WrittenFile(
-            new Value(as('config'), 'pageBundleJsFile'),
-            new ConcatenatedData(
-              new ReadDataFromFiles(
-                new ReadFilesOfDirectoryRecursively(
-                  new Value(as('config'), 'pageStaticJsFilesDirectory')
-                )
-              )
+        new WatcherWithEventTypeAndFilenameListener(
+          new Value(
+            as('config'),
+            'staticGeneratorsDirectory'
+          ), 
+          {
+            persistent: true,
+            recursive: true,
+            encoding: 'utf8'
+          },
+          new OnStaticGeneratorsChangeEvent(
+            new Value(
+              as('config'), 
+              'staticGeneratorsDirectory'
             )
           )
         ).after(
           new WatcherWithEventTypeAndFilenameListener(
-            new Value(as('config'), 'staticGeneratorsDirectory'),
-            { persistent: true, recursive: true, encoding: 'utf8' },
-            new OnStaticGeneratorsChangeEvent(
-              new Value(as('config'), 'staticGeneratorsDirectory')
+            new Value(
+              as('config'), 
+              'templatesDirectory'
+              ),
+            { 
+              persistent: true,
+              recursive: true,
+              encoding: 'utf8'
+            },
+            new OnTemplatesChangeEvent(
+              new Value(
+                as('config'),
+                'staticGeneratorsDirectory'
+              )
             )
           ).after(
             new WatcherWithEventTypeAndFilenameListener(
-              new Value(as('config'), 'templatesDirectory'),
-              { persistent: true, recursive: true, encoding: 'utf8' },
-              new OnTemplatesChangeEvent(
-                new Value(as('config'), 'staticGeneratorsDirectory')
+              new Value(
+                as('config'),
+                'pageStaticJsFilesDirectory'
+              ),
+              { 
+                persistent: true,
+                recursive: true,
+                encoding: 'utf8'
+              },
+              new OnPageStaticJsFilesChangeEvent(
+                new Value(
+                  as('config'),
+                  'pageStaticJsFilesDirectory'
+                ),
+                new Value(
+                  as('config'),
+                  'pageBundleJsFile'
+                )
               )
             ).after(
-              new WatcherWithEventTypeAndFilenameListener(
-                new Value(as('config'), 'pageStaticJsFilesDirectory'),
-                { persistent: true, recursive: true, encoding: 'utf8' },
-                new OnPageStaticJsFilesChangeEvent(
-                  new Value(as('config'), 'pageStaticJsFilesDirectory'),
-                  new Value(as('config'), 'pageBundleJsFile')
-                )
-              ).after(
-                new If(
-                  new Value(as('config'), `${env}.clusterMode`),
-                  new ClusterWithForkedWorkers(
-                    new ClusterWithExitEvent(
-                      cluster, 
-                      new ReloadedBackendOnFailedWorkerEvent()
-                    ), numCPUs
-                  ),
-                  new Else(
-                    launchedBackend
-                  )
+              new If(
+                new Value(
+                  as('config'), 
+                  `${env}.clusterMode`
+                ),
+                new ClusterWithForkedWorkers(
+                  new ClusterWithExitEvent(
+                    cluster, 
+                    new ReloadedBackendOnFailedWorkerEvent()
+                  ), numCPUs
+                ),
+                new Else(
+                  launchedBackend
                 )
               )
             )
