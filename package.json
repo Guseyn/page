@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/Guseyn/page#readme",
   "dependencies": {
+    "@babel/polyfill": "^7.0.0",
     "@cuties/cluster": "^1.0.3",
     "@cuties/cutie": "^1.4.4",
     "@cuties/fs": "^1.1.4",
@@ -30,5 +31,10 @@
     "@cuties/scripts": "^1.0.4",
     "@page-libs/md2html": "^1.0.0",
     "@page-libs/static-generator": "^1.0.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.1.2",
+    "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0"
   }
 }

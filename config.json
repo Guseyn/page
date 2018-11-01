@@ -10,7 +10,7 @@
   "templatesDirectory": "./templates",
   "staticHtmlFilesDirectory": "./static/html",
   "pageStaticJsFilesDirectory": "./static/js/page",
-  "pageBundleJsFile": "./static/js/page.js",
+  "pageOutStaticJsFilesDirectory": "./static/js/page-out",
   "local": {
     "port": 8000,
     "host": "127.0.0.1",
