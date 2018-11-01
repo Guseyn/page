@@ -9,13 +9,13 @@ const { AsyncObject } = require('@cuties/cutie');
 
 class PrintedToConsolePageLogo extends AsyncObject {
 
-  constructor(logo, version) {
-    super(logo, version);
+  constructor(logo, version, step) {
+    super(logo, version, step);
   }
 
   definedSyncCall() {
-    return (logo, version) => {
-      console.log(`${logo}${version}\n`);
+    return (logo, version, step) => {
+      console.log(`${logo}${version}\n\n${step}\n`);
       return logo;
     }
   }
