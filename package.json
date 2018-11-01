@@ -7,7 +7,17 @@
     "example": "example"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build-local-app": "NODE_ENV=local node server/app/build-app",
+    "build-dev-app": "NODE_ENV=dev node server/app/build-app",
+    "build-test-app": "NODE_ENV=test node server/app/build-app",
+    "build-stage-app": "NODE_ENV=stage node server/app/build-app",
+    "build-prod-app": "NODE_ENV=prod node server/app/build-app",
+    "run-local-app": "NODE_ENV=local node server/app/run-app",
+    "run-dev-app": "NODE_ENV=dev node server/app/run-app",
+    "run-test-app": "NODE_ENV=test node server/app/run-app",
+    "run-stage-app": "NODE_ENV=stage node server/app/run-app",
+    "run-prod-app": "NODE_ENV=prod node server/app/run-app"
   },
   "repository": {
     "type": "git",

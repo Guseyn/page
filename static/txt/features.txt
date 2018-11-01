@@ -1,3 +1,0 @@
-1. Static generator that render pages that are based on templates.<br>
-2. Server that can serve static files.<br>
-3. Server can work in cluster mode(where child processes that all share server port).<br>
