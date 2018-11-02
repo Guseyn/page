@@ -6,6 +6,7 @@ module.exports = function(grunt) {
 
   require('load-grunt-tasks')(grunt);
   require('grunt-browserify')(grunt);
+  require('grunt-contrib-uglify')(grunt);
 
   // Project configuration.
   grunt.initConfig({
@@ -31,10 +32,20 @@ module.exports = function(grunt) {
           '<%= config.pageBundle %>': ['<%= config.pageOutStaticJsFilesDirectory %>/**/*.js']
         }
       }
+    },
+    uglify: {
+      options: {
+        mangle: false
+      },
+      my_target: {
+        files: {
+          '<%= config.pageMinBundle %>': ['<%= config.pageBundle %>']
+        }
+      }
     }
   });
 
   // Default task(s).
-  grunt.registerTask('default', ['babel', 'browserify']);
+  grunt.registerTask('default', ['babel', 'browserify', 'uglify']);
 
 };
