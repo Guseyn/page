@@ -8,16 +8,16 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build-local-app": "NODE_ENV=local node server/app/build-app",
-    "build-dev-app": "NODE_ENV=dev node server/app/build-app",
-    "build-test-app": "NODE_ENV=test node server/app/build-app",
-    "build-stage-app": "NODE_ENV=stage node server/app/build-app",
-    "build-prod-app": "NODE_ENV=prod node server/app/build-app",
-    "run-local-app": "NODE_ENV=local node server/app/run-app",
-    "run-dev-app": "NODE_ENV=dev node server/app/run-app",
-    "run-test-app": "NODE_ENV=test node server/app/run-app",
-    "run-stage-app": "NODE_ENV=stage node server/app/run-app",
-    "run-prod-app": "NODE_ENV=prod node server/app/run-app"
+    "build-local": "NODE_ENV=local node server/app/build-app",
+    "build-dev": "NODE_ENV=dev node server/app/build-app",
+    "build-test": "NODE_ENV=test node server/app/build-app",
+    "build-stage": "NODE_ENV=stage node server/app/build-app",
+    "build-prod": "NODE_ENV=prod node server/app/build-app",
+    "run-local": "NODE_ENV=local node server/app/run-app",
+    "run-dev": "NODE_ENV=dev node server/app/run-app",
+    "run-test": "NODE_ENV=test node server/app/run-app",
+    "run-stage": "NODE_ENV=stage node server/app/run-app",
+    "run-prod": "NODE_ENV=prod node server/app/run-app"
   },
   "repository": {
     "type": "git",
@@ -30,7 +30,6 @@
   },
   "homepage": "https://github.com/Guseyn/page#readme",
   "dependencies": {
-    "@babel/polyfill": "^7.0.0",
     "@cuties/cluster": "^1.0.3",
     "@cuties/cutie": "^1.4.4",
     "@cuties/fs": "^1.1.4",
@@ -43,8 +42,11 @@
     "@page-libs/static-generator": "^1.0.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.1.2",
     "@babel/core": "^7.1.2",
-    "@babel/preset-env": "^7.1.0"
+    "@babel/preset-env": "^7.1.0",
+    "grunt": "^1.0.3",
+    "grunt-babel": "^8.0.0",
+    "grunt-browserify": "^5.3.0",
+    "load-grunt-tasks": "^4.0.0"
   }
 }

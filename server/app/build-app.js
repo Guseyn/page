@@ -9,7 +9,7 @@ const { ParsedJSON, Value } = require('@cuties/json');
 const { ExecutedScripts } = require('@cuties/scripts');
 const { ReadDataByPath } = require('@cuties/fs');
 const PrintedToConsolePageLogo = require('./../PrintedToConsolePageLogo');
-const ExecutedBabelCommand = require('./../ExecutedBabelCommand');
+const ExecutedGruntBuild = require('./../ExecutedGruntBuild');
 const env = process.env.NODE_ENV || 'local';
 
 new ParsedJSON(
@@ -36,16 +36,7 @@ new ParsedJSON(
           'staticGeneratorsDirectory'
         )
       ).after(
-        new ExecutedBabelCommand(
-          new Value(
-            as('config'),
-            'pageStaticJsFilesDirectory'
-          ),
-          new Value(
-            as('config'),
-            'pageOutStaticJsFilesDirectory'
-          )
-        )
+        new ExecutedGruntBuild()
       )
     )
   )

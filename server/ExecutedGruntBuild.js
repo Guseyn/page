@@ -4,15 +4,15 @@ const { AsyncObject } = require('@cuties/cutie');
 const { exec } = require('child_process');
 
 // Represented result is number
-class ExecutedBabelCommand extends AsyncObject {
+class ExecutedGruntBuild extends AsyncObject {
 
-  constructor(src, outDir) {
-    super(src, outDir);
+  constructor() {
+    super();
   }
 
   definedAsyncCall() {
-    return (src, outDir, callback) => {
-      exec(`./node_modules/.bin/babel ${src} --out-dir ${outDir}`, callback);
+    return (callback) => {
+      exec(`grunt`, callback);
     }
   }
 
@@ -38,4 +38,4 @@ class ExecutedBabelCommand extends AsyncObject {
 
 }
 
-module.exports = ExecutedBabelCommand;
+module.exports = ExecutedGruntBuild;
