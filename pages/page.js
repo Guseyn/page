@@ -21,7 +21,7 @@ new ParsedJSON(
           new Script(
             new Value(
               as('config'),
-              'pageBundleHref'
+              'pageMinBundleHref'
             ),
             'type="text/javascript"'
           )

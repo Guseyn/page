@@ -12,7 +12,9 @@
   "pageStaticJsFilesDirectory": "./static/js/page",
   "pageOutStaticJsFilesDirectory": "./static/js/page-out",
   "pageBundle": "./static/js/page-bundle.js",
-  "pageBundleHref": "./../js/page-bundle.js",
+  "pageBundleHref": "/../js/page-bundle.js",
+  "pageMinBundle": "./static/js/page-bundle.min.js",
+  "pageMinBundleHref": "/../js/page-bundle.min.js",
   "local": {
     "port": 8000,
     "host": "127.0.0.1",
