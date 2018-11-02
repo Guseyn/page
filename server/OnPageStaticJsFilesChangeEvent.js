@@ -1,6 +1,7 @@
 'use strict'
 
 const { AsyncObject } = require('@cuties/cutie');
+const ExecutedGruntBuild = require('./ExecutedGruntBuild');
 
 class OnPageStaticJsFilesChangeEvent extends AsyncObject {
 
@@ -12,7 +13,7 @@ class OnPageStaticJsFilesChangeEvent extends AsyncObject {
     return (pageStaticJsFilesDirectory, pageBundleJsFile) => {
       return (eventType, fileName) => {
         if (eventType === 'change') {
-          // TODO: use here babel
+          new ExecutedGruntBuild().call();
         }
       }
     }
