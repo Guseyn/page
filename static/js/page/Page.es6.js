@@ -1,11 +1,11 @@
-class Page {
+const Unit = require('./Unit');
 
-  constructor() {
-    this.app = () => {}
-  }
+class Page extends Unit {
 
-  log() {
-
+  constructor(elm) {
+    super(elm);
   }
 
 }
+
+module.exports = Page;

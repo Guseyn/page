@@ -18,7 +18,13 @@ new ParsedJSON(
           new Meta('charset="UTF-8"'),
           new Style('/../css/normalize.css', 'type="text/css"'),
           new Style('/../css/page.css', 'type="text/css"'),
-          new Script('/../js/page.js', 'type="text/javascript"')
+          new Script(
+            new Value(
+              as('config'),
+              'pageBundleHref'
+            ),
+            'type="text/javascript"'
+          )
         ),
         new Body(
           'class="main"',
