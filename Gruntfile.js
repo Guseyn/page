@@ -1,5 +1,6 @@
 // Thanks to:
-// https://github.com/babel/grunt-babel/issues/5
+// https://github.com/babel/grunt-babel/issues/5,
+// https://stackoverflow.com/questions/29293083/grunt-with-babel-and-browserify
 
 module.exports = function(grunt) {
 
@@ -17,19 +18,23 @@ module.exports = function(grunt) {
       dist: {
         files: [{
           expand: true,
-          cwd: "<%= config.pageStaticJsFilesDirectory %>",
+          cwd: '<%= config.pageStaticJsFilesDirectory %>',
           src: ['**/*.es6.js'],
-          dest: "<%= config.pageOutStaticJsFilesDirectory %>",
+          dest: '<%= config.pageOutStaticJsFilesDirectory %>',
           ext: '.js'
         }]
       }
     },
     browserify: {
-
+      dist: {
+        files: {
+          '<%= config.pageBundle %>': ['<%= config.pageOutStaticJsFilesDirectory %>/**/*.js']
+        }
+      }
     }
   });
 
   // Default task(s).
-  grunt.registerTask('default', ['babel']);
+  grunt.registerTask('default', ['babel', 'browserify']);
 
 };
