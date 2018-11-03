@@ -19,9 +19,9 @@ module.exports = function(grunt) {
       dist: {
         files: [{
           expand: true,
-          cwd: '<%= config.pageStaticJsFilesDirectory %>',
+          cwd: '<%= config.staticJs %>',
           src: ['**/*.es6.js'],
-          dest: '<%= config.pageOutStaticJsFilesDirectory %>',
+          dest: '<%= config.outStaticJs %>',
           ext: '.js'
         }]
       }
@@ -29,7 +29,7 @@ module.exports = function(grunt) {
     browserify: {
       dist: {
         files: {
-          '<%= config.pageBundle %>': ['<%= config.pageOutStaticJsFilesDirectory %>/**/*.js']
+          '<%= config.bundle %>': ['<%= config.outStaticJs %>/**/*.js']
         }
       }
     },
@@ -39,7 +39,7 @@ module.exports = function(grunt) {
       },
       my_target: {
         files: {
-          '<%= config.pageMinBundle %>': ['<%= config.pageBundle %>']
+          '<%= config.minBundle %>': ['<%= config.bundle %>']
         }
       }
     }

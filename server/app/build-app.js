@@ -21,19 +21,19 @@ new ParsedJSON(
       new ReadDataByPath(
         new Value(
           as('config'),
-          'pageLogoText'
+          'page.logoText'
         )
       ),
       new Value(
         as('config'),
-        'pageVersion'
+        'page.version'
       ),
       'BUILD'
     ).after(
       new ExecutedScripts(
         new Value(
           as('config'),
-          'staticGeneratorsDirectory'
+          'staticGenerators'
         )
       ).after(
         new ExecutedGruntBuild()

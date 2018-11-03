@@ -33,7 +33,7 @@ const launchedBackend = new Backend(
     new CreatedCustomIndex(
       new Value(
         as('config'),
-        'indexPage'
+        'index'
       ),
       notFoundMethod
     ),
@@ -42,7 +42,7 @@ const launchedBackend = new Backend(
       new UrlToFSPathMapper(
         new Value(
           as('config'),
-          'staticDirectory'
+          'static'
         )
       ), 
       notFoundMethod
@@ -60,12 +60,12 @@ new ParsedJSON(
       new ReadDataByPath(
         new Value(
           as('config'),
-          'pageLogoText'
+          'page.logoText'
         )
       ),
       new Value(
         as('config'),
-        'pageVersion'
+        'page.version'
       ),
       'RUN'
     ).after(
@@ -74,7 +74,7 @@ new ParsedJSON(
         new WatcherWithEventTypeAndFilenameListener(
           new Value(
             as('config'),
-            'staticGeneratorsDirectory'
+            'staticGenerators'
           ),
           {
             persistent: true,
@@ -84,14 +84,14 @@ new ParsedJSON(
           new OnStaticGeneratorsChangeEvent(
             new Value(
               as('config'),
-              'staticGeneratorsDirectory'
+              'staticGenerators'
             )
           )
         ).after(
           new WatcherWithEventTypeAndFilenameListener(
             new Value(
               as('config'), 
-              'templatesDirectory'
+              'templates'
             ),
             {
               persistent: true,
@@ -101,14 +101,14 @@ new ParsedJSON(
             new OnTemplatesChangeEvent(
               new Value(
                 as('config'),
-                'staticGeneratorsDirectory'
+                'staticGenerators'
               )
             )
           ).after(
             new WatcherWithEventTypeAndFilenameListener(
               new Value(
                 as('config'),
-                'pageStaticJsFilesDirectory'
+                'staticJs'
               ),
               {
                 persistent: true,
@@ -118,11 +118,11 @@ new ParsedJSON(
               new OnPageStaticJsFilesChangeEvent(
                 new Value(
                   as('config'),
-                  'pageStaticJsFilesDirectory'
+                  'staticJs'
                 ),
                 new Value(
                   as('config'),
-                  'pageBundleJsFile'
+                  'bundleJs'
                 )
               )
             )
