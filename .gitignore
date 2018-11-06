@@ -62,5 +62,9 @@ typings/
 # next.js build output
 .next
 
-# page out dir for babel
+# page out for babel
 static/js/page-out
+static/js/page-bundle.js
+static/js/page-bundle.min.js
+
+
