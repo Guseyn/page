@@ -5,6 +5,10 @@ function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterat
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
@@ -28,6 +32,11 @@ function (_Unit) {
     return _possibleConstructorReturn(this, _getPrototypeOf(Page).call(this, elm));
   }
 
+  _createClass(Page, [{
+    key: "onclick",
+    value: function onclick() {}
+  }]);
+
   return Page;
 }(Unit);
 
@@ -38,11 +47,54 @@ module.exports = Page;
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Unit = function Unit(elm) {
-  _classCallCheck(this, Unit);
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-  this.elm = elm;
-};
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Unit =
+/*#__PURE__*/
+function () {
+  function Unit(obj) {
+    _classCallCheck(this, Unit);
+
+    this.obj = obj;
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
+
+    try {
+      for (var _iterator = Object.getOwnPropertyNames(Object.getPrototypeOf(this))[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        var propertyName = _step.value;
+
+        if (this[propertyName] instanceof Function && this[propertyName] !== 'constructor') {
+          this.obj[propertyName] = this[propertyName].bind(this);
+        }
+      }
+    } catch (err) {
+      _didIteratorError = true;
+      _iteratorError = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion && _iterator.return != null) {
+          _iterator.return();
+        }
+      } finally {
+        if (_didIteratorError) {
+          throw _iteratorError;
+        }
+      }
+    }
+  }
+
+  _createClass(Unit, [{
+    key: "override",
+    value: function override(methodName, method) {
+      this.obj[methodName] = method;
+    }
+  }]);
+
+  return Unit;
+}();
 
 module.exports = Unit;
 
@@ -52,7 +104,8 @@ module.exports = Unit;
 var Page = require('./Page');
 
 window.onload = function () {
-  console.log(new Page(document.getElementById('page')));
+  var page = new Page(document.getElementById('page'));
+  console.log(page.obj);
 };
 
 },{"./Page":1}]},{},[3,1,2]);

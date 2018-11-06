@@ -1,5 +1,6 @@
 const Page = require('./Page');
 
 window.onload = () => {
-  console.log(new Page(document.getElementById('page')));
+  let page = new Page(document.getElementById('page'));
+  console.log(page.obj);
 }
