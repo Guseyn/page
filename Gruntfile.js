@@ -6,7 +6,7 @@ module.exports = function(grunt) {
 
   require('load-grunt-tasks')(grunt);
   require('grunt-browserify')(grunt);
-  require('grunt-contrib-uglify')(grunt);
+  require('grunt-contrib-uglify-es')(grunt);
 
   // Project configuration.
   grunt.initConfig({
