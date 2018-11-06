@@ -6,9 +6,6 @@ class Page extends Unit {
     super(elm);
   }
 
-  onclick() {
-  }
-
 }
 
 module.exports = Page;
