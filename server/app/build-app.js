@@ -30,13 +30,13 @@ new ParsedJSON(
       ),
       'BUILD'
     ).after(
-      new ExecutedScripts(
-        new Value(
-          as('config'),
-          'staticGenerators'
+      new ExecutedGruntBuild().after(
+        new ExecutedScripts(
+          new Value(
+            as('config'),
+            'staticGenerators'
+          )
         )
-      ).after(
-        new ExecutedGruntBuild()
       )
     )
   )
