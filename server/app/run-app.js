@@ -22,6 +22,10 @@ const dev_env = env === 'local' || env === 'dev';
 
 const launchedBackend = new Backend(
   new Value(
+    as('config'),
+    `${env}.protocol`
+  ),
+  new Value(
     as('config'), 
     `${env}.port`
   ),

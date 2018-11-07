@@ -12,6 +12,7 @@ class ExecutedGruntBuild extends AsyncObject {
 
   definedAsyncCall() {
     return (callback) => {
+      console.log(`Grunt build:`);
       exec(`grunt`, callback);
     }
   }

@@ -18,26 +18,31 @@
   "minBundle": "./static/js/page-bundle.min.js",
   "minBundleHref": "/../js/page-bundle.min.js",
   "local": {
+    "protocol": "http",
     "port": 8000,
     "host": "127.0.0.1",
     "clusterMode": true
   },
   "dev": {
+    "protocol": "http",
     "port": 8000,
     "host": "127.0.0.1",
     "clusterMode": true
   },
   "test": {
+    "protocol": "http",
     "port": 8000,
     "host": "127.0.0.1",
     "clusterMode": true
   },
   "stage": {
+    "protocol": "http",
     "port": 8000,
     "host": "127.0.0.1",
     "clusterMode": true
   },
   "prod": {
+    "protocol": "http",
     "port": 8000,
     "host": "127.0.0.1",
     "clusterMode": true
