@@ -19,23 +19,14 @@ new ParsedJSON(
     new IsMaster(cluster),
     new PrintedToConsolePageLogo(
       new ReadDataByPath(
-        new Value(
-          as('config'),
-          'page.logoText'
-        )
+        new Value(as('config'), 'page.logoText')
       ),
-      new Value(
-        as('config'),
-        'page.version'
-      ),
+      new Value(as('config'), 'page.version'),
       'BUILD'
     ).after(
       new ExecutedGruntBuild().after(
         new ExecutedScripts(
-          new Value(
-            as('config'),
-            'staticGenerators'
-          )
+          new Value(as('config'), 'staticGenerators')
         )
       )
     )
