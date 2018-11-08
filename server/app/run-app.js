@@ -21,33 +21,18 @@ const env = process.env.NODE_ENV || 'local';
 const dev_env = env === 'local' || env === 'dev';
 
 const launchedBackend = new Backend(
-  new Value(
-    as('config'),
-    `${env}.protocol`
-  ),
-  new Value(
-    as('config'), 
-    `${env}.port`
-  ),
-  new Value(
-    as('config'),
-    `${env}.host`
-  ),
+  new Value(as('config'), `${env}.protocol`),
+  new Value(as('config'), `${env}.port`),
+  new Value(as('config'), `${env}.host`),
   new RestApi(
     new CreatedCustomIndex(
-      new Value(
-        as('config'),
-        'index'
-      ),
+      new Value(as('config'), 'index'),
       notFoundMethod
     ),
     new CreatedServingFilesMethod(
       new RegExp(/^\/(css|html|image|js|txt)/),
       new UrlToFSPathMapper(
-        new Value(
-          as('config'),
-          'static'
-        )
+        new Value(as('config'), 'static')
       ), 
       notFoundMethod
     ),
@@ -62,82 +47,40 @@ new ParsedJSON(
     new IsMaster(cluster),
     new PrintedToConsolePageLogo(
       new ReadDataByPath(
-        new Value(
-          as('config'),
-          'page.logoText'
-        )
+        new Value(as('config'), 'page.logoText')
       ),
-      new Value(
-        as('config'),
-        'page.version'
-      ),
+      new Value(as('config'), 'page.version'),
       'RUN'
     ).after(
       new If(
         dev_env,
         new WatcherWithEventTypeAndFilenameListener(
-          new Value(
-            as('config'),
-            'staticGenerators'
-          ),
-          {
-            persistent: true,
-            recursive: true,
-            encoding: 'utf8'
-          },
+          new Value(as('config'), 'staticGenerators'),
+          { persistent: true, recursive: true, encoding: 'utf8' },
           new OnStaticGeneratorsChangeEvent(
-            new Value(
-              as('config'),
-              'staticGenerators'
-            )
+            new Value(as('config'), 'staticGenerators')
           )
         ).after(
           new WatcherWithEventTypeAndFilenameListener(
-            new Value(
-              as('config'), 
-              'templates'
-            ),
-            {
-              persistent: true,
-              recursive: true,
-              encoding: 'utf8'
-            },
+            new Value(as('config'), 'templates'),
+            { persistent: true, recursive: true, encoding: 'utf8' },
             new OnTemplatesChangeEvent(
-              new Value(
-                as('config'),
-                'staticGenerators'
-              )
+              new Value(as('config'), 'staticGenerators')
             )
           ).after(
             new WatcherWithEventTypeAndFilenameListener(
-              new Value(
-                as('config'),
-                'staticJs'
-              ),
-              {
-                persistent: true,
-                recursive: true,
-                encoding: 'utf8'
-              },
+              new Value(as('config'), 'staticJs'),
+              { persistent: true, recursive: true, encoding: 'utf8' },
               new OnPageStaticJsFilesChangeEvent(
-                new Value(
-                  as('config'),
-                  'staticJs'
-                ),
-                new Value(
-                  as('config'),
-                  'bundleJs'
-                )
+                new Value(as('config'), 'staticJs'),
+                new Value(as('config'),'bundleJs')
               )
             )
           )
         )
       ).after(
         new If(
-          new Value(
-            as('config'),
-            `${env}.clusterMode`
-          ),
+          new Value(as('config'), `${env}.clusterMode`),
           new ClusterWithForkedWorkers(
             new ClusterWithExitEvent(
               cluster,
