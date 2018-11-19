@@ -22,7 +22,7 @@ new ParsedJSON(
         new Value(as('config'), 'page.logoText')
       ),
       new Value(as('config'), 'page.version'),
-      'BUILD'
+      `BUILD (${env})`
     ).after(
       new ExecutedGruntBuild().after(
         new ExecutedScripts(
