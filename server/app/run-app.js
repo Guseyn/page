@@ -50,7 +50,7 @@ new ParsedJSON(
         new Value(as('config'), 'page.logoText')
       ),
       new Value(as('config'), 'page.version'),
-      'RUN'
+      `RUN (${env})`
     ).after(
       new If(
         dev_env,
