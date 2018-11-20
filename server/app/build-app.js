@@ -24,7 +24,7 @@ new ParsedJSON(
       new Value(as('config'), 'page.version'),
       `BUILD (${env})`
     ).after(
-      new ExecutedGruntBuild().after(
+      new ExecutedGruntBuild(process).after(
         new ExecutedScripts(
           new Value(as('config'), 'staticGenerators')
         )

@@ -1,40 +1,17 @@
 'use strict'
 
 const { AsyncObject } = require('@cuties/cutie');
-const { exec } = require('child_process');
+const executedGruntBuild = require('./custom-calls/executedGruntBuild');
 
-// Represented result is number
+// Represented result is process
 class ExecutedGruntBuild extends AsyncObject {
 
-  constructor() {
-    super();
+  constructor(process) {
+    super(process);
   }
 
   definedAsyncCall() {
-    return (callback) => {
-      console.log(`Grunt build:`);
-      exec(`grunt`, callback);
-    }
-  }
-
-  onErrorAndResult(error, stdout, stderr) {
-    let result = 1;
-    if (error.isNull) {
-      result = 0;
-      console.log('\x1b[31m%s\x1b[0m', stderr);
-    }
-    if (stdout.length !== 0) {
-      console.log(stdout);
-    }
-    if (!error.isNull) {
-      result = 0;
-      console.log('\x1b[31m%s\x1b[0m', error);
-    }
-    return result;
-  }
-
-  continueAfterFail() {
-    return true;
+    return executedGruntBuild;
   }
 
 }
