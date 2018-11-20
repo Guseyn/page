@@ -63,8 +63,8 @@ typings/
 .next
 
 # page out for babel
-static/js/page-out
-static/js/page-bundle.js
-static/js/page-bundle.min.js
+static/js/out
+static/js/bundle.js
+static/js/bundle.min.js
 
 
