@@ -1,5 +1,5 @@
+const { AsyncObject } = require('@page-libs/cutie');
 const Page = require('./Page');
-const AsyncObject = require('./cutie/AsyncObject');
 const ResponseFromAjaxRequest = require('./ResponseFromAjaxRequest');
 
 class LoggedResponse extends AsyncObject {

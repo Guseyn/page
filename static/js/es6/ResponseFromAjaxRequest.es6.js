@@ -1,4 +1,4 @@
-const AsyncObject = require('./cutie/AsyncObject');
+const { AsyncObject } = require('@page-libs/cutie');
 
 // custom call
 // err, {statusCode, headers, body} in callback
