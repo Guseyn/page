@@ -1,6 +1,6 @@
 const { AsyncObject } = require('@page-libs/cutie');
+const { ResponseFromAjaxRequest } = require('@page-libs/ajax');
 const Page = require('./Page');
-const ResponseFromAjaxRequest = require('./ResponseFromAjaxRequest');
 
 class LoggedResponse extends AsyncObject {
 
@@ -18,7 +18,9 @@ class LoggedResponse extends AsyncObject {
 }
 
 window.onload = () => {
-  let page = new Page(document.getElementById('page'));
+  let page = new Page(
+    document.getElementById('page')
+  );
   new LoggedResponse(
     new ResponseFromAjaxRequest({
       url: 'http://localhost:8000/',
