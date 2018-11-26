@@ -8,6 +8,7 @@ const { ParsedJSON, Value } = require('@cuties/json');
 const { Backend, RestApi, CreatedServingFilesMethod, CreatedCachedServingFilesMethod } = require('@cuties/rest');
 const { ReadDataByPath, WatcherWithEventTypeAndFilenameListener } = require('@cuties/fs');
 const CustomNotFoundMethod = require('./../CustomNotFoundMethod');
+const CustomInternalServerErrorMethod = require('./../CustomInternalServerErrorMethod');
 const CreatedCustomIndex = require('./../CreatedCustomIndex');
 const OnPageStaticJsFilesChangeEvent = require('./../OnPageStaticJsFilesChangeEvent');
 const OnStaticGeneratorsChangeEvent = require('./../OnStaticGeneratorsChangeEvent');
@@ -16,6 +17,7 @@ const ReloadedBackendOnFailedWorkerEvent = require('./../ReloadedBackendOnFailed
 const UrlToFSPathMapper = require('./../UrlToFSPathMapper');
 const PrintedToConsolePageLogo = require('./../PrintedToConsolePageLogo');
 const notFoundMethod = new CustomNotFoundMethod(new RegExp(/^\/not-found/));
+const internalServerErrorMethod = new CustomInternalServerErrorMethod();
 const numCPUs = require('os').cpus().length;
 const env = process.env.NODE_ENV || 'local';
 const dev_env = env === 'local' || env === 'dev';
@@ -36,7 +38,8 @@ const launchedBackend = new Backend(
       ), 
       notFoundMethod
     ),
-    notFoundMethod
+    notFoundMethod,
+    internalServerErrorMethod
   )
 );
 
