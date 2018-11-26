@@ -1,4 +1,4 @@
-const Unit = require('./Unit');
+const { Unit } = require('@page-libs/unit');
 
 class Page extends Unit {
 
