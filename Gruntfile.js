@@ -20,7 +20,7 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: '<%= config.staticJs %>',
-          src: ['**/*.es6.js'],
+          src: ['**/*.js'],
           dest: '<%= config.outStaticJs %>',
           ext: '.js'
         }]
