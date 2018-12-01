@@ -1,8 +1,7 @@
 .page {
   font-size: 25px;
   width: 540px;
-  height: 260px;
-  padding: 10px;
+  height: auto;
   z-index: 15;
   margin: 30px auto;
   text-align: center;
@@ -23,7 +22,6 @@
 .slogan {
   width: 100%;
   font-size: 20px;
-  padding: 8px;
   border-bottom: 1px solid deepskyblue;
 }
 
@@ -31,4 +29,11 @@
   text-align: left;
   font-size: 15px;
   padding: 7px;
+}
+
+button {
+  background: #f8f8f8;
+  border: 1px solid grey;
+  color: deepskyblue;
+  cursor: pointer;
 }
