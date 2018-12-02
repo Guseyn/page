@@ -13,7 +13,7 @@ class OnPageStaticJsFilesChangeEvent extends AsyncObject {
     return (pageStaticJsFilesDirectory, pageBundleJsFile) => {
       return (eventType, fileName) => {
         if (eventType === 'change') {
-          new ExecutedGruntBuild().call();
+          new ExecutedGruntBuild(process).call();
         }
       }
     }
