@@ -7,7 +7,7 @@ class Page extends Unit {
 
   constructor(elm, button) {
     super(elm);
-    button.override('onclick', this.onButtonClick);
+    this.override(button, 'onclick', this.onButtonClick);
   }
 
   onButtonClick() {
