@@ -18,19 +18,29 @@
         The framework you can trust
       </div>
       <div class="readme">
-        <h1>page</h1>
+        <h1>Page</h1>
 
-        <p>UI framework with pure OOP approach in design. Has no unnecessary complexity: only html, css and js.</p>
+        <p><strong>Page</strong> can be described as a base for any applications on top of it with server and client on Node.js. It provides a lot of features and common scenarios for using web. It&#39;s completely based on the <a href="https://github.com/Guseyn/async-tree-patern/blob/master/Async_Tree_Patern.pdf">Async Tree Pattern</a> that allows you to customize <strong>Page</strong> in any way you want, you can even throw it away and build other base core for your application. In another words, <strong>Page</strong> is just an example of how you can build your application using libraries that are based on <a href="https://github.com/Guseyn/cutie">Cutie</a>.</p>
 
-        <p>4 base things: html components/templates, css files, ui js files (ui-js), js files for generating pages from html components/templates(gen-js).</p>
+        <h1>Basic concepts</h1>
 
-        <h1>Concept</h1>
+        <h2>Page is not a framework</h2>
 
-        <p>Page represents a skeleton of every project that based on it. So it&#39;s not only UI framework. Page-cli make a copy of this repository(with changed Readme.md) and use it as a base for your application.</p>
+        <p>Almost every framework is made with assumption that we live in ideal world, but it&#39;s very far from the truth. It&#39;s not possible to build something big and stable using <em>magic</em>, which every framework is based on. That&#39;s why <strong>Page</strong> is not a framework, it allows you to control the whole behaviour of your application and apply new changes in a explicit way.</p>
 
-        <h1>Mapping between &#39;gen-js&#39; and html:</h1>
+        <h2>It&#39;s not easy to start quickly</h2>
 
-        <p>It&#39;s based on <a href="https://github.com/Guseyn/page-static-generator">page-static-generator</a>.</p>
+        <p>First of all you need to get acquainted with <a href="https://github.com/Guseyn/async-tree-patern/blob/master/Async_Tree_Patern.pdf">Async Tree Pattern</a> and it&#39;s <a href="https://github.com/Guseyn/cutie">implementation</a>. It allows to build everything using pure approach in OOP. </p>
+
+        <p>Also you must know how <a href="https://nodejs.org/en/docs/">Node.js</a> works. It&#39;s also important to understand how non-blockinng i/o works there.</p>
+
+        <h2>No unnecessary complexity</h2>
+
+        <p>Only <em>html</em>, <em>css</em> and <em>js</em> (server side js and browser js).</p>
+
+        <h2>Small core</h2>
+
+        <p><strong>Page</strong> is almost based on little pieces from different libraries that can be easily combined with each other for building appication. It makes <strong>Page</strong> lightweight and easily extensible. </p>
       </div>
       <button id="button">
         click
