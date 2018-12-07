@@ -16,7 +16,7 @@ Also you must know how [Node.js](https://nodejs.org/en/docs/) works. It's also i
 
 ## No unnecessary complexity
 
-Only *html*, *css* and *js* (server side js and browser js).
+Only *html*, *css* and *js* (*server side* and *browser*).
 
 ## Small core
 
