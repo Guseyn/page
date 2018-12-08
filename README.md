@@ -14,7 +14,7 @@ Almost every framework is made with assumption that we live in ideal world, but 
 
 First of all you need to get acquainted with [Async Tree Pattern](https://github.com/Guseyn/async-tree-patern/blob/master/Async_Tree_Patern.pdf) and it's [implementation](https://github.com/Guseyn/cutie). It allows to build everything using pure approach in OOP. 
 
-Also you must know how [Node.js](https://nodejs.org/en/docs/) works. It's also important to understand how non-blockinng i/o works there.
+Also you must know how [Node.js](https://nodejs.org/en/docs/) works and it's important to understand how non-blockinng i/o works there.
 
 ## No unnecessary complexity
 
