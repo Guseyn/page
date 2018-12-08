@@ -36,7 +36,7 @@ First of all you need to download this repository to your local machine. You can
 2. Update version of framework: `page update`, this command just updates versions of components in your *package.json*
 3. Install new dependencies: `npm install`
 
-# Project structure
+# Project Structure
 
 ```bash
 ├── page
