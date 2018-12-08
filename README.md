@@ -38,4 +38,48 @@ First of all you need to download this repository to your local machine. You can
 
 # Project structure
 
-
+```bash
+├── page
+│   ├── pages
+│   │   ├── **/*.js
+│   ├── server
+│   │   ├── app
+│   │   │   ├── build-app.js 
+│   │   │   ├── run-app.js
+│   │   │   ├── custom-calls
+│   │   │   │   ├── executedGruntBuild.js
+│   │   │   ├── CreatedCustomIndex.js
+│   │   │   ├── CustomIndex.js
+│   │   │   ├── CustomIntrnalServerErrorMethod.js
+│   │   │   ├── CustomNotFoundMethod.js
+│   │   │   ├── ExecutedGruntBuild.js
+│   │   │   ├── NotFoundErrorEvent.js
+│   │   │   ├── OnPageStaticJsFilesChangeEvent.js
+│   │   │   ├── OnStaticGeneratorsChangeEvent.js
+│   │   │   ├── OnTemplatesChangeEvent.js
+│   │   │   ├── PrintedToConsolePageLogo.js
+│   │   │   ├── ReloadedBackendOnFailedWorkerEvent.js
+│   │   │   ├── UrlToFSPathMapper.js
+│   ├── static
+│   │   ├── css
+│   │   │   ├── **/*.css
+│   │   ├── html
+│   │   │   ├── **/*.html
+│   │   ├── image
+│   │   │   ├── **/*.{jpg,png,..}
+│   │   ├── js
+│   │   │   ├── **/*.js
+│   │   ├── txt
+│   │   │   ├── **/*.txt
+│   │   ├── ...
+│   ├── templates
+│   │   ├── **/*.html
+│   ├── .babelrc
+│   ├── .gitignore
+│   ├── config.json
+│   ├── Gruntfile.js
+│   ├── LICENSE
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── README.md
+```

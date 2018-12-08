@@ -35,7 +35,7 @@ const launchedBackend = new Backend(
       new RegExp(/^\/(css|html|image|js|txt)/),
       new UrlToFSPathMapper(
         new Value(as('config'), 'static')
-      ), 
+      ),
       notFoundMethod
     ),
     notFoundMethod,
