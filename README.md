@@ -26,12 +26,14 @@ First of all you need to download this repository to your local machine. You can
 2. Go to *page-cli* directory: `cd page-cli`
 3. Install npm dependencies there: `npm install`
 4. Link `page` command: `npm link`
-5. Create project: `page create`
-6. Then you'll have to enter some information about your project: `Project name`, `Version`, `Author`, `Description`, `License`
-
-You'll get this repository with changed *package.json*  and removed *.git* directory(so you can bind it to your project on github).
+5. Go to the workspace where you want to create your project: `cd ../<my-projects>`
+6. Create project: `page create`
+7. Then you'll have to enter some information about your project (`Project name`, `Version`, `Author`, `Description`, `License`), you'll get this repository with changed *package.json*  and removed *.git* directory (so you can bind it to your project on github).
+8. Go to your project directory: `cd <projectName>`
+9. Install dependencies: `npm install`
 
 ## Update 
 
-1. Go to your project directory: `cd <projec_name>`
-2. Update version of framework: `page update`
+1. Go to your project directory: `cd <project_name>`
+2. Update version of framework: `page update`, this command just updates versions of components in your *package.son*
+3. Install new dependencies: `npm install`
