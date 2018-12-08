@@ -20,27 +20,54 @@
       <div class="readme">
         <h1>Page</h1>
 
-        <p><strong>Page</strong> can be described as a base for any applications on top of it with server and client on Node.js. It provides a lot of features and common scenarios for using web. It&#39;s completely based on the <a href="https://github.com/Guseyn/async-tree-patern/blob/master/Async_Tree_Patern.pdf">Async Tree Pattern</a> that allows you to customize <strong>Page</strong> in any way you want, you can even throw it away and build other base core for your application. In another words, <strong>Page</strong> is just an example of how you can build your application using libraries that are based on <a href="https://github.com/Guseyn/cutie">Cutie</a>.</p>
+        <p><strong>Page</strong> can be described as a base for any applications on top of it with server and client on Node.js. It provides a lot of features and common scenarios for using web. It&#39;s completely based on the <a href="https://github.com/Guseyn/async-tree-patern/blob/master/Async_Tree_Patern.pdf">Async Tree Pattern</a> that allows you to customize <strong>Page</strong> in any way you want, you can even throw it away and build other base core for your application.</p>
 
-        <h1>Basic concepts</h1>
+        <p>In another words, <strong>Page</strong> is just an example of how you can build your application using libraries that are based on <a href="https://github.com/Guseyn/cutie">Cutie</a>.</p>
 
-        <h2>Page is not a framework</h2>
+        <h1>Basic Concepts</h1>
 
-        <p>Almost every framework is made with assumption that we live in ideal world, but it&#39;s very far from the truth. It&#39;s not possible to build something big and stable using <em>magic</em>, which every framework is based on. That&#39;s why <strong>Page</strong> is not a framework, it allows you to control the whole behaviour of your application and apply new changes in a explicit way.</p>
+        <ol>
+          <li>
+            <p><strong>Page Is Not a Framework.</strong> Almost every framework is made with assumption that we live in ideal world, but it&#39;s very far from the truth. It&#39;s not possible to build something big and stable using <em>magic</em>, which every framework is based on. That&#39;s why <strong>Page</strong> is not a framework, it allows you to control the whole behaviour of your application and apply new changes in a explicit way.</p>
+          </li>
+          <li>
+            <p><strong>It&#39;s Not Easy to Start Quickly.</strong> First of all you need to get acquainted with <a href="https://github.com/Guseyn/async-tree-patern/blob/master/Async_Tree_Patern.pdf">Async Tree Pattern</a> and it&#39;s <a href="https://github.com/Guseyn/cutie">implementation</a>. It allows to build everything using pure approach in OOP. Also you must know how <a href="https://nodejs.org/en/docs/">Node.js</a> works and it&#39;s important to understand how non-blockinng i/o works there.</p>
+          </li>
+          <li>
+            <p><strong>No Unnecessary Complexity.</strong> Only <em>html</em>, <em>css</em> and <em>js</em> (<em>server side</em> and <em>browser</em>).</p>
+          </li>
+          <li>
+            <p><strong>Small Core.</strong> <strong>Page</strong> is almost based on little pieces from different libraries that can be easily combined with each other for building appication. It makes <strong>Page</strong> lightweight and easily extensible. </p>
+          </li>
+        </ol>
 
-        <h2>It&#39;s not easy to start quickly</h2>
+        <h1>How to Start (page-cli)</h1>
 
-        <p>First of all you need to get acquainted with <a href="https://github.com/Guseyn/async-tree-patern/blob/master/Async_Tree_Patern.pdf">Async Tree Pattern</a> and it&#39;s <a href="https://github.com/Guseyn/cutie">implementation</a>. It allows to build everything using pure approach in OOP. </p>
+        <p>First of all you need to download this repository to your local machine. You can do it via github or <strong>page-cli</strong>. We suggest you to use the last option, because it also makes building and running of your application much easier.</p>
 
-        <p>Also you must know how <a href="https://nodejs.org/en/docs/">Node.js</a> works. It&#39;s also important to understand how non-blockinng i/o works there.</p>
+        <h2>Installation Instructions</h2>
 
-        <h2>No unnecessary complexity</h2>
+        <ol>
+          <li>Clone <em>page-cli</em>: <code>git clone https://github.com/Guseyn/page-cli.git</code></li>
+          <li>Go to <em>page-cli</em> directory: <code>cd page-cli</code></li>
+          <li>Install npm dependencies there: <code>npm install</code></li>
+          <li>Link <code>page</code> command: <code>npm link</code></li>
+          <li>Go to the workspace where you want to create your project: <code>cd ../&lt;my-projects&gt;</code></li>
+          <li>Create project: <code>page create</code></li>
+          <li>Then you&#39;ll have to enter some information about your project (<code>Project name</code>, <code>Version</code>, <code>Author</code>, <code>Description</code>, <code>License</code>), you&#39;ll get this repository with changed <em>package.json</em> and removed <em>.git</em> directory (so you can bind it to your project on github).</li>
+          <li>Go to your project directory: <code>cd &lt;projectName&gt;</code></li>
+          <li>Install dependencies: <code>npm install</code></li>
+        </ol>
 
-        <p>Only <em>html</em>, <em>css</em> and <em>js</em> (server side js and browser js).</p>
+        <h2>Update Instructions</h2>
 
-        <h2>Small core</h2>
+        <ol>
+          <li>Go to your project directory: <code>cd &lt;project_name&gt;</code></li>
+          <li>Update version of framework: <code>page update</code>, this command just updates versions of components in your <em>package.json</em></li>
+          <li>Install new dependencies: <code>npm install</code></li>
+        </ol>
 
-        <p><strong>Page</strong> is almost based on little pieces from different libraries that can be easily combined with each other for building appication. It makes <strong>Page</strong> lightweight and easily extensible. </p>
+        <h1>Project structure</h1>
       </div>
       <button id="button">
         click
