@@ -178,3 +178,79 @@ This property is for location of the minified version of the bundle file.
 #### minBundleHref
 
 This property is for link of the minified bundle file.
+
+#### enviroments(local, prod, dev, stage, prod)
+
+Every environment property includes `protocol, port, host, clusterMode`. You can also add your own environment properties (for example, if you use `https` for `protocol`, you might need `cert` and `key` properties).
+
+```json
+"local": {
+  "protocol": "http",
+  "port": 8000,
+  "host": "127.0.0.1",
+  "clusterMode": true
+},
+"dev": {
+  "protocol": "http",
+  "port": 8000,
+  "host": "127.0.0.1",
+  "clusterMode": true
+},
+"test": {
+  "protocol": "http",
+  "port": 8000,
+  "host": "127.0.0.1",
+  "clusterMode": true
+},
+"stage": {
+  "protocol": "http",
+  "port": 8000,
+  "host": "127.0.0.1",
+  "clusterMode": true
+},
+"prod": {
+  "protocol": "http",
+  "port": 8000,
+  "host": "127.0.0.1",
+  "clusterMode": true
+}
+
+```
+
+# Building process
+
+The declaration of this process is in `server/app/build-app.js` script. Here we execute [grunt build](https://github.com/Guseyn/page/blob/master/Gruntfile.js) (you can use other build system). After grunt tasks are executed we generate static pages. And that's it, you can also add some other steps in your building process.
+
+For building use command: `page build` or `page b`.
+
+```js
+// server/app/build-app.js
+
+const { as } = require('@cuties/cutie');
+const { ProcessWithExitEvent, KilledProcess } = require('@cuties/process');
+const { ParsedJSON, Value } = require('@cuties/json');
+const { ExecutedScripts } = require('@cuties/scripts');
+const { ReadDataByPath } = require('@cuties/fs');
+const PrintedToConsolePageLogo = require('./../PrintedToConsolePageLogo');
+const ExecutedGruntBuild = require('./../ExecutedGruntBuild');
+const env = process.env.NODE_ENV || 'local';
+
+new ParsedJSON(
+  new ReadDataByPath('./config.json')
+).as('config').after(
+  new PrintedToConsolePageLogo(
+    new ReadDataByPath(
+      new Value(as('config'), 'page.logoText')
+    ),
+    new Value(as('config'), 'page.version'),
+    `BUILD (${env})`
+  ).after(
+    new ExecutedGruntBuild(process).after(
+      new ExecutedScripts(
+        new Value(as('config'), 'staticGenerators')
+      )
+    )
+  )
+).call();
+
+```
