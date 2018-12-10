@@ -83,3 +83,79 @@ First of all you need to download this repository to your local machine. You can
 │   ├── package.json
 │   ├── README.md
 ```
+
+## config.json
+
+`config.json` contains all settings of **Page**. For using it in the code you can use following async composition:
+
+```js
+const { ParsedJSON, Value } = require('@cuties/json');
+const { ReadDataByPath } = require('@cuties/fs');
+
+new ParsedJSON(
+  new ReadDataByPath('./config.json')
+).as('config').after(
+  // now you can use following composition for retrieving concrete value from config
+  new Value(as('config'), 'somePropertyName')
+).call();
+
+```
+
+### Properties in `config.json`
+
+#### page
+
+```json
+"page": {
+  "version": "1.0.0",
+  "logoText": "./static/txt/logo.txt",
+  "logoImage": "./static/image/logo.png",
+  "logoImageSrc": "/../image/logo.png"
+}
+```
+
+This property contains object with information about **Page**: current version, path to the logo in the text format and image format, also image address of the logo.
+
+#### index, indexHref
+
+These properties point to the index page. `index` is for location of the index page in the file system and `indexHref` is for link address of the index page.
+
+#### static
+
+This property is for location of the directory of static files.
+
+#### staticGenerators
+
+This property is for location of the directory with [static genrators](TODO://add_link_here_about_them).
+
+#### templates
+
+This property is for location of the directory with [templates](TODO://add_link_here_about_them).
+
+#### staticHtml
+
+This property is for location of the directory of static files with `html` extension.
+
+#### staticJs
+
+This property is for location of the directory of static files with `js` extension (*es6*).
+
+#### outStaticJs
+
+This property is for location of the directory of static files with `js` extension(for using in a browser).
+
+#### bundle
+
+This property is for location of the bundle file that is generated from `outStaticJs` directory.
+
+#### bundleHref
+
+This property is for link of the bundle file.
+
+#### minBundle
+
+This property is for location of the minified version of the bundle file.
+
+#### minBundleHref
+
+This property is for link of the minified bundle file.
