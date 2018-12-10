@@ -26,7 +26,7 @@ First of all you need to download this repository to your local machine. You can
 4. Link `page` command: `npm link`
 5. Go to the workspace where you want to create your project: `cd ../<my-projects>`
 6. Create project: `page create`
-7. Then you'll have to enter some information about your project (`Project name`, `Version`, `Author`, `Description`, `License`), you'll get this repository with changed *package.json*  and removed *.git* directory (so you can bind it to your project on github).
+7. Then you'll have to enter some information about your project (`Project name`, `Version`, `Author`, `Description`, `License`), you'll get this repository with changed *package.json* and removed *.git* directory (so you can bind it to your project on github).
 8. Go to your project directory: `cd <projectName>`
 9. Install dependencies: `npm install`
 
@@ -39,27 +39,27 @@ First of all you need to download this repository to your local machine. You can
 # Project Structure
 
 ```bash
-├── page
+├── projectName
 │   ├── pages
 │   │   ├── **/*.js
 │   ├── server
 │   │   ├── app
 │   │   │   ├── build-app.js 
 │   │   │   ├── run-app.js
-│   │   │   ├── custom-calls
-│   │   │   │   ├── executedGruntBuild.js
-│   │   │   ├── CreatedCustomIndex.js
-│   │   │   ├── CustomIndex.js
-│   │   │   ├── CustomIntrnalServerErrorMethod.js
-│   │   │   ├── CustomNotFoundMethod.js
-│   │   │   ├── ExecutedGruntBuild.js
-│   │   │   ├── NotFoundErrorEvent.js
-│   │   │   ├── OnPageStaticJsFilesChangeEvent.js
-│   │   │   ├── OnStaticGeneratorsChangeEvent.js
-│   │   │   ├── OnTemplatesChangeEvent.js
-│   │   │   ├── PrintedToConsolePageLogo.js
-│   │   │   ├── ReloadedBackendOnFailedWorkerEvent.js
-│   │   │   ├── UrlToFSPathMapper.js
+│   │   ├── custom-calls
+│   │   │   ├── executedGruntBuild.js
+│   │   ├── CreatedCustomIndex.js
+│   │   ├── CustomIndex.js
+│   │   ├── CustomIntrnalServerErrorMethod.js
+│   │   ├── CustomNotFoundMethod.js
+│   │   ├── ExecutedGruntBuild.js
+│   │   ├── NotFoundErrorEvent.js
+│   │   ├── OnPageStaticJsFilesChangeEvent.js
+│   │   ├── OnStaticGeneratorsChangeEvent.js
+│   │   ├── OnTemplatesChangeEvent.js
+│   │   ├── PrintedToConsolePageLogo.js
+│   │   ├── ReloadedBackendOnFailedWorkerEvent.js
+│   │   ├── UrlToFSPathMapper.js
 │   ├── static
 │   │   ├── css
 │   │   │   ├── **/*.css
@@ -84,7 +84,23 @@ First of all you need to download this repository to your local machine. You can
 │   ├── README.md
 ```
 
-## config.json
+## `pages` directory
+
+This directory contains js scripts that generate static html pages(they are based on [page-static-generator library](https://github.com/Guseyn/page-static-generator)). Generation of static pages is contained in [building](//TODO:add_link_here) and [running](//TODO:add_link_here) processes.
+
+## `server` directory
+
+This directory contains server part of the application. It's divided into [building](//TODO:add_link_here) and [running](//TODO:add_link_here) processes.
+
+## `static` directory
+
+This directory contains static files, each type of files is stored in the corresponding subdirectory(`html`, `js` and so on). You can also add subdirectories for different extensions. Just don't forget to configure it in [running process](//TODO:add_link_here).
+
+## `templates` directory
+
+This directory contains html tepmlates(components) for [generating pages](//TODO:add_link_here).
+
+## `config.json`
 
 `config.json` contains all settings of **Page**. Use following async composition for retrieving values from config in the code:
 
