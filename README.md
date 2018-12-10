@@ -86,7 +86,7 @@ First of all you need to download this repository to your local machine. You can
 
 ## config.json
 
-`config.json` contains all settings of **Page**. For using it in the code you can use following async composition:
+`config.json` contains all settings of **Page**. Use following async composition for retrieving values from config in the code:
 
 ```js
 const { ParsedJSON, Value } = require('@cuties/json');
@@ -95,7 +95,10 @@ const { ReadDataByPath } = require('@cuties/fs');
 new ParsedJSON(
   new ReadDataByPath('./config.json')
 ).as('config').after(
-  // now you can use following composition for retrieving concrete value from config
+  /* 
+    now you can use following composition 
+      for retrieving concrete value from config
+  */
   new Value(as('config'), 'somePropertyName')
 ).call();
 
