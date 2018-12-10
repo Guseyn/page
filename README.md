@@ -221,7 +221,7 @@ Every environment property includes `protocol, port, host, clusterMode`. You can
 
 The declaration of this process is in `server/app/build-app.js` script. Here we execute [grunt build](https://github.com/Guseyn/page/blob/master/Gruntfile.js) (you can use other build system). After grunt tasks are executed we generate static pages. And that's it, you can also add some other steps in your building process.
 
-For building use command: `page build [evironment]` or `page b [evironment]`. `environment` is one of the following values: `local`, `prod`, `dev`, `stage`, `prod`).
+For building use command: `page build [evironment]` or `page b [evironment]`. `environment` is one of the following values: `local`, `prod`, `dev`, `stage`, `prod` (`local` is default).
 
 ```js
 // server/app/build-app.js
