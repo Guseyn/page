@@ -181,7 +181,7 @@ This property is for link of the minified bundle file.
 
 #### enviroments(local, prod, dev, stage, prod)
 
-Every environment property includes `protocol, port, host, clusterMode`. You can also add your own environment properties (for example, if you use `https` for `protocol`, you might need `cert` and `key` properties).
+Every environment property includes `protocol, port, host, clusterMode`. You can also add your own environments and environment properties (for example, if you use `https` for `protocol`, you might need `cert` and `key` properties).
 
 ```json
 "local": {
@@ -221,7 +221,7 @@ Every environment property includes `protocol, port, host, clusterMode`. You can
 
 The declaration of this process is in `server/app/build-app.js` script. Here we execute [grunt build](https://github.com/Guseyn/page/blob/master/Gruntfile.js) (you can use other build system). After grunt tasks are executed we generate static pages. And that's it, you can also add some other steps in your building process.
 
-For building use command: `page build` or `page b`.
+For building use command: `page build [evironment]` or `page b [evironment]`. `environment` is one of the following values: `local`, `prod`, `dev`, `stage`, `prod`).
 
 ```js
 // server/app/build-app.js
