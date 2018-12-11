@@ -295,6 +295,8 @@ For running use command: `page run [evironment]` or `page r [evironment]`. `envi
 
 As you can see here, we get some parameters like `post` and `host` from `config.json`. If look at the whole script, you can notice that it's possible to run server in [cluster mode](https://nodejs.org/dist/latest/docs/api/cluster.html).
 
+## The whole declaration
+
 I believe that the declarative code below is self-explainable, but you can anyway [submit an issue](https://github.com/Guseyn/page/issues), if something is not clear. However, it requires some knowledge in such modules like: [cutie](https://github.com/Guseyn/cutie), [cutie-if-else](https://github.com/Guseyn/cutie-if-else), [cutie-cluster](https://github.com/Guseyn/cutie-cluster), [cutie-json](https://github.com/Guseyn/cutie-json), [cutie-rest](https://github.com/Guseyn/cutie-rest), [cutie-fs](https://github.com/Guseyn/cutie-fs).
 
 ```js
