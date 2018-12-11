@@ -219,7 +219,7 @@ Every environment property includes `protocol, port, host, clusterMode`. You can
 
 # Building process
 
-The declaration of this process is in `server/app/build-app.js` script. Here we execute [grunt build](https://github.com/Guseyn/page/blob/master/Gruntfile.js) (you can use other build system). After grunt tasks are executed we generate static pages. And that's it, you can also add some other steps in your building process.
+The declaration of this process is in [server/app/build-app.js](https://github.com/Guseyn/page/blob/master/server/app/build-app.js) script. Here we execute [grunt build](https://github.com/Guseyn/page/blob/master/Gruntfile.js) (you can use other build system). After grunt tasks are executed we generate static pages. And that's it, you can also add some other steps in your building process.
 
 For building use command: `page build [evironment]` or `page b [evironment]`. `environment` is one of the following values: `local`, `prod`, `dev`, `stage`, `prod` (`local` is default).
 
@@ -254,3 +254,154 @@ new ParsedJSON(
 ).call();
 
 ```
+
+So, here building process just generates static pages and minified bundle js file as it's shown [here]((https://github.com/Guseyn/page/blob/master/Gruntfile.js)).
+
+# Running process
+
+The declaration of this process is in [server/app/run-app.js](https://github.com/Guseyn/page/blob/master/server/app/run-app.js) script.
+
+## Backend (server)
+
+For building backend server with REST API we use here [cutie-rest](https://github.com/Guseyn/cutie-rest):
+
+```js
+const launchedBackend = new Backend(
+  new Value(as('config'), `${env}.protocol`),
+  new Value(as('config'), `${env}.port`),
+  new Value(as('config'), `${env}.host`),
+  new RestApi(
+    new CreatedCustomIndex(
+      new Value(as('config'), 'index'),
+      notFoundMethod
+    ),
+    new CreatedServingFilesMethod(
+      new RegExp(/^\/(css|html|image|js|txt)/),
+      new UrlToFSPathMapper(
+        new Value(as('config'), 'static')
+      ),
+      notFoundMethod
+    ),
+    notFoundMethod,
+    internalServerErrorMethod
+  )
+);
+
+```
+
+It's just an example of how it could be and work. But, of course, you can configure it differently due to your requirements.
+
+For running use command: `page run [evironment]` or `page r [evironment]`. `environment` is one of the following values: `local`, `prod`, `dev`, `stage`, `prod` (`local` is default).
+
+As you can see here, we get some parameters like `post` and `host` from `config.json`. If look at the whole script, you can notice that it's possible to run server in [cluster mode](https://nodejs.org/dist/latest/docs/api/cluster.html).
+
+I believe that the declarative code below is self-explainable, but you can anyway [submit an issue](https://github.com/Guseyn/page/issues), if something is not clear. However, it requires some knowledge in such modules like: [cutie](https://github.com/Guseyn/cutie), [cutie-if-else](https://github.com/Guseyn/cutie-if-else), [cutie-cluster](https://github.com/Guseyn/cutie-cluster), [cutie-json](https://github.com/Guseyn/cutie-json), [cutie-rest](https://github.com/Guseyn/cutie-rest), [cutie-fs](https://github.com/Guseyn/cutie-fs).
+
+```js
+const cluster = require('cluster');
+const { as } = require('@cuties/cutie');
+const { If, Else } = require('@cuties/if-else');
+const { IsMaster, ClusterWithForkedWorkers, ClusterWithExitEvent } = require('@cuties/cluster');
+const { ParsedJSON, Value } = require('@cuties/json');
+const { Backend, RestApi, CreatedServingFilesMethod, CreatedCachedServingFilesMethod } = require('@cuties/rest');
+const { ReadDataByPath, WatcherWithEventTypeAndFilenameListener } = require('@cuties/fs');
+const CustomNotFoundMethod = require('./../CustomNotFoundMethod');
+const CustomInternalServerErrorMethod = require('./../CustomInternalServerErrorMethod');
+const CreatedCustomIndex = require('./../CreatedCustomIndex');
+const OnPageStaticJsFilesChangeEvent = require('./../OnPageStaticJsFilesChangeEvent');
+const OnStaticGeneratorsChangeEvent = require('./../OnStaticGeneratorsChangeEvent');
+const OnTemplatesChangeEvent = require('./../OnTemplatesChangeEvent');
+const ReloadedBackendOnFailedWorkerEvent = require('./../ReloadedBackendOnFailedWorkerEvent');
+const UrlToFSPathMapper = require('./../UrlToFSPathMapper');
+const PrintedToConsolePageLogo = require('./../PrintedToConsolePageLogo');
+const notFoundMethod = new CustomNotFoundMethod(new RegExp(/^\/not-found/));
+const internalServerErrorMethod = new CustomInternalServerErrorMethod();
+const numCPUs = require('os').cpus().length;
+const env = process.env.NODE_ENV || 'local';
+const dev_env = env === 'local' || env === 'dev';
+
+const launchedBackend = new Backend(
+  new Value(as('config'), `${env}.protocol`),
+  new Value(as('config'), `${env}.port`),
+  new Value(as('config'), `${env}.host`),
+  new RestApi(
+    new CreatedCustomIndex(
+      new Value(as('config'), 'index'),
+      notFoundMethod
+    ),
+    new CreatedServingFilesMethod(
+      new RegExp(/^\/(css|html|image|js|txt)/),
+      new UrlToFSPathMapper(
+        new Value(as('config'), 'static')
+      ),
+      notFoundMethod
+    ),
+    notFoundMethod,
+    internalServerErrorMethod
+  )
+);
+
+new ParsedJSON(
+  new ReadDataByPath('./config.json')
+).as('config').after(
+  new If(
+    new IsMaster(cluster),
+    new PrintedToConsolePageLogo(
+      new ReadDataByPath(
+        new Value(as('config'), 'page.logoText')
+      ),
+      new Value(as('config'), 'page.version'),
+      `RUN (${env})`
+    ).after(
+      new If(
+        dev_env,
+        new WatcherWithEventTypeAndFilenameListener(
+          new Value(as('config'), 'staticGenerators'),
+          { persistent: true, recursive: true, encoding: 'utf8' },
+          new OnStaticGeneratorsChangeEvent(
+            new Value(as('config'), 'staticGenerators')
+          )
+        ).after(
+          new WatcherWithEventTypeAndFilenameListener(
+            new Value(as('config'), 'templates'),
+            { persistent: true, recursive: true, encoding: 'utf8' },
+            new OnTemplatesChangeEvent(
+              new Value(as('config'), 'staticGenerators')
+            )
+          ).after(
+            new WatcherWithEventTypeAndFilenameListener(
+              new Value(as('config'), 'staticJs'),
+              { persistent: true, recursive: true, encoding: 'utf8' },
+              new OnPageStaticJsFilesChangeEvent(
+                new Value(as('config'), 'staticJs'),
+                new Value(as('config'),'bundleJs')
+              )
+            )
+          )
+        )
+      ).after(
+        new If(
+          new Value(as('config'), `${env}.clusterMode`),
+          new ClusterWithForkedWorkers(
+            new ClusterWithExitEvent(
+              cluster,
+              new ReloadedBackendOnFailedWorkerEvent()
+            ), numCPUs
+          ),
+          new Else(
+            launchedBackend
+          )
+        )
+      )
+    ),
+    new Else(
+      launchedBackend
+    )
+  )
+).call();
+
+```
+
+As you can see it's easily configurable code, so you can add and remove components due to your requirements.
+
+In few words, running process here runs server with REST API (in cluster mode by default) and adds [fs watchers](https://nodejs.org/dist/latest/docs/api/fs.html#fs_fs_watch_filename_options_listener) on `pages`, `static`, `templates` directories. Also in cluster mode failed processes restart automatically.
