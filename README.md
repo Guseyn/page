@@ -289,7 +289,7 @@ const launchedBackend = new Backend(
 
 ```
 
-It's just an example of how it could be and work. But, of course, you can configure it differently due to your requirements.
+It's just an example of how it could be built and work. But, of course, you can configure it differently due to your requirements.
 
 For running use command: `page run [evironment]` or `page r [evironment]`. `environment` is one of the following values: `local`, `prod`, `dev`, `stage`, `prod` (`local` is default).
 
