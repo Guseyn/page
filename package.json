@@ -44,7 +44,7 @@
     "@page-libs/cutie": "^1.0.3",
     "@page-libs/dom": "^1.0.2",
     "@page-libs/md2html": "^1.0.0",
-    "@page-libs/static-generator": "^1.0.1",
+    "@page-libs/static-generator": "^1.0.2",
     "@page-libs/unit": "^1.0.2"
   },
   "devDependencies": {
