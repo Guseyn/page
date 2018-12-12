@@ -38,7 +38,7 @@
     "@cuties/if-else": "^1.0.5",
     "@cuties/json": "1.0.0",
     "@cuties/path": "^1.0.3",
-    "@cuties/rest": "^1.1.11",
+    "@cuties/rest": "^1.1.12",
     "@cuties/scripts": "^1.0.4",
     "@page-libs/ajax": "^1.0.5",
     "@page-libs/cutie": "^1.0.3",
