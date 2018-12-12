@@ -82,6 +82,7 @@ First of all you need to download this repository to your local machine. You can
 │   ├── package-lock.json
 │   ├── package.json
 │   ├── README.md
+
 ```
 
 ## `pages` directory
@@ -407,3 +408,10 @@ new ParsedJSON(
 As you can see it's easily configurable code, so you can add and remove components due to your requirements.
 
 In few words, running process here runs server with REST API (in cluster mode by default) and adds [fs watchers](https://nodejs.org/dist/latest/docs/api/fs.html#fs_fs_watch_filename_options_listener) on `pages`, `static`, `templates` directories. Also in cluster mode failed processes restart automatically.
+
+# List of libraries for Page
+
+## page-cutie
+
+[This library](https://github.com/Guseyn/page-cutie) is analogue of [cutie](https://github.com/Guseyn/cutie) for using [Async Tree Pattern](https://github.com/Guseyn/async-tree-patern/blob/master/Async_Tree_Patern.pdf) in browser.
+
