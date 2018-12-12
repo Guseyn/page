@@ -581,4 +581,4 @@ You can find more information about usage [here](https://github.com/Guseyn/page-
 
 ## page-md2html
 
-
+[This library](https://github.com/Guseyn/page-static-generator) is simple tool for transforming text from *markdown* to the *html*.
