@@ -415,3 +415,20 @@ In few words, running process here runs server with REST API (in cluster mode by
 
 [This library](https://github.com/Guseyn/page-cutie) is analogue of [cutie](https://github.com/Guseyn/cutie) for using [Async Tree Pattern](https://github.com/Guseyn/async-tree-patern/blob/master/Async_Tree_Patern.pdf) in browser.
 
+## page-ajax
+
+[This library](https://github.com/Guseyn/page-cutie) allows you to use ajax in very conviniet way. It works like external request objects in [cutie-http](https://github.com/Guseyn/cutie-http) or [cutie-https](https://github.com/Guseyn/cutie-https).
+
+### Example
+
+```js
+new ResponseBody(
+  new ResponseFromAjaxRequest({
+    url: 'http://localhost:8000/html/res.html',
+    method: 'GET'
+  })
+).call();
+
+```
+
+So, as you can see here, it's possible wrap async request with just one object using [Async Tree Pattern](https://github.com/Guseyn/async-tree-patern/blob/master/Async_Tree_Patern.pdf).
