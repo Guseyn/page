@@ -435,9 +435,9 @@ function transformedAsyncObjects(...asyncObjects) {
   return asyncObject;
 }
 
-``` 
+```
 
-## page-ajax
+## page-ajax (based on *page-cutie*)
 
 [This library](https://github.com/Guseyn/page-cutie) allows you to use ajax in very conviniet way. It works like external request objects in [cutie-http](https://github.com/Guseyn/cutie-http) or [cutie-https](https://github.com/Guseyn/cutie-https).
 
@@ -485,7 +485,7 @@ new UserForm(
 ```
 Full example [here](https://github.com/Guseyn/page-unit#example).
 
-## page-static-generator
+## page-static-generator (based on *cutie*)
 
 [This library](https://github.com/Guseyn/page-static-generator) is simple tool for generating *html* pages from different templates combining them.
 
@@ -579,7 +579,7 @@ The result is
 
 You can find more information about usage [here](https://github.com/Guseyn/page-static-generator#usage).
 
-## page-md2html
+## page-md2html (based on *cutie*)
 
 [This library](https://github.com/Guseyn/page-static-generator) is simple tool for transforming text from *markdown* to the *html*.
 Based on [this lib](https://github.com/showdownjs/showdown).
@@ -591,4 +591,33 @@ Based on [this lib](https://github.com/showdownjs/showdown).
 new HtmlFromMd(markdownText).call();
 
 ```
+## page-dom (based on *page-cutie*)
 
+[This library](https://github.com/Guseyn/page-dom) is set of async objects for creating DOM elements.
+
+### Example
+
+This simple example just shows the way of declaration in this lib:
+
+```js
+new ElementWithAppendedChildren(
+  document.createElement('div'),
+  div('class="div" id="div1"')(
+    h1()(), 
+    a('href="guseyn.com"')(),
+    div('class="div" id="div2"')(
+      img('src="image.png"')(),
+      p('', 'text')()
+    )
+  )
+).call();
+
+```
+
+[Here](https://github.com/Guseyn/page-dom#async-objects) you can find more examples.
+
+### common sense
+
+I don't think that it makes sense to wrap every static function in browser js with objects. In my opinion, it's overhead. It's better to use [page-unit](https://github.com/Guseyn/page-unit) with procedural code in events(like in `onclick` methods). Actually, procedural code is clear, if amount of it is not big. Probably some *heavy* stuff will be written in OOP style in other libs for *Page*, but for simple things it's better use good old procedural js. 
+
+However, this example is not the case, obviously. I think that creating element in DOM in declarative style is much better than the same code in procedural style.
