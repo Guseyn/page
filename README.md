@@ -409,7 +409,7 @@ new ParsedJSON(
 
 As you can see it's easily configurable code, so you can add and remove components due to your requirements.
 
-In few words, running process here runs server with REST API (in cluster mode by default) and adds [fs watchers](https://nodejs.org/dist/latest/docs/api/fs.html#fs_fs_watch_filename_options_listener) on `pages`, `static`, `templates` directories. Also in cluster mode failed processes restart automatically.
+In few words, running process here runs server with REST API (in cluster mode by default) and adds [fs watchers](https://nodejs.org/dist/latest/docs/api/fs.html#fs_fs_watch_filename_options_listener) on `pages`, `static`, `templates` directories(in `local` and `dev` environments). Also in cluster mode failed processes restart automatically.
 
 # List of libraries for Page
 
@@ -466,3 +466,98 @@ new UserForm(
 
 ```
 Full example [here](https://github.com/Guseyn/page-unit#example).
+
+## page-static-generator
+
+[This library](https://github.com/Guseyn/page-static-generator) is simple tool for generating *html* pages from different templates combining them.
+
+### Example
+
+We can build *html* page from these two templates:
+
+```html
+<!-- outer.html -->
+<div class="outer">
+   {text}
+  <div class="place-for-inner-template">
+    {innerTemplate}
+  </div>
+</div>
+
+``` 
+
+```html
+<!-- inner.html -->
+<div class="inner">
+   {text}
+</div>
+
+```
+
+using following composition:
+
+```js
+'use strict'
+
+const { SavedPage, PrettyPage, Page, Head, Body, Script, Style, TemplateWithParams, Template } = require('@page-libs/static-generator');
+
+new SavedPage(
+  'page.html', 
+  new PrettyPage(
+    new Page(
+      'xmlns="http://www.w3.org/1999/xhtml" lang="en"',
+      new Head(
+        new Script('script1.js', 'type="text/javascript"'),
+        new Script('script2.js', 'type="text/javascript"'),
+        new Style('main.css', 'type="text/css"'),
+        new Style('mobile.css', 'type="text/css"')
+      ),
+      new Body(
+        'class="main"',
+        new TemplateWithParams(
+          new Template('outer.html'),
+          'text in outer template',
+          new TemplateWithParams(
+            new Template('inner.html'),
+            'text in inner template'
+          )
+        )
+      )
+    )
+  )
+).call();
+
+```
+
+The result is
+
+```html
+<!-- page.html -->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+
+  <head>
+    <script src="script1.js" type="text/javascript"></script>
+    <script src="script2.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="main.css" type="text/css">
+    <link rel="stylesheet" href="mobile.css" type="text/css">
+  </head>
+
+  <body class="main">
+    <div class="outer">
+      text in outer template
+      <div class="place-for-inner-template">
+        <div class="inner">
+          text in inner template
+        </div>
+
+      </div>
+    </div>
+  </body>
+
+</html>
+
+```
+
+You can find more information about usage [here](https://github.com/Guseyn/page-static-generator#usage).
+
