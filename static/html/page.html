@@ -34,6 +34,9 @@
             <p><strong>It&#39;s Not Easy to Start Quickly.</strong> First of all you need to get acquainted with <a href="https://github.com/Guseyn/async-tree-patern/blob/master/Async_Tree_Patern.pdf">Async Tree Pattern</a> and it&#39;s <a href="https://github.com/Guseyn/cutie">implementation</a>. It allows to build everything using pure approach in OOP. Also you must know how <a href="https://nodejs.org/en/docs/">Node.js</a> works and it&#39;s important to understand how non-blockinng i/o works there.</p>
           </li>
           <li>
+            <p><strong>But It&#39;s Very Easy To Continue.</strong> Ones you&#39;ve learnt how to use <a href="https://github.com/Guseyn/async-tree-patern/blob/master/Async_Tree_Patern.pdf">Async Tree Pattern</a>, libraries that are based on <a href="https://github.com/Guseyn/cutie">cutie</a> and libraries for <strong>Page</strong>, your life is never will be like before. You&#39;ll able to intoduce new changes into your code extremely fast and painless(unlike in other frameworks). </p>
+          </li>
+          <li>
             <p><strong>No Unnecessary Complexity.</strong> Only <em>html</em>, <em>css</em> and <em>js</em> (<em>server side</em> and <em>browser</em>).</p>
           </li>
           <li>
@@ -67,7 +70,529 @@
           <li>Install new dependencies: <code>npm install</code></li>
         </ol>
 
-        <h1>Project structure</h1>
+        <h1>Project Structure</h1>
+
+        <p><code></code>`bash
+          ├── projectName
+          │ ├── pages
+          │ │ ├── <strong>/*.js
+│   ├── server
+│   │   ├── app
+│   │   │   ├── build-app.js 
+│   │   │   ├── run-app.js
+│   │   ├── custom-calls
+│   │   │   ├── executedGruntBuild.js
+│   │   ├── CreatedCustomIndex.js
+│   │   ├── CustomIndex.js
+│   │   ├── CustomIntrnalServerErrorMethod.js
+│   │   ├── CustomNotFoundMethod.js
+│   │   ├── ExecutedGruntBuild.js
+│   │   ├── NotFoundErrorEvent.js
+│   │   ├── OnPageStaticJsFilesChangeEvent.js
+│   │   ├── OnStaticGeneratorsChangeEvent.js
+│   │   ├── OnTemplatesChangeEvent.js
+│   │   ├── PrintedToConsolePageLogo.js
+│   │   ├── ReloadedBackendOnFailedWorkerEvent.js
+│   │   ├── UrlToFSPathMapper.js
+│   ├── static
+│   │   ├── css
+│   │   │   ├── </strong>/<em>.css
+│   │   ├── html
+│   │   │   ├── **/</em>.html
+          │ │ ├── image
+          │ │ │ ├── <strong>/*.{jpg,png,..}
+│   │   ├── js
+│   │   │   ├── </strong>/<em>.js
+│   │   ├── txt
+│   │   │   ├── **/</em>.txt
+          │ │ ├── ...
+          │ ├── templates
+          │ │ ├── **/*.html
+          │ ├── .babelrc
+          │ ├── .gitignore
+          │ ├── config.json
+          │ ├── Gruntfile.js
+          │ ├── LICENSE
+          │ ├── package-lock.json
+          │ ├── package.json
+          │ ├── README.md</p>
+
+        <p><code></code>`</p>
+
+        <h2><code>pages</code> directory</h2>
+
+        <p>This directory contains js scripts that generate static html pages(they are based on <a href="https://github.com/Guseyn/page-static-generator">page-static-generator library</a>). Generation of static pages is contained in <a href="//TODO:add_link_here">building</a> and <a href="//TODO:add_link_here">running</a> processes.</p>
+
+        <h2><code>server</code> directory</h2>
+
+        <p>This directory contains server part of the application. It&#39;s divided into <a href="//TODO:add_link_here">building</a> and <a href="//TODO:add_link_here">running</a> processes.</p>
+
+        <h2><code>static</code> directory</h2>
+
+        <p>This directory contains static files, each type of files is stored in the corresponding subdirectory(<code>html</code>, <code>js</code> and so on). You can also add subdirectories for different extensions. Just don&#39;t forget to configure it in <a href="//TODO:add_link_here">running process</a>.</p>
+
+        <h2><code>templates</code> directory</h2>
+
+        <p>This directory contains html tepmlates(components) for <a href="//TODO:add_link_here">generating pages</a>.</p>
+
+        <h2><code>config.json</code></h2>
+
+        <p><code>config.json</code> contains all settings of <strong>Page</strong>. Use following async composition for retrieving values from config in the code:</p>
+
+        <p><code></code>`js
+          const { ParsedJSON, Value } = require(&#39;@cuties/json&#39;);
+          const { ReadDataByPath } = require(&#39;@cuties/fs&#39;);</p>
+
+        <p>new ParsedJSON(
+          new ReadDataByPath(&#39;./config.json&#39;)
+          ).as(&#39;config&#39;).after(
+          /<em>
+    now you can use following composition 
+      for retrieving concrete value from config
+  </em>/
+          new Value(as(&#39;config&#39;), &#39;somePropertyName&#39;)
+          ).call();</p>
+
+        <p><code></code>`</p>
+
+        <h3>Properties in <code>config.json</code></h3>
+
+        <h4>page</h4>
+
+        <p><code>json
+&quot;page&quot;: {
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;logoText&quot;: &quot;./static/txt/logo.txt&quot;,
+  &quot;logoImage&quot;: &quot;./static/image/logo.png&quot;,
+  &quot;logoImageSrc&quot;: &quot;/../image/logo.png&quot;
+}
+</code></p>
+
+        <p>This property contains object with information about <strong>Page</strong>: current version, path to the logo in the text format and image format, also image address of the logo.</p>
+
+        <h4>index, indexHref</h4>
+
+        <p>These properties point to the index page. <code>index</code> is for location of the index page in the file system and <code>indexHref</code> is for link address of the index page.</p>
+
+        <h4>static</h4>
+
+        <p>This property is for location of the directory of static files.</p>
+
+        <h4>staticGenerators</h4>
+
+        <p>This property is for location of the directory with <a href="TODO://add_link_here_about_them">static genrators</a>.</p>
+
+        <h4>templates</h4>
+
+        <p>This property is for location of the directory with <a href="TODO://add_link_here_about_them">templates</a>.</p>
+
+        <h4>staticHtml</h4>
+
+        <p>This property is for location of the directory of static files with <code>html</code> extension.</p>
+
+        <h4>staticJs</h4>
+
+        <p>This property is for location of the directory of static files with <code>js</code> extension (<em>es6</em>).</p>
+
+        <h4>outStaticJs</h4>
+
+        <p>This property is for location of the directory of static files with <code>js</code> extension(for using in a browser).</p>
+
+        <h4>bundle</h4>
+
+        <p>This property is for location of the bundle file that is generated from <code>outStaticJs</code> directory.</p>
+
+        <h4>bundleHref</h4>
+
+        <p>This property is for link of the bundle file.</p>
+
+        <h4>minBundle</h4>
+
+        <p>This property is for location of the minified version of the bundle file.</p>
+
+        <h4>minBundleHref</h4>
+
+        <p>This property is for link of the minified bundle file.</p>
+
+        <h4>enviroments(local, prod, dev, stage, prod)</h4>
+
+        <p>Every environment property includes <code>protocol, port, host, clusterMode</code>. You can also add your own environments and environment properties (for example, if you use <code>https</code> for <code>protocol</code>, you might need <code>cert</code> and <code>key</code> properties).</p>
+
+        <p><code></code>`json
+          &quot;local&quot;: {
+          &quot;protocol&quot;: &quot;http&quot;,
+          &quot;port&quot;: 8000,
+          &quot;host&quot;: &quot;127.0.0.1&quot;,
+          &quot;clusterMode&quot;: true
+          },
+          &quot;dev&quot;: {
+          &quot;protocol&quot;: &quot;http&quot;,
+          &quot;port&quot;: 8000,
+          &quot;host&quot;: &quot;127.0.0.1&quot;,
+          &quot;clusterMode&quot;: true
+          },
+          &quot;test&quot;: {
+          &quot;protocol&quot;: &quot;http&quot;,
+          &quot;port&quot;: 8000,
+          &quot;host&quot;: &quot;127.0.0.1&quot;,
+          &quot;clusterMode&quot;: true
+          },
+          &quot;stage&quot;: {
+          &quot;protocol&quot;: &quot;http&quot;,
+          &quot;port&quot;: 8000,
+          &quot;host&quot;: &quot;127.0.0.1&quot;,
+          &quot;clusterMode&quot;: true
+          },
+          &quot;prod&quot;: {
+          &quot;protocol&quot;: &quot;http&quot;,
+          &quot;port&quot;: 8000,
+          &quot;host&quot;: &quot;127.0.0.1&quot;,
+          &quot;clusterMode&quot;: true
+          }</p>
+
+        <p><code></code>`</p>
+
+        <h1>Building process</h1>
+
+        <p>The declaration of this process is in <a href="https://github.com/Guseyn/page/blob/master/server/app/build-app.js">server/app/build-app.js</a> script. Here we execute <a href="https://github.com/Guseyn/page/blob/master/Gruntfile.js">grunt build</a> (you can use other build system). After grunt tasks are executed we generate static pages. And that&#39;s it, you can also add some other steps in your building process.</p>
+
+        <p>For building use command: <code>page build [evironment]</code> or <code>page b [evironment]</code>. <code>environment</code> is one of the following values: <code>local</code>, <code>prod</code>, <code>dev</code>, <code>stage</code>, <code>prod</code> (<code>local</code> is default).</p>
+
+        <p><code></code>`js
+          // server/app/build-app.js</p>
+
+        <p>const { as } = require(&#39;@cuties/cutie&#39;);
+          const { ProcessWithExitEvent, KilledProcess } = require(&#39;@cuties/process&#39;);
+          const { ParsedJSON, Value } = require(&#39;@cuties/json&#39;);
+          const { ExecutedScripts } = require(&#39;@cuties/scripts&#39;);
+          const { ReadDataByPath } = require(&#39;@cuties/fs&#39;);
+          const PrintedToConsolePageLogo = require(&#39;./../PrintedToConsolePageLogo&#39;);
+          const ExecutedGruntBuild = require(&#39;./../ExecutedGruntBuild&#39;);
+          const env = process.env.NODE_ENV || &#39;local&#39;;</p>
+
+        <p>new ParsedJSON(
+          new ReadDataByPath(&#39;./config.json&#39;)
+          ).as(&#39;config&#39;).after(
+          new PrintedToConsolePageLogo(
+          new ReadDataByPath(
+          new Value(as(&#39;config&#39;), &#39;page.logoText&#39;)
+          ),
+          new Value(as(&#39;config&#39;), &#39;page.version&#39;),
+          <code>BUILD (${env})</code>
+          ).after(
+          new ExecutedGruntBuild(process).after(
+          new ExecutedScripts(
+          new Value(as(&#39;config&#39;), &#39;staticGenerators&#39;)
+          )
+          )
+          )
+          ).call();</p>
+
+        <p><code></code>`</p>
+
+        <p>So, here building process just generates static pages and minified bundle js file as it&#39;s shown <a href="(https://github.com/Guseyn/page/blob/master/Gruntfile.js)">here</a>.</p>
+
+        <h1>Running process</h1>
+
+        <p>The declaration of this process is in <a href="https://github.com/Guseyn/page/blob/master/server/app/run-app.js">server/app/run-app.js</a> script.</p>
+
+        <h2>Backend (server)</h2>
+
+        <p>For building backend server with REST API we use here <a href="https://github.com/Guseyn/cutie-rest">cutie-rest</a>:</p>
+
+        <p><code></code><code>js
+const launchedBackend = new Backend(
+  new Value(as(&#39;config&#39;), </code>${env}.protocol<code>),
+  new Value(as(&#39;config&#39;), </code>${env}.port<code>),
+  new Value(as(&#39;config&#39;), </code>${env}.host`),
+          new RestApi(
+          new CreatedCustomIndex(
+          new Value(as(&#39;config&#39;), &#39;index&#39;),
+          notFoundMethod
+          ),
+          new CreatedServingFilesMethod(
+          new RegExp(/^\/(css|html|image|js|txt)/),
+          new UrlToFSPathMapper(
+          new Value(as(&#39;config&#39;), &#39;static&#39;)
+          ),
+          notFoundMethod
+          ),
+          notFoundMethod,
+          internalServerErrorMethod
+          )
+          );</p>
+
+        <p><code></code>`</p>
+
+        <p>It&#39;s just an example of how it could be built and work. But, of course, you can configure it differently due to your requirements.</p>
+
+        <p>For running use command: <code>page run [evironment]</code> or <code>page r [evironment]</code>. <code>environment</code> is one of the following values: <code>local</code>, <code>prod</code>, <code>dev</code>, <code>stage</code>, <code>prod</code> (<code>local</code> is default).</p>
+
+        <p>As you can see here, we get some parameters like <code>post</code> and <code>host</code> from <code>config.json</code>. If look at the whole script, you can notice that it&#39;s possible to run server in <a href="https://nodejs.org/dist/latest/docs/api/cluster.html">cluster mode</a>.</p>
+
+        <h2>The whole declaration</h2>
+
+        <p>I believe that the declarative code below is self-explainable, but you can anyway <a href="https://github.com/Guseyn/page/issues">submit an issue</a>, if something is not clear. However, it requires some knowledge in such modules like: <a href="https://github.com/Guseyn/cutie">cutie</a>, <a href="https://github.com/Guseyn/cutie-if-else">cutie-if-else</a>, <a href="https://github.com/Guseyn/cutie-cluster">cutie-cluster</a>, <a href="https://github.com/Guseyn/cutie-json">cutie-json</a>, <a href="https://github.com/Guseyn/cutie-rest">cutie-rest</a>, <a href="https://github.com/Guseyn/cutie-fs">cutie-fs</a>.</p>
+
+        <p><code></code>`js
+          const cluster = require(&#39;cluster&#39;);
+          const { as } = require(&#39;@cuties/cutie&#39;);
+          const { If, Else } = require(&#39;@cuties/if-else&#39;);
+          const { IsMaster, ClusterWithForkedWorkers, ClusterWithExitEvent } = require(&#39;@cuties/cluster&#39;);
+          const { ParsedJSON, Value } = require(&#39;@cuties/json&#39;);
+          const { Backend, RestApi, CreatedServingFilesMethod, CreatedCachedServingFilesMethod } = require(&#39;@cuties/rest&#39;);
+          const { ReadDataByPath, WatcherWithEventTypeAndFilenameListener } = require(&#39;@cuties/fs&#39;);
+          const CustomNotFoundMethod = require(&#39;./../CustomNotFoundMethod&#39;);
+          const CustomInternalServerErrorMethod = require(&#39;./../CustomInternalServerErrorMethod&#39;);
+          const CreatedCustomIndex = require(&#39;./../CreatedCustomIndex&#39;);
+          const OnPageStaticJsFilesChangeEvent = require(&#39;./../OnPageStaticJsFilesChangeEvent&#39;);
+          const OnStaticGeneratorsChangeEvent = require(&#39;./../OnStaticGeneratorsChangeEvent&#39;);
+          const OnTemplatesChangeEvent = require(&#39;./../OnTemplatesChangeEvent&#39;);
+          const ReloadedBackendOnFailedWorkerEvent = require(&#39;./../ReloadedBackendOnFailedWorkerEvent&#39;);
+          const UrlToFSPathMapper = require(&#39;./../UrlToFSPathMapper&#39;);
+          const PrintedToConsolePageLogo = require(&#39;./../PrintedToConsolePageLogo&#39;);
+          const notFoundMethod = new CustomNotFoundMethod(new RegExp(/^\/not-found/));
+          const internalServerErrorMethod = new CustomInternalServerErrorMethod();
+          const numCPUs = require(&#39;os&#39;).cpus().length;
+          const env = process.env.NODE<em>ENV || &#39;local&#39;;
+const dev</em>env = env === &#39;local&#39; || env === &#39;dev&#39;;</p>
+
+        <p>const launchedBackend = new Backend(
+          new Value(as(&#39;config&#39;), <code>${env}.protocol</code>),
+          new Value(as(&#39;config&#39;), <code>${env}.port</code>),
+          new Value(as(&#39;config&#39;), <code>${env}.host</code>),
+          new RestApi(
+          new CreatedCustomIndex(
+          new Value(as(&#39;config&#39;), &#39;index&#39;),
+          notFoundMethod
+          ),
+          new CreatedServingFilesMethod(
+          new RegExp(/^\/(css|html|image|js|txt)/),
+          new UrlToFSPathMapper(
+          new Value(as(&#39;config&#39;), &#39;static&#39;)
+          ),
+          notFoundMethod
+          ),
+          notFoundMethod,
+          internalServerErrorMethod
+          )
+          );</p>
+
+        <p>new ParsedJSON(
+          new ReadDataByPath(&#39;./config.json&#39;)
+          ).as(&#39;config&#39;).after(
+          new If(
+          new IsMaster(cluster),
+          new PrintedToConsolePageLogo(
+          new ReadDataByPath(
+          new Value(as(&#39;config&#39;), &#39;page.logoText&#39;)
+          ),
+          new Value(as(&#39;config&#39;), &#39;page.version&#39;),
+          <code>RUN (${env})</code>
+          ).after(
+          new If(
+          dev_env,
+          new WatcherWithEventTypeAndFilenameListener(
+          new Value(as(&#39;config&#39;), &#39;staticGenerators&#39;),
+          { persistent: true, recursive: true, encoding: &#39;utf8&#39; },
+          new OnStaticGeneratorsChangeEvent(
+          new Value(as(&#39;config&#39;), &#39;staticGenerators&#39;)
+          )
+          ).after(
+          new WatcherWithEventTypeAndFilenameListener(
+          new Value(as(&#39;config&#39;), &#39;templates&#39;),
+          { persistent: true, recursive: true, encoding: &#39;utf8&#39; },
+          new OnTemplatesChangeEvent(
+          new Value(as(&#39;config&#39;), &#39;staticGenerators&#39;)
+          )
+          ).after(
+          new WatcherWithEventTypeAndFilenameListener(
+          new Value(as(&#39;config&#39;), &#39;staticJs&#39;),
+          { persistent: true, recursive: true, encoding: &#39;utf8&#39; },
+          new OnPageStaticJsFilesChangeEvent(
+          new Value(as(&#39;config&#39;), &#39;staticJs&#39;),
+          new Value(as(&#39;config&#39;),&#39;bundleJs&#39;)
+          )
+          )
+          )
+          )
+          ).after(
+          new If(
+          new Value(as(&#39;config&#39;), <code>${env}.clusterMode</code>),
+          new ClusterWithForkedWorkers(
+          new ClusterWithExitEvent(
+          cluster,
+          new ReloadedBackendOnFailedWorkerEvent()
+          ), numCPUs
+          ),
+          new Else(
+          launchedBackend
+          )
+          )
+          )
+          ),
+          new Else(
+          launchedBackend
+          )
+          )
+          ).call();</p>
+
+        <p><code></code>`</p>
+
+        <p>As you can see it&#39;s easily configurable code, so you can add and remove components due to your requirements.</p>
+
+        <p>In few words, running process here runs server with REST API (in cluster mode by default) and adds <a href="https://nodejs.org/dist/latest/docs/api/fs.html#fs_fs_watch_filename_options_listener">fs watchers</a> on <code>pages</code>, <code>static</code>, <code>templates</code> directories(in <code>local</code> and <code>dev</code> environments). Also in cluster mode failed processes restart automatically.</p>
+
+        <h1>List of libraries for Page</h1>
+
+        <p>All these libraries are available on <strong>npm</strong> under <code>@page-libs</code> scope.</p>
+
+        <h2>page-cutie</h2>
+
+        <p><a href="https://github.com/Guseyn/page-cutie">This library</a> is analogue of <a href="https://github.com/Guseyn/cutie">cutie</a> for using <a href="https://github.com/Guseyn/async-tree-patern/blob/master/Async_Tree_Patern.pdf">Async Tree Pattern</a> in browser.</p>
+
+        <h2>page-ajax</h2>
+
+        <p><a href="https://github.com/Guseyn/page-cutie">This library</a> allows you to use ajax in very conviniet way. It works like external request objects in <a href="https://github.com/Guseyn/cutie-http">cutie-http</a> or <a href="https://github.com/Guseyn/cutie-https">cutie-https</a>.</p>
+
+        <h3>Example</h3>
+
+        <p><code></code>`js
+          new ResponseBody(
+          new ResponseFromAjaxRequest({
+          url: &#39;http://localhost:8000/html/res.html&#39;,
+          method: &#39;GET&#39;
+          })
+          ).call();</p>
+
+        <p><code></code>`</p>
+
+        <p>So, as you can see here, it&#39;s possible wrap async request with just one object using <a href="https://github.com/Guseyn/async-tree-patern/blob/master/Async_Tree_Patern.pdf">Async Tree Pattern</a>.</p>
+
+        <h2>page-unit</h2>
+
+        <p><a href="https://github.com/Guseyn/page-unit">This library</a> allows you to represent <em>html code</em> as <em>js code</em>, so you can encapsulate entire behaviour of DOM elements in objects.</p>
+
+        <h3>Example</h3>
+
+        <p>We can represent following html code:</p>
+
+        <p><code></code>`html
+          &lt;div id=&quot;user-form&quot;&gt;
+          &lt;input id =&quot;name&quot;&gt;
+          &lt;input id =&quot;password&quot;&gt;
+          &lt;button id=&quot;submit&quot;&gt;Sign in&lt;/button&gt;
+          &lt;/div&gt;</p>
+
+        <p><code></code>`</p>
+
+        <p>like this composition:</p>
+
+        <p><code></code>`js
+          new UserForm(
+          document.getElementById(&#39;user-form&#39;),
+          new NameInput(document.getElementById(&#39;name&#39;)),
+          new PasswordInput(document.getElementById(&#39;password&#39;)),
+          new SubmitButton(document.getElementById(&#39;submit&#39;))
+          );</p>
+
+        <p><code></code>`
+          Full example <a href="https://github.com/Guseyn/page-unit#example">here</a>.</p>
+
+        <h2>page-static-generator</h2>
+
+        <p><a href="https://github.com/Guseyn/page-static-generator">This library</a> is simple tool for generating <em>html</em> pages from different templates combining them.</p>
+
+        <h3>Example</h3>
+
+        <p>We can build <em>html</em> page from these two templates:</p>
+
+        <p><code></code>`html
+          &lt;!-- outer.html --&gt;
+          &lt;div class=&quot;outer&quot;&gt;
+          {text}
+          &lt;div class=&quot;place-for-inner-template&quot;&gt;
+          {innerTemplate}
+          &lt;/div&gt;
+          &lt;/div&gt;</p>
+
+        <p><code></code>` </p>
+
+        <p><code></code>`html
+          &lt;!-- inner.html --&gt;
+          &lt;div class=&quot;inner&quot;&gt;
+          {text}
+          &lt;/div&gt;</p>
+
+        <p><code></code>`</p>
+
+        <p>using following composition:</p>
+
+        <p><code></code>`js
+          &#39;use strict&#39;</p>
+
+        <p>const { SavedPage, PrettyPage, Page, Head, Body, Script, Style, TemplateWithParams, Template } = require(&#39;@page-libs/static-generator&#39;);</p>
+
+        <p>new SavedPage(
+          &#39;page.html&#39;,
+          new PrettyPage(
+          new Page(
+          &#39;xmlns=&quot;http://www.w3.org/1999/xhtml&quot; lang=&quot;en&quot;&#39;,
+          new Head(
+          new Script(&#39;script1.js&#39;, &#39;type=&quot;text/javascript&quot;&#39;),
+          new Script(&#39;script2.js&#39;, &#39;type=&quot;text/javascript&quot;&#39;),
+          new Style(&#39;main.css&#39;, &#39;type=&quot;text/css&quot;&#39;),
+          new Style(&#39;mobile.css&#39;, &#39;type=&quot;text/css&quot;&#39;)
+          ),
+          new Body(
+          &#39;class=&quot;main&quot;&#39;,
+          new TemplateWithParams(
+          new Template(&#39;outer.html&#39;),
+          &#39;text in outer template&#39;,
+          new TemplateWithParams(
+          new Template(&#39;inner.html&#39;),
+          &#39;text in inner template&#39;
+          )
+          )
+          )
+          )
+          )
+          ).call();</p>
+
+        <p><code></code>`</p>
+
+        <p>The result is</p>
+
+        <p><code></code>`html
+          &lt;!-- page.html --&gt;
+          &lt;!DOCTYPE html&gt;
+          &lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot; lang=&quot;en&quot;&gt;</p>
+
+        <p> &lt;head&gt;
+          &lt;script src=&quot;script1.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+          &lt;script src=&quot;script2.js&quot; type=&quot;text/javascript&quot;&gt;&lt;/script&gt;
+          &lt;link rel=&quot;stylesheet&quot; href=&quot;main.css&quot; type=&quot;text/css&quot;&gt;
+          &lt;link rel=&quot;stylesheet&quot; href=&quot;mobile.css&quot; type=&quot;text/css&quot;&gt;
+          &lt;/head&gt;</p>
+
+        <p> &lt;body class=&quot;main&quot;&gt;
+          &lt;div class=&quot;outer&quot;&gt;
+          text in outer template
+          &lt;div class=&quot;place-for-inner-template&quot;&gt;
+          &lt;div class=&quot;inner&quot;&gt;
+          text in inner template
+          &lt;/div&gt;</p>
+
+        <pre><code>  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+        <p> &lt;/body&gt;</p>
+
+        <p>&lt;/html&gt;</p>
+
+        <p><code></code>`</p>
+
+        <p>You can find more information about usage <a href="https://github.com/Guseyn/page-static-generator#usage">here</a>.</p>
       </div>
       <button id="button">
         click

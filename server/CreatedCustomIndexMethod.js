@@ -1,9 +1,9 @@
 'use strict'
 
 const { AsyncObject } = require('@cuties/cutie');
-const CustomIndex = require('./CustomIndex');
+const CustomIndexMethod = require('./CustomIndexMethod');
 
-class CreatedCustomIndex extends AsyncObject {
+class CreatedCustomIndexMethod extends AsyncObject {
 
   constructor(page, notFoundMethod) {
     super(page, notFoundMethod);
@@ -11,11 +11,11 @@ class CreatedCustomIndex extends AsyncObject {
 
   definedSyncCall() {
     return (page, notFoundMethod) => {
-      return new CustomIndex(page, notFoundMethod);
+      return new CustomIndexMethod(page, notFoundMethod);
     }
   }
 
 
 }
 
-module.exports = CreatedCustomIndex;
+module.exports = CreatedCustomIndexMethod;

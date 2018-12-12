@@ -4,10 +4,10 @@ const { CreatedReadStream } = require('@cuties/fs');
 const { ResponseWithStatusCode, ResponseWithHeader } = require('@cuties/http');
 const { ResolvedPath, Extname } = require('@cuties/path');
 const { PipedReadable, ReadableWithErrorEvent } = require('@cuties/stream');
-const { Index } = require('@cuties/rest');
+const { IndexMethod } = require('@cuties/rest');
 const NotFoundErrorEvent = require('./NotFoundErrorEvent');
 
-class CustomIndex extends Index {
+class CustomIndexMethod extends IndexMethod {
 
   constructor(page, notFoundMethod) {
     super();
@@ -36,4 +36,4 @@ class CustomIndex extends Index {
 
 }
 
-module.exports = CustomIndex;
+module.exports = CustomIndexMethod;
