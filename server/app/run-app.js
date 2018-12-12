@@ -9,7 +9,7 @@ const { Backend, RestApi, CreatedServingFilesMethod, CreatedCachedServingFilesMe
 const { ReadDataByPath, WatcherWithEventTypeAndFilenameListener } = require('@cuties/fs');
 const CustomNotFoundMethod = require('./../CustomNotFoundMethod');
 const CustomInternalServerErrorMethod = require('./../CustomInternalServerErrorMethod');
-const CreatedCustomIndex = require('./../CreatedCustomIndex');
+const CreatedCustomIndexMethod = require('./../CreatedCustomIndexMethod');
 const OnPageStaticJsFilesChangeEvent = require('./../OnPageStaticJsFilesChangeEvent');
 const OnStaticGeneratorsChangeEvent = require('./../OnStaticGeneratorsChangeEvent');
 const OnTemplatesChangeEvent = require('./../OnTemplatesChangeEvent');
@@ -27,7 +27,7 @@ const launchedBackend = new Backend(
   new Value(as('config'), `${env}.port`),
   new Value(as('config'), `${env}.host`),
   new RestApi(
-    new CreatedCustomIndex(
+    new CreatedCustomIndexMethod(
       new Value(as('config'), 'index'),
       notFoundMethod
     ),

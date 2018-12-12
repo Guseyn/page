@@ -330,7 +330,7 @@ const launchedBackend = new Backend(
   new Value(as('config'), `${env}.port`),
   new Value(as('config'), `${env}.host`),
   new RestApi(
-    new CreatedCustomIndex(
+    new CreatedCustomIndexMethod(
       new Value(as('config'), 'index'),
       notFoundMethod
     ),
@@ -418,6 +418,24 @@ All these libraries are available on **npm** under `@page-libs` scope.
 ## page-cutie
 
 [This library](https://github.com/Guseyn/page-cutie) is analogue of [cutie](https://github.com/Guseyn/cutie) for using [Async Tree Pattern](https://github.com/Guseyn/async-tree-patern/blob/master/Async_Tree_Patern.pdf) in browser.
+
+**Warning:** If you want to use async objects from libraries that are based on [cutie](https://github.com/Guseyn/cutie) in browser, you must change their parents from `AsyncObject` in **cutie** to the `AsyncObject` from **page-cutie**. Use following function:
+
+```js
+const AsyncObject = require('@cuties/cutie').AsyncObject;
+const PageAsyncObject = require('@page-libs/cutie').AsyncObject;
+
+function transformedAsyncObjects(...asyncObjects) {
+  for (let i = 0; i < asyncObjects.length; i++) {
+    if (asyncObjects[i].prototype instanceof PageAsyncObject) {
+      Object.setPrototypeOf(asyncObjects[i].prototype, AsyncObject.prototype);
+      Object.setPrototypeOf(asyncObjects[i], AsyncObject);
+    }
+  }
+  return asyncObject;
+}
+
+``` 
 
 ## page-ajax
 
