@@ -10,9 +10,11 @@ In another words, **Page** is just an example of how you can build your applicat
 
 2. **It's Not Easy to Start Quickly.** First of all you need to get acquainted with [Async Tree Pattern](https://github.com/Guseyn/async-tree-patern/blob/master/Async_Tree_Patern.pdf) and it's [implementation](https://github.com/Guseyn/cutie). It allows to build everything using pure approach in OOP.  Also you must know how [Node.js](https://nodejs.org/en/docs/) works and it's important to understand how non-blockinng i/o works there.
 
-3. **No Unnecessary Complexity.** Only *html*, *css* and *js* (*server side* and *browser*).
+3. **But It's Very Easy To Continue.** Ones you've learnt how to use [Async Tree Pattern](https://github.com/Guseyn/async-tree-patern/blob/master/Async_Tree_Patern.pdf), libraries that are based on [cutie](https://github.com/Guseyn/cutie) and libraries for **Page**, your life is never will be like before. You'll able to intoduce new changes into your code extremely fast and painless(unlike in other frameworks). 
 
-4. **Small Core.** **Page** is almost based on little pieces from different libraries that can be easily combined with each other for building appication. It makes **Page** lightweight and easily extensible. 
+4. **No Unnecessary Complexity.** Only *html*, *css* and *js* (*server side* and *browser*).
+
+5. **Small Core.** **Page** is almost based on little pieces from different libraries that can be easily combined with each other for building appication. It makes **Page** lightweight and easily extensible. 
 
 # How to Start (page-cli)
 
@@ -411,6 +413,8 @@ In few words, running process here runs server with REST API (in cluster mode by
 
 # List of libraries for Page
 
+All these libraries are available on **npm** under `@page-libs` scope.
+
 ## page-cutie
 
 [This library](https://github.com/Guseyn/page-cutie) is analogue of [cutie](https://github.com/Guseyn/cutie) for using [Async Tree Pattern](https://github.com/Guseyn/async-tree-patern/blob/master/Async_Tree_Patern.pdf) in browser.
@@ -432,3 +436,33 @@ new ResponseBody(
 ```
 
 So, as you can see here, it's possible wrap async request with just one object using [Async Tree Pattern](https://github.com/Guseyn/async-tree-patern/blob/master/Async_Tree_Patern.pdf).
+
+## page-unit
+
+[This library](https://github.com/Guseyn/page-unit) allows you to represent *html code* as *js code*, so you can encapsulate entire behaviour of DOM elements in objects.
+
+### Example
+
+We can represent following html code:
+
+```html
+<div id="user-form">
+  <input id ="name">
+  <input id ="password">
+  <button id="submit">Sign in</button>
+</div>
+
+```
+
+like this composition:
+
+```js
+new UserForm(
+  document.getElementById('user-form'), 
+  new NameInput(document.getElementById('name')),
+  new PasswordInput(document.getElementById('password')),
+  new SubmitButton(document.getElementById('submit'))
+);
+
+```
+Full example [here](https://github.com/Guseyn/page-unit#example).
