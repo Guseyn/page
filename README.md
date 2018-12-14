@@ -22,21 +22,21 @@ First of all you need to download this repository to your local machine. You can
 
 ## Installation Instructions
 
-1. Clone *page-cli*: `git clone https://github.com/Guseyn/page-cli.git`
-2. Go to *page-cli* directory: `cd page-cli`
-3. Install npm dependencies there: `npm install`
-4. Link `page` command: `npm link`
-5. Go to the workspace where you want to create your project: `cd ../<my-projects>`
-6. Create project: `page create`
+1. Clone *page-cli*: **`git clone https://github.com/Guseyn/page-cli.git`**
+2. Go to *page-cli* directory: **`cd page-cli`**
+3. Install npm dependencies there: **`npm install`**
+4. Link `page` command: **`npm link`**
+5. Go to the workspace where you want to create your project: **`cd ../<my-projects>`**
+6. Create project: **`page create`**
 7. Then you'll have to enter some information about your project (`Project name`, `Version`, `Author`, `Description`, `License`), you'll get this repository with changed *package.json* and removed *.git* directory (so you can bind it to your project on github).
-8. Go to your project directory: `cd <projectName>`
-9. Install dependencies: `npm install`
+8. Go to your project directory: **`cd <projectName>`**
+9. Install dependencies: **`npm install`**
 
 ## Update Instructions
 
-1. Go to your project directory: `cd <project_name>`
-2. Update version of framework: `page update`, this command just updates versions of components in your *package.json*
-3. Install new dependencies: `npm install`
+1. Go to your project directory: **`cd <project_name>`**
+2. Update version of framework: **`page update`**, this command just updates versions of components in your *package.json*
+3. Install new dependencies: **`npm install`**
 
 # Project Structure
 
@@ -224,7 +224,7 @@ Every environment property includes `protocol, port, host, clusterMode`. You can
 
 The declaration of this process is in [server/app/build-app.js](https://github.com/Guseyn/page/blob/master/server/app/build-app.js) script. Here we execute [grunt build](https://github.com/Guseyn/page/blob/master/Gruntfile.js) (you can use other build system). After grunt tasks are executed we generate static pages. And that's it, you can also add some other steps in your building process.
 
-For building use command: `page build [evironment]` or `page b [evironment]`. `environment` is one of the following values: `local`, `prod`, `dev`, `stage`, `prod` (`local` is default).
+For building use command: **`page build [evironment]`** or **`page b [evironment]`**. `environment` is one of the following values: `local`, `prod`, `dev`, `stage`, `prod` (`local` is default).
 
 ```js
 // server/app/build-app.js
@@ -294,7 +294,7 @@ const launchedBackend = new Backend(
 
 It's just an example of how it could be built and work. But, of course, you can configure it differently due to your requirements.
 
-For running use command: `page run [evironment]` or `page r [evironment]`. `environment` is one of the following values: `local`, `prod`, `dev`, `stage`, `prod` (`local` is default).
+For running use command: **`page run [evironment]`** or **`page r [evironment]`**. `environment` is one of the following values: `local`, `prod`, `dev`, `stage`, `prod` (`local` is default).
 
 As you can see here, we get some parameters like `post` and `host` from `config.json`. If look at the whole script, you can notice that it's possible to run server in [cluster mode](https://nodejs.org/dist/latest/docs/api/cluster.html).
 
