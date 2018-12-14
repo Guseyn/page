@@ -377,7 +377,7 @@ function transformedAsyncObjects(...asyncObjects) {
   return asyncObject;
 }
 </code></pre>
-        <h2 id="pageajax">page-ajax</h2>
+        <h2 id="pageajaxbasedonpagecutie">page-ajax (based on <em>page-cutie</em>)</h2>
         <p><a href="https://github.com/Guseyn/page-cutie">This library</a> allows you to use ajax in very conviniet way. It works like external request objects in <a href="https://github.com/Guseyn/cutie-http">cutie-http</a> or <a href="https://github.com/Guseyn/cutie-https">cutie-https</a>.</p>
         <h3 id="example">Example</h3>
         <pre><code class="js language-js">new ResponseBody(
@@ -407,7 +407,7 @@ function transformedAsyncObjects(...asyncObjects) {
 );
 </code></pre>
         <p>Full example <a href="https://github.com/Guseyn/page-unit#example">here</a>.</p>
-        <h2 id="pagestaticgenerator">page-static-generator</h2>
+        <h2 id="pagestaticgeneratorbasedoncutie">page-static-generator (based on <em>cutie</em>)</h2>
         <p><a href="https://github.com/Guseyn/page-static-generator">This library</a> is simple tool for generating <em>html</em> pages from different templates combining them.</p>
         <h3 id="example-2">Example</h3>
         <p>We can build <em>html</em> page from these two templates:</p>
@@ -482,6 +482,32 @@ new SavedPage(
 &lt;/html&gt;
 </code></pre>
         <p>You can find more information about usage <a href="https://github.com/Guseyn/page-static-generator#usage">here</a>.</p>
+        <h2 id="pagemd2htmlbasedoncutie">page-md2html (based on <em>cutie</em>)</h2>
+        <p><a href="https://github.com/Guseyn/page-static-generator">This library</a> is simple tool for transforming text from <em>markdown</em> to the <em>html</em>.
+          Based on <a href="https://github.com/showdownjs/showdown">this lib</a>.</p>
+        <h3 id="example-3">Example</h3>
+        <pre><code class="js language-js">new HtmlFromMd(markdownText).call();
+</code></pre>
+        <h2 id="pagedombasedonpagecutie">page-dom (based on <em>page-cutie</em>)</h2>
+        <p><a href="https://github.com/Guseyn/page-dom">This library</a> is set of async objects for creating DOM elements.</p>
+        <h3 id="example-4">Example</h3>
+        <p>This simple example just shows the way of declaration in this lib:</p>
+        <pre><code class="js language-js">new ElementWithAppendedChildren(
+  document.createElement('div'),
+  div('class="div" id="div1"')(
+    h1()(), 
+    a('href="guseyn.com"')(),
+    div('class="div" id="div2"')(
+      img('src="image.png"')(),
+      p('', 'text')()
+    )
+  )
+).call();
+</code></pre>
+        <p><a href="https://github.com/Guseyn/page-dom#async-objects">Here</a> you can find more examples.</p>
+        <h3 id="commonsense">common sense</h3>
+        <p>I don't think that it makes sense to wrap every static function in browser js with objects. In my opinion, it's overhead. It's better to use <a href="https://github.com/Guseyn/page-unit">page-unit</a> with procedural code in events(like in <code>onclick</code> methods). Actually, procedural code is clear, if amount of it is not big. Probably some <em>heavy</em> stuff will be written in OOP style in other libs for <em>Page</em>, but for simple things it's better use good old procedural js. </p>
+        <p>However, this example is not the case, obviously. I think that creating element in DOM in declarative style is much better than the same code in procedural style.</p>
       </div>
       <button id="button">
         click
