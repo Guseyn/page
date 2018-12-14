@@ -4,6 +4,22 @@
 
 In another words, **Page** is just an example of how you can build your application using libraries that are based on [Cutie](https://github.com/Guseyn/cutie).
 
+# Contents
+
+- [Basic Concepts](#basic-concepts)
+- [How to Start (page-cli)](#how-to-start-page-cli)
+- [Project Structure](#project-structure)
+- [Building Process](#building-process)
+- [Running Process](#running-process)
+- [List Of Libraries For Page](#list-of-libraries-for-page)
+  - [page-cutie](#page-cutie)
+  - [page-ajax-based-on-page-cutie](#page-ajax-based-on-page-cutie)
+  - [page-unit](#page-unit)
+  - [page-static-generator](#page-static-generator-based-on-cutie)
+  - [page-md2html](#page-md2html-based-on-cutie)
+- [Build System](#build-system)
+- [Future plans](#future-plans)
+
 # Basic Concepts
 
 1. **Page Is Not a Framework.** Almost every framework is made with assumption that we live in ideal world, but it's very far from the truth. It's not possible to build something big and stable using *magic*, which every framework is based on. That's why **Page** is not a framework, it allows you to control the whole behaviour of your application and apply new changes in a explicit way.
@@ -16,7 +32,7 @@ In another words, **Page** is just an example of how you can build your applicat
 
 5. **Small Core.** **Page** is almost based on little pieces from different libraries that can be easily combined with each other for building appication. It makes **Page** lightweight and easily extensible. 
 
-# How to Start (page-cli)
+# How To Start (page-cli)
 
 First of all you need to download this repository to your local machine. You can do it via github or **page-cli**. We suggest you to use the last option, because it also makes building and running of your application much easier.
 
@@ -220,7 +236,7 @@ Every environment property includes `protocol, port, host, clusterMode`. You can
 
 ```
 
-# Building process
+# Building Process
 
 The declaration of this process is in [server/app/build-app.js](https://github.com/Guseyn/page/blob/master/server/app/build-app.js) script. Here we execute [grunt build](https://github.com/Guseyn/page/blob/master/Gruntfile.js) (you can use other build system). After grunt tasks are executed we generate static pages. And that's it, you can also add some other steps in your building process.
 
@@ -260,7 +276,7 @@ new ParsedJSON(
 
 So, here building process just generates static pages and minified bundle js file as it's shown [here]((https://github.com/Guseyn/page/blob/master/Gruntfile.js)).
 
-# Running process
+# Running Process
 
 The declaration of this process is in [server/app/run-app.js](https://github.com/Guseyn/page/blob/master/server/app/run-app.js) script.
 
@@ -298,7 +314,7 @@ For running use command: **`page run [evironment]`** or **`page r [evironment]`*
 
 As you can see here, we get some parameters like `post` and `host` from `config.json`. If look at the whole script, you can notice that it's possible to run server in [cluster mode](https://nodejs.org/dist/latest/docs/api/cluster.html).
 
-## The whole declaration
+## The Whole Declaration
 
 I believe that the declarative code below is self-explainable, but you can anyway [submit an issue](https://github.com/Guseyn/page/issues), if something is not clear. However, it requires some knowledge in such modules like: [cutie](https://github.com/Guseyn/cutie), [cutie-if-else](https://github.com/Guseyn/cutie-if-else), [cutie-cluster](https://github.com/Guseyn/cutie-cluster), [cutie-json](https://github.com/Guseyn/cutie-json), [cutie-rest](https://github.com/Guseyn/cutie-rest), [cutie-fs](https://github.com/Guseyn/cutie-fs).
 
@@ -411,7 +427,7 @@ As you can see it's easily configurable code, so you can add and remove componen
 
 In few words, running process here runs server with REST API (in cluster mode by default) and adds [fs watchers](https://nodejs.org/dist/latest/docs/api/fs.html#fs_fs_watch_filename_options_listener) on `pages`, `static`, `templates` directories(in `local` and `dev` environments). Also in cluster mode failed processes restart automatically.
 
-# List of libraries for Page
+# List of Libraries For Page
 
 All these libraries are available on **npm** under `@page-libs` scope.
 
@@ -616,13 +632,13 @@ new ElementWithAppendedChildren(
 
 [Here](https://github.com/Guseyn/page-dom#async-objects) you can find more examples.
 
-### common sense
+### Common Sense
 
 I don't think that it makes sense to wrap every static function in browser js with objects. In my opinion, it's overhead. It's better to use [page-unit](https://github.com/Guseyn/page-unit) with procedural code in events(like in `onclick` methods). Actually, procedural code is clear, if amount of it is not big. Probably some *heavy* stuff will be written in OOP style in other libs for *Page*, but for simple things it's better use good old procedural js. 
 
 However, this example is not the case, obviously. I think that creating element in DOM in declarative style is much better than the same code in procedural style.
 
-## Build system
+# Build System
 
 **Page** uses [grunt](https://gruntjs.com/). If you look at [Gruntfile.js](https://github.com/Guseyn/page/blob/master/Gruntfile.js), you'll see 3 tasks: `babel`, `browserify`, `uglify`.
 
@@ -638,11 +654,11 @@ We need this step because browsers don't understand `require()`. Using browserif
 
 It just minifies `static\js\bundle.js` into `static\js\bundle.min.js`.
 
-## It's your choice
+## It's Your Choice
 
 Obviously, you can choose any other build system for your browser js code you want. It's just an example of how it could be.
 
-## Future plans
+# Future plans
 
 Probably having following libraries would be useful:
 
