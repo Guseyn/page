@@ -41,7 +41,7 @@ First of all you need to download this repository to your local machine. You can
 # Project Structure
 
 ```bash
-├── projectName
+├── ProjectName
 │   ├── pages
 │   │   ├── **/*.js
 │   ├── server
@@ -641,3 +641,15 @@ It just minifies `static\js\bundle.js` into `static\js\bundle.min.js`.
 ## It's your choice
 
 Obviously, you can choose any other build system for your browser js code you want. It's just an example of how it could be.
+
+## Future plans
+
+Probably having following libraries would be useful:
+
+1. **page-youtube** (inserts youtube videos(iframes) into web-page when user clicks on corresponding thumbnails)
+2. **page-google-oauth2**
+3. **page-jwt-token**
+4. **page-mobile-web-transformer**
+5. **page-templates**
+
+and so on.
