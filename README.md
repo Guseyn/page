@@ -621,3 +621,23 @@ new ElementWithAppendedChildren(
 I don't think that it makes sense to wrap every static function in browser js with objects. In my opinion, it's overhead. It's better to use [page-unit](https://github.com/Guseyn/page-unit) with procedural code in events(like in `onclick` methods). Actually, procedural code is clear, if amount of it is not big. Probably some *heavy* stuff will be written in OOP style in other libs for *Page*, but for simple things it's better use good old procedural js. 
 
 However, this example is not the case, obviously. I think that creating element in DOM in declarative style is much better than the same code in procedural style.
+
+## Build system
+
+**Page** uses [grunt](https://gruntjs.com/). If you look at [Gruntfile.js](https://github.com/Guseyn/page/blob/master/Gruntfile.js), you'll see 3 tasks: `babel`, `browserify`, `uglify`.
+
+## `babel`
+
+We recommend to write code in `es6` style and keep your code in `static/js/es6`. Babel takes this code, convert it into JavaScript that browsers can understand and put it in `static/js/out`.
+
+## `browserify`
+
+We need this step because browsers don't understand `require()`. Using browserify we make module system work in browser, so use also can use `node_modules` in your project. It generates `static\js\bundle.js`.
+
+## `uglify`
+
+It just minifies `static\js\bundle.js` into `static\js\bundle.min.js`.
+
+## It's your choice
+
+Obviously, you can choose any other build system for your browser js code you want. It's just an example of how it could be.
