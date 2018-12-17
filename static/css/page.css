@@ -8,27 +8,10 @@
   font-family: Arial, Verdana, sans-serif;
 }
 
-.logo {
-  width: 154px;
-  height: 41px;
-}
-
-.version {
-  width: 100%;
-  font-size: 14px;
-  padding: 2px;
-}
-
-.slogan {
-  width: 100%;
-  font-size: 20px;
-  border-bottom: 1px solid deepskyblue;
-}
-
-.readme {
-  text-align: left;
-  font-size: 15px;
-  padding: 7px;
+.github-logo {
+  width: 35px;
+  height: 35px;
+  margin-top: 20px; 
 }
 
 button {

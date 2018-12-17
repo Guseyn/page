@@ -30,19 +30,7 @@ new ParsedJSON(
         ),
         new Body(
           'class="main"',
-          new TemplateWithParams(
-            new Template('./templates/page.html'),
-            new HtmlFromMd(
-              new StringFromBuffer(
-                new ResponseBody(
-                  new ResponseFromHttpsGetRequest({
-                    hostname: 'raw.githubusercontent.com',
-                    path: '/Guseyn/page/master/README.md'
-                  })
-                )
-              )
-            )
-          )
+          new Template('./templates/page.html')
         )
       )
     )
