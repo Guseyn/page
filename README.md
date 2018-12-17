@@ -274,7 +274,7 @@ new ParsedJSON(
 
 ```
 
-So, here building process just generates static pages and minified bundle js file as it's shown [here]((https://github.com/Guseyn/page/blob/master/Gruntfile.js)).
+So, here building process just generates static pages and minified bundle js file as it's shown [here](https://github.com/Guseyn/page/blob/master/Gruntfile.js).
 
 # Running Process
 
