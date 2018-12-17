@@ -32,13 +32,6 @@ new ParsedJSON(
           'class="main"',
           new TemplateWithParams(
             new Template('./templates/page.html'),
-            new Value(
-              as('config'), 'page.logoImageSrc'
-            ),
-            new Value(
-              as('config'), 'page.version'
-            ),
-            'The framework you can trust',
             new HtmlFromMd(
               new StringFromBuffer(
                 new ResponseBody(

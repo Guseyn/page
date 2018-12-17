@@ -10,17 +10,26 @@
 
   <body class="main">
     <div class="page" id="page">
-      <image src="/../image/logo.png" class="logo" />
-      <div class="version">
-        v1.0.0
-      </div>
-      <div class="slogan">
-        The framework you can trust
-      </div>
       <div class="readme">
-        <h1 id="page">Page</h1>
+        <p><img src="https://github.com/Guseyn/logos/blob/master/page.svg"></p>
         <p><strong>Page</strong> can be described as a base for any applications on top of it with server and client on Node.js. It provides a lot of features and common scenarios for using web. It's completely based on the <a href="https://github.com/Guseyn/async-tree-patern/blob/master/Async_Tree_Patern.pdf">Async Tree Pattern</a> that allows you to customize <strong>Page</strong> in any way you want, you can even throw it away and build other base core for your application.</p>
         <p>In another words, <strong>Page</strong> is just an example of how you can build your application using libraries that are based on <a href="https://github.com/Guseyn/cutie">Cutie</a>.</p>
+        <h1 id="contents">Contents</h1>
+        <ul>
+          <li><a href="#basic-concepts">Basic Concepts</a></li>
+          <li><a href="#how-to-start-page-cli">How to Start (page-cli)</a></li>
+          <li><a href="#project-structure">Project Structure</a></li>
+          <li><a href="#building-process">Building Process</a></li>
+          <li><a href="#running-process">Running Process</a></li>
+          <li><a href="#list-of-libraries-for-page">List Of Libraries For Page</a></li>
+          <li><a href="#page-cutie">page-cutie</a></li>
+          <li><a href="#page-ajax-based-on-page-cutie">page-ajax-based-on-page-cutie</a></li>
+          <li><a href="#page-unit">page-unit</a></li>
+          <li><a href="#page-static-generator-based-on-cutie">page-static-generator</a></li>
+          <li><a href="#page-md2html-based-on-cutie">page-md2html</a></li>
+          <li><a href="#build-system">Build System</a></li>
+          <li><a href="#future-plans">Future plans</a></li>
+        </ul>
         <h1 id="basicconcepts">Basic Concepts</h1>
         <ol>
           <li>
@@ -39,28 +48,28 @@
             <p><strong>Small Core.</strong> <strong>Page</strong> is almost based on little pieces from different libraries that can be easily combined with each other for building appication. It makes <strong>Page</strong> lightweight and easily extensible. </p>
           </li>
         </ol>
-        <h1 id="howtostartpagecli">How to Start (page-cli)</h1>
+        <h1 id="howtostartpagecli">How To Start (page-cli)</h1>
         <p>First of all you need to download this repository to your local machine. You can do it via github or <strong>page-cli</strong>. We suggest you to use the last option, because it also makes building and running of your application much easier.</p>
         <h2 id="installationinstructions">Installation Instructions</h2>
         <ol>
-          <li>Clone <em>page-cli</em>: <code>git clone https://github.com/Guseyn/page-cli.git</code></li>
-          <li>Go to <em>page-cli</em> directory: <code>cd page-cli</code></li>
-          <li>Install npm dependencies there: <code>npm install</code></li>
-          <li>Link <code>page</code> command: <code>npm link</code></li>
-          <li>Go to the workspace where you want to create your project: <code>cd ../&lt;my-projects&gt;</code></li>
-          <li>Create project: <code>page create</code></li>
+          <li>Clone <em>page-cli</em>: <strong><code>git clone https://github.com/Guseyn/page-cli.git</code></strong></li>
+          <li>Go to <em>page-cli</em> directory: <strong><code>cd page-cli</code></strong></li>
+          <li>Install npm dependencies there: <strong><code>npm install</code></strong></li>
+          <li>Link <code>page</code> command: <strong><code>npm link</code></strong></li>
+          <li>Go to the workspace where you want to create your project: <strong><code>cd ../&lt;my-projects&gt;</code></strong></li>
+          <li>Create project: <strong><code>page create</code></strong></li>
           <li>Then you'll have to enter some information about your project (<code>Project name</code>, <code>Version</code>, <code>Author</code>, <code>Description</code>, <code>License</code>), you'll get this repository with changed <em>package.json</em> and removed <em>.git</em> directory (so you can bind it to your project on github).</li>
-          <li>Go to your project directory: <code>cd &lt;projectName&gt;</code></li>
-          <li>Install dependencies: <code>npm install</code></li>
+          <li>Go to your project directory: <strong><code>cd &lt;projectName&gt;</code></strong></li>
+          <li>Install dependencies: <strong><code>npm install</code></strong></li>
         </ol>
         <h2 id="updateinstructions">Update Instructions</h2>
         <ol>
-          <li>Go to your project directory: <code>cd &lt;project_name&gt;</code></li>
-          <li>Update version of framework: <code>page update</code>, this command just updates versions of components in your <em>package.json</em></li>
-          <li>Install new dependencies: <code>npm install</code></li>
+          <li>Go to your project directory: <strong><code>cd &lt;project_name&gt;</code></strong></li>
+          <li>Update version of framework: <strong><code>page update</code></strong>, this command just updates versions of components in your <em>package.json</em></li>
+          <li>Install new dependencies: <strong><code>npm install</code></strong></li>
         </ol>
         <h1 id="projectstructure">Project Structure</h1>
-        <pre><code class="bash language-bash">├── projectName
+        <pre><code class="bash language-bash">├── ProjectName
 │   ├── pages
 │   │   ├── **/*.js
 │   ├── server
@@ -128,7 +137,7 @@ new ParsedJSON(
 ).call();
 </code></pre>
         <h3 id="propertiesinconfigjson">Properties in <code>config.json</code></h3>
-        <h4 id="page-1">page</h4>
+        <h4 id="page">page</h4>
         <pre><code class="json language-json">"page": {
   "version": "1.0.0",
   "logoText": "./static/txt/logo.txt",
@@ -192,9 +201,9 @@ new ParsedJSON(
   "clusterMode": true
 }
 </code></pre>
-        <h1 id="buildingprocess">Building process</h1>
+        <h1 id="buildingprocess">Building Process</h1>
         <p>The declaration of this process is in <a href="https://github.com/Guseyn/page/blob/master/server/app/build-app.js">server/app/build-app.js</a> script. Here we execute <a href="https://github.com/Guseyn/page/blob/master/Gruntfile.js">grunt build</a> (you can use other build system). After grunt tasks are executed we generate static pages. And that's it, you can also add some other steps in your building process.</p>
-        <p>For building use command: <code>page build [evironment]</code> or <code>page b [evironment]</code>. <code>environment</code> is one of the following values: <code>local</code>, <code>prod</code>, <code>dev</code>, <code>stage</code>, <code>prod</code> (<code>local</code> is default).</p>
+        <p>For building use command: <strong><code>page build [evironment]</code></strong> or <strong><code>page b [evironment]</code></strong>. <code>environment</code> is one of the following values: <code>local</code>, <code>prod</code>, <code>dev</code>, <code>stage</code>, <code>prod</code> (<code>local</code> is default).</p>
         <pre><code class="js language-js">// server/app/build-app.js
 
 const { as } = require('@cuties/cutie');
@@ -225,7 +234,7 @@ new ParsedJSON(
 ).call();
 </code></pre>
         <p>So, here building process just generates static pages and minified bundle js file as it's shown <a href="(https://github.com/Guseyn/page/blob/master/Gruntfile.js">here</a>).</p>
-        <h1 id="runningprocess">Running process</h1>
+        <h1 id="runningprocess">Running Process</h1>
         <p>The declaration of this process is in <a href="https://github.com/Guseyn/page/blob/master/server/app/run-app.js">server/app/run-app.js</a> script.</p>
         <h2 id="backendserver">Backend (server)</h2>
         <p>For building backend server with REST API we use here <a href="https://github.com/Guseyn/cutie-rest">cutie-rest</a>:</p>
@@ -251,9 +260,9 @@ new ParsedJSON(
 );
 </code></pre>
         <p>It's just an example of how it could be built and work. But, of course, you can configure it differently due to your requirements.</p>
-        <p>For running use command: <code>page run [evironment]</code> or <code>page r [evironment]</code>. <code>environment</code> is one of the following values: <code>local</code>, <code>prod</code>, <code>dev</code>, <code>stage</code>, <code>prod</code> (<code>local</code> is default).</p>
+        <p>For running use command: <strong><code>page run [evironment]</code></strong> or <strong><code>page r [evironment]</code></strong>. <code>environment</code> is one of the following values: <code>local</code>, <code>prod</code>, <code>dev</code>, <code>stage</code>, <code>prod</code> (<code>local</code> is default).</p>
         <p>As you can see here, we get some parameters like <code>post</code> and <code>host</code> from <code>config.json</code>. If look at the whole script, you can notice that it's possible to run server in <a href="https://nodejs.org/dist/latest/docs/api/cluster.html">cluster mode</a>.</p>
-        <h2 id="thewholedeclaration">The whole declaration</h2>
+        <h2 id="thewholedeclaration">The Whole Declaration</h2>
         <p>I believe that the declarative code below is self-explainable, but you can anyway <a href="https://github.com/Guseyn/page/issues">submit an issue</a>, if something is not clear. However, it requires some knowledge in such modules like: <a href="https://github.com/Guseyn/cutie">cutie</a>, <a href="https://github.com/Guseyn/cutie-if-else">cutie-if-else</a>, <a href="https://github.com/Guseyn/cutie-cluster">cutie-cluster</a>, <a href="https://github.com/Guseyn/cutie-json">cutie-json</a>, <a href="https://github.com/Guseyn/cutie-rest">cutie-rest</a>, <a href="https://github.com/Guseyn/cutie-fs">cutie-fs</a>.</p>
         <pre><code class="js language-js">const cluster = require('cluster');
 const { as } = require('@cuties/cutie');
@@ -359,7 +368,7 @@ new ParsedJSON(
 </code></pre>
         <p>As you can see it's easily configurable code, so you can add and remove components due to your requirements.</p>
         <p>In few words, running process here runs server with REST API (in cluster mode by default) and adds <a href="https://nodejs.org/dist/latest/docs/api/fs.html#fs_fs_watch_filename_options_listener">fs watchers</a> on <code>pages</code>, <code>static</code>, <code>templates</code> directories(in <code>local</code> and <code>dev</code> environments). Also in cluster mode failed processes restart automatically.</p>
-        <h1 id="listoflibrariesforpage">List of libraries for Page</h1>
+        <h1 id="listoflibrariesforpage">List of Libraries For Page</h1>
         <p>All these libraries are available on <strong>npm</strong> under <code>@page-libs</code> scope.</p>
         <h2 id="pagecutie">page-cutie</h2>
         <p><a href="https://github.com/Guseyn/page-cutie">This library</a> is analogue of <a href="https://github.com/Guseyn/cutie">cutie</a> for using <a href="https://github.com/Guseyn/async-tree-patern/blob/master/Async_Tree_Patern.pdf">Async Tree Pattern</a> in browser.</p>
@@ -505,13 +514,30 @@ new SavedPage(
 ).call();
 </code></pre>
         <p><a href="https://github.com/Guseyn/page-dom#async-objects">Here</a> you can find more examples.</p>
-        <h3 id="commonsense">common sense</h3>
+        <h3 id="commonsense">Common Sense</h3>
         <p>I don't think that it makes sense to wrap every static function in browser js with objects. In my opinion, it's overhead. It's better to use <a href="https://github.com/Guseyn/page-unit">page-unit</a> with procedural code in events(like in <code>onclick</code> methods). Actually, procedural code is clear, if amount of it is not big. Probably some <em>heavy</em> stuff will be written in OOP style in other libs for <em>Page</em>, but for simple things it's better use good old procedural js. </p>
         <p>However, this example is not the case, obviously. I think that creating element in DOM in declarative style is much better than the same code in procedural style.</p>
+        <h1 id="buildsystem">Build System</h1>
+        <p><strong>Page</strong> uses <a href="https://gruntjs.com/">grunt</a>. If you look at <a href="https://github.com/Guseyn/page/blob/master/Gruntfile.js">Gruntfile.js</a>, you'll see 3 tasks: <code>babel</code>, <code>browserify</code>, <code>uglify</code>.</p>
+        <h2 id="babel"><code>babel</code></h2>
+        <p>We recommend to write code in <code>es6</code> style and keep your code in <code>static/js/es6</code>. Babel takes this code, convert it into JavaScript that browsers can understand and put it in <code>static/js/out</code>.</p>
+        <h2 id="browserify"><code>browserify</code></h2>
+        <p>We need this step because browsers don't understand <code>require()</code>. Using browserify we make module system work in browser, so use also can use <code>node_modules</code> in your project. It generates <code>static\js\bundle.js</code>.</p>
+        <h2 id="uglify"><code>uglify</code></h2>
+        <p>It just minifies <code>static\js\bundle.js</code> into <code>static\js\bundle.min.js</code>.</p>
+        <h2 id="itsyourchoice">It's Your Choice</h2>
+        <p>Obviously, you can choose any other build system for your browser js code you want. It's just an example of how it could be.</p>
+        <h1 id="futureplans">Future plans</h1>
+        <p>Probably having following libraries would be useful:</p>
+        <ol>
+          <li><strong>page-youtube</strong> (inserts youtube videos(iframes) into web-page when user clicks on corresponding thumbnails)</li>
+          <li><strong>page-google-oauth2</strong></li>
+          <li><strong>page-jwt-token</strong></li>
+          <li><strong>page-mobile-web-transformer</strong></li>
+          <li><strong>page-templates</strong></li>
+        </ol>
+        <p>and so on.</p>
       </div>
-      <button id="button">
-        click
-      </button>
     </div>
   </body>
 
