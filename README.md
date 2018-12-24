@@ -51,7 +51,7 @@ First of all you need to download this repository to your local machine. You can
 2. Update version of framework: **`page update`**, this command just updates versions of components in your *package.json*
 3. Install new dependencies: **`npm install`**
 
-## Test instructions
+## Test Instructions
 
 1. Go to your project directory: **`cd <project_name>`**
 2. Run tests: **`page test`** (it runs **`npm test`**)
