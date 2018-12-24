@@ -7,7 +7,7 @@
     "example": "example"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node test-executor",
     "build-local": "NODE_ENV=local node server/app/build-app",
     "build-dev": "NODE_ENV=dev node server/app/build-app",
     "build-test": "NODE_ENV=test node server/app/build-app",
@@ -30,12 +30,14 @@
   },
   "homepage": "https://github.com/Guseyn/page#readme",
   "dependencies": {
+    "@cuties/assert": "^1.1.5",
     "@cuties/buffer": "^1.1.1",
     "@cuties/cluster": "^1.0.3",
     "@cuties/cutie": "^1.4.4",
     "@cuties/fs": "^1.1.4",
     "@cuties/https": "^1.0.2",
     "@cuties/if-else": "^1.0.5",
+    "@cuties/is": "^1.0.8",
     "@cuties/json": "1.0.0",
     "@cuties/path": "^1.0.3",
     "@cuties/rest": "^1.1.12",
@@ -45,7 +47,8 @@
     "@page-libs/dom": "^1.0.2",
     "@page-libs/md2html": "^1.0.2",
     "@page-libs/static-generator": "^1.0.2",
-    "@page-libs/unit": "^1.0.2"
+    "@page-libs/unit": "^1.0.2",
+    "test-executor": "^1.1.3"
   },
   "devDependencies": {
     "@babel/core": "^7.1.2",
