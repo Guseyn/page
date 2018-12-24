@@ -1,25 +1,25 @@
 'use strict'
 
-const cluster = require('cluster');
-const { as } = require('@cuties/cutie');
-const { If, Else } = require('@cuties/if-else');
-const { IsMaster, ClusterWithForkedWorkers, ClusterWithExitEvent } = require('@cuties/cluster');
-const { ParsedJSON, Value } = require('@cuties/json');
-const { Backend, RestApi, CreatedServingFilesMethod, CreatedCachedServingFilesMethod } = require('@cuties/rest');
-const { ReadDataByPath, WatcherWithEventTypeAndFilenameListener } = require('@cuties/fs');
-const CustomNotFoundMethod = require('./../CustomNotFoundMethod');
-const CustomInternalServerErrorMethod = require('./../CustomInternalServerErrorMethod');
-const CreatedCustomIndexMethod = require('./../CreatedCustomIndexMethod');
-const OnPageStaticJsFilesChangeEvent = require('./../OnPageStaticJsFilesChangeEvent');
-const OnStaticGeneratorsChangeEvent = require('./../OnStaticGeneratorsChangeEvent');
-const OnTemplatesChangeEvent = require('./../OnTemplatesChangeEvent');
-const ReloadedBackendOnFailedWorkerEvent = require('./../ReloadedBackendOnFailedWorkerEvent');
-const UrlToFSPathMapper = require('./../UrlToFSPathMapper');
-const PrintedToConsolePageLogo = require('./../PrintedToConsolePageLogo');
+const cluster = require('cluster')
+const { as } = require('@cuties/cutie')
+const { If, Else } = require('@cuties/if-else')
+const { IsMaster, ClusterWithForkedWorkers, ClusterWithExitEvent } = require('@cuties/cluster')
+const { ParsedJSON, Value } = require('@cuties/json')
+const { Backend, RestApi, CreatedServingFilesMethod } = require('@cuties/rest')
+const { ReadDataByPath, WatcherWithEventTypeAndFilenameListener } = require('@cuties/fs')
+const CustomNotFoundMethod = require('./../CustomNotFoundMethod')
+const CustomInternalServerErrorMethod = require('./../CustomInternalServerErrorMethod')
+const CreatedCustomIndexMethod = require('./../CreatedCustomIndexMethod')
+const OnPageStaticJsFilesChangeEvent = require('./../OnPageStaticJsFilesChangeEvent')
+const OnStaticGeneratorsChangeEvent = require('./../OnStaticGeneratorsChangeEvent')
+const OnTemplatesChangeEvent = require('./../OnTemplatesChangeEvent')
+const ReloadedBackendOnFailedWorkerEvent = require('./../ReloadedBackendOnFailedWorkerEvent')
+const UrlToFSPathMapper = require('./../UrlToFSPathMapper')
+const PrintedToConsolePageLogo = require('./../PrintedToConsolePageLogo')
 
-const numCPUs = require('os').cpus().length;
-const env = process.env.NODE_ENV || 'local';
-const dev_env = env === 'local' || env === 'dev';
+const numCPUs = require('os').cpus().length
+const env = process.env.NODE_ENV || 'local'
+const devEnv = env === 'local' || env === 'dev'
 
 const launchedBackend = new Backend(
   new Value(as('config'), `${env}.protocol`),
@@ -40,7 +40,7 @@ const launchedBackend = new Backend(
     new CustomNotFoundMethod(new RegExp(/^\/not-found/)),
     new CustomInternalServerErrorMethod()
   )
-);
+)
 
 new ParsedJSON(
   new ReadDataByPath('./config.json')
@@ -55,7 +55,7 @@ new ParsedJSON(
       `RUN (${env})`
     ).after(
       new If(
-        dev_env,
+        devEnv,
         new WatcherWithEventTypeAndFilenameListener(
           new Value(as('config'), 'staticGenerators'),
           { persistent: true, recursive: true, encoding: 'utf8' },
@@ -75,7 +75,7 @@ new ParsedJSON(
               { persistent: true, recursive: true, encoding: 'utf8' },
               new OnPageStaticJsFilesChangeEvent(
                 new Value(as('config'), 'staticJs'),
-                new Value(as('config'),'bundleJs')
+                new Value(as('config'), 'bundleJs')
               )
             )
           )
@@ -99,4 +99,4 @@ new ParsedJSON(
       launchedBackend
     )
   )
-).call();
+).call()

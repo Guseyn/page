@@ -1,16 +1,15 @@
 'use strict'
 
-const { AsyncObject } = require('@cuties/cutie');
-const { ExecutedScripts } = require('@cuties/scripts');
-const { JoinedPaths } = require('@cuties/path');
+const { AsyncObject } = require('@cuties/cutie')
+const { ExecutedScripts } = require('@cuties/scripts')
+const { JoinedPaths } = require('@cuties/path')
 
 class OnStaticGeneratorsChangeEvent extends AsyncObject {
-
-  constructor(staticGeneratorsDirectoryPath) {
-    super(staticGeneratorsDirectoryPath);
+  constructor (staticGeneratorsDirectoryPath) {
+    super(staticGeneratorsDirectoryPath)
   }
 
-  definedSyncCall() {
+  definedSyncCall () {
     return (staticGeneratorsDirectoryPath) => {
       return (eventType, fileName) => {
         if (eventType === 'change') {
@@ -18,12 +17,11 @@ class OnStaticGeneratorsChangeEvent extends AsyncObject {
             new JoinedPaths(
               staticGeneratorsDirectoryPath, fileName
             )
-          ).call();
+          ).call()
         }
       }
     }
   }
-
 }
 
-module.exports = OnStaticGeneratorsChangeEvent;
+module.exports = OnStaticGeneratorsChangeEvent

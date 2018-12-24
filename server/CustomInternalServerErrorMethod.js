@@ -1,19 +1,15 @@
 'use strict'
 
-const {
-  InternalServerErrorMethod
-} = require('@cuties/rest');
+const { InternalServerErrorMethod } = require('@cuties/rest')
 
 class CustomInternalServerErrorMethod extends InternalServerErrorMethod {
-
-  constructor() {
-    super();
-  }
-  
-  invoke(request, response, error) {
-    super.invoke(request, response, error);
+  constructor () {
+    super()
   }
 
+  invoke (request, response, error) {
+    super.invoke(request, response, error)
+  }
 }
 
-module.exports = CustomInternalServerErrorMethod;
+module.exports = CustomInternalServerErrorMethod
