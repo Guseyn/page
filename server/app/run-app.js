@@ -16,8 +16,7 @@ const OnTemplatesChangeEvent = require('./../OnTemplatesChangeEvent');
 const ReloadedBackendOnFailedWorkerEvent = require('./../ReloadedBackendOnFailedWorkerEvent');
 const UrlToFSPathMapper = require('./../UrlToFSPathMapper');
 const PrintedToConsolePageLogo = require('./../PrintedToConsolePageLogo');
-const notFoundMethod = new CustomNotFoundMethod(new RegExp(/^\/not-found/));
-const internalServerErrorMethod = new CustomInternalServerErrorMethod();
+
 const numCPUs = require('os').cpus().length;
 const env = process.env.NODE_ENV || 'local';
 const dev_env = env === 'local' || env === 'dev';
@@ -29,17 +28,17 @@ const launchedBackend = new Backend(
   new RestApi(
     new CreatedCustomIndexMethod(
       new Value(as('config'), 'index'),
-      notFoundMethod
+      new CustomNotFoundMethod(new RegExp(/^\/not-found/))
     ),
     new CreatedServingFilesMethod(
       new RegExp(/^\/(css|html|image|js|txt)/),
       new UrlToFSPathMapper(
         new Value(as('config'), 'static')
       ),
-      notFoundMethod
+      new CustomNotFoundMethod(new RegExp(/^\/not-found/))
     ),
-    notFoundMethod,
-    internalServerErrorMethod
+    new CustomNotFoundMethod(new RegExp(/^\/not-found/)),
+    new CustomInternalServerErrorMethod()
   )
 );
 
