@@ -38,10 +38,7 @@ First of all you need to download this repository to your local machine. You can
 
 ## Installation Instructions
 
-1. Clone *page-cli*: **`git clone https://github.com/Guseyn/page-cli.git`**
-2. Go to *page-cli* directory: **`cd page-cli`**
-3. Install npm dependencies there: **`npm install`**
-4. Link `page` command: **`npm link`**
+1. Install *page-cli*: **`npm install @page-libs/cli -g`**
 5. Go to the workspace where you want to create your project: **`cd ../<my-projects>`**
 6. Create project: **`page create`**
 7. Then you'll have to enter some information about your project (`Project name`, `Version`, `Author`, `Description`, `License`), you'll get this repository with changed *package.json* and removed *.git* directory (so you can bind it to your project on github).
@@ -53,6 +50,11 @@ First of all you need to download this repository to your local machine. You can
 1. Go to your project directory: **`cd <project_name>`**
 2. Update version of framework: **`page update`**, this command just updates versions of components in your *package.json*
 3. Install new dependencies: **`npm install`**
+
+## Test instructions
+
+1. Go to your project directory: **`cd <project_name>`**
+2. Run tests: **`page test`** (it runs **`npm test`**)
 
 # Project Structure
 
