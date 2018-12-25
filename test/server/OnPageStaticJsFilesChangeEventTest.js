@@ -1,11 +1,11 @@
 'use strict'
 
 const { AsyncObject } = require('@cuties/cutie')
-const OnStaticGeneratorsChangeEvent = require('./../../server/OnStaticGeneratorsChangeEvent')
+const OnPageStaticJsFilesChangeEvent = require('./../../server/OnPageStaticJsFilesChangeEvent')
 const { Assertion } = require('@cuties/assert')
 const { Is } = require('@cuties/is')
 
-class InvokedOnStaticGeneratorsChangeEvent extends AsyncObject {
+class InvokedOnPageStaticJsFilesChangeEvent extends AsyncObject {
   constructor (event, eventType, fileName) {
     super(event, eventType, fileName)
   }
@@ -20,24 +20,24 @@ class InvokedOnStaticGeneratorsChangeEvent extends AsyncObject {
 
 new Assertion(
   new Is(
-    new OnStaticGeneratorsChangeEvent('./test/files'),
+    new OnPageStaticJsFilesChangeEvent('dir', 'file'),
     Function
   )
 ).after(
   new Assertion(
     new Is(
-      new InvokedOnStaticGeneratorsChangeEvent(
-        new OnStaticGeneratorsChangeEvent('./test/files'),
-        'change', 'index.html'
+      new InvokedOnPageStaticJsFilesChangeEvent(
+        new OnPageStaticJsFilesChangeEvent('dir', 'file'),
+        'change', 'file'
       ),
       Function
     )
   ).after(
     new Assertion(
       new Is(
-        new InvokedOnStaticGeneratorsChangeEvent(
-          new OnStaticGeneratorsChangeEvent('./test/files'),
-          'create', 'index.html'
+        new InvokedOnPageStaticJsFilesChangeEvent(
+          new OnPageStaticJsFilesChangeEvent('dir', 'file'),
+          'create', 'file'
         ),
         Function
       )

@@ -5,7 +5,7 @@ const { ParsedJSON, Value } = require('@cuties/json')
 const { ExecutedScripts } = require('@cuties/scripts')
 const { ReadDataByPath } = require('@cuties/fs')
 const PrintedToConsolePageLogo = require('./../PrintedToConsolePageLogo')
-const { ExecutedLint, ConfiguredTestCoverage, ExecutedTestCoverage, ExecutedTestCoverageCheck, ExecutedTestCoverageReport } = require('@cuties/wall')
+const { ExecutedLint, ExecutedTestCoverage, ExecutedTestCoverageCheck } = require('@cuties/wall')
 const ExecutedGruntBuild = require('./../ExecutedGruntBuild')
 const env = process.env.NODE_ENV || 'local'
 
@@ -23,14 +23,8 @@ new ParsedJSON(
       new ExecutedLint(process, './static/js/es6').after(
         new ExecutedLint(process, './test').after(
           new ExecutedTestCoverageCheck(
-            new ExecutedTestCoverageReport(
-              new ExecutedTestCoverage(
-                new ConfiguredTestCoverage(
-                  process, { 'lines': 100, 'functions': 100, 'branches': 100 }
-                ),
-                './test-executor.js'
-              )
-            )
+            new ExecutedTestCoverage(process, './test-executor.js'),
+            { 'lines': 100, 'functions': 100, 'branches': 100 }
           ).after(
             new ExecutedGruntBuild(process).after(
               new ExecutedScripts(
