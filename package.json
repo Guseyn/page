@@ -42,7 +42,7 @@
     "@cuties/path": "^1.0.3",
     "@cuties/rest": "^1.1.12",
     "@cuties/scripts": "^1.0.4",
-    "@cuties/wall": "^1.0.2",
+    "@cuties/wall": "^1.0.3",
     "@page-libs/ajax": "^1.0.5",
     "@page-libs/cutie": "^1.0.3",
     "@page-libs/dom": "^1.0.2",
