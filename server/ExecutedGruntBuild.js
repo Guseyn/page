@@ -5,8 +5,8 @@ const executedGruntBuild = require('./custom-calls/executedGruntBuild')
 
 // Represented result is process
 class ExecutedGruntBuild extends AsyncObject {
-  constructor (process) {
-    super(process)
+  constructor (process, fileName) {
+    super(process, fileName)
   }
 
   definedAsyncCall () {

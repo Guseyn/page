@@ -86,7 +86,7 @@ new ParsedJSON(
           new ClusterWithForkedWorkers(
             new ClusterWithExitEvent(
               cluster,
-              new ReloadedBackendOnFailedWorkerEvent()
+              new ReloadedBackendOnFailedWorkerEvent(cluster)
             ), numCPUs
           ),
           new Else(
