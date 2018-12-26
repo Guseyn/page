@@ -11,6 +11,7 @@ In another words, **Page** is just an example of how you can build your applicat
 - [Project Structure](#project-structure)
 - [Building Process](#building-process)
 - [Running Process](#running-process)
+- [Test Project]()
 - [List Of Libraries For Page](#list-of-libraries-for-page)
   - [page-cutie](#page-cutie)
   - [page-ajax-based-on-page-cutie](#page-ajax-based-on-page-cutie)
@@ -26,7 +27,7 @@ In another words, **Page** is just an example of how you can build your applicat
 
 2. **It's Not Easy to Start Quickly.** First of all you need to get acquainted with [Async Tree Pattern](https://github.com/Guseyn/async-tree-patern/blob/master/Async_Tree_Patern.pdf) and it's [implementation](https://github.com/Guseyn/cutie). It allows to build everything using pure approach in OOP.  Also you must know how [Node.js](https://nodejs.org/en/docs/) works and it's important to understand how non-blockinng i/o works there.
 
-3. **But It's Very Easy To Continue.** Ones you've learnt how to use [Async Tree Pattern](https://github.com/Guseyn/async-tree-patern/blob/master/Async_Tree_Patern.pdf), libraries that are based on [cutie](https://github.com/Guseyn/cutie) and libraries for **Page**, your life is never will be like before. You'll able to intoduce new changes into your code extremely fast and painless(unlike in other frameworks). 
+3. **But It's Very Easy To Continue.** Ones you've learnt how to use [Async Tree Pattern](https://github.com/Guseyn/async-tree-patern/blob/master/Async_Tree_Patern.pdf), libraries that are based on [cutie](https://github.com/Guseyn/cutie) and libraries for **Page**, your life is never will be like before. You'll able to intoduce new changes into your code extremely fast and painless(unlike in frameworks). 
 
 4. **No Unnecessary Complexity.** Only *html*, *css* and *js* (*server side* and *browser*).
 
@@ -94,7 +95,13 @@ First of all you need to download this repository to your local machine. You can
 │   │   ├── ...
 │   ├── templates
 │   │   ├── **/*.html
+│   ├── test
+│   ├── ├── server
+│   ├── ├── ├── files
+│   ├── ├── ├── ├── **/*.{html, js}
+├── ├── ├── ├── **/*.js
 │   ├── .babelrc
+│   ├── .eslintrc.json
 │   ├── .gitignore
 │   ├── config.json
 │   ├── Gruntfile.js
@@ -102,6 +109,7 @@ First of all you need to download this repository to your local machine. You can
 │   ├── package-lock.json
 │   ├── package.json
 │   ├── README.md
+│   ├── test-executor
 
 ```
 
@@ -126,8 +134,8 @@ This directory contains html tepmlates(components) for [generating pages](//TODO
 `config.json` contains all settings of **Page**. Use following async composition for retrieving values from config in the code:
 
 ```js
-const { ParsedJSON, Value } = require('@cuties/json');
-const { ReadDataByPath } = require('@cuties/fs');
+const { ParsedJSON, Value } = require('@cuties/json')
+const { ReadDataByPath } = require('@cuties/fs')
 
 new ParsedJSON(
   new ReadDataByPath('./config.json')
@@ -137,7 +145,7 @@ new ParsedJSON(
       for retrieving concrete value from config
   */
   new Value(as('config'), 'somePropertyName')
-).call();
+).call()
 
 ```
 
@@ -247,14 +255,14 @@ For building use command: **`page build [evironment]`** or **`page b [evironment
 ```js
 // server/app/build-app.js
 
-const { as } = require('@cuties/cutie');
-const { ProcessWithExitEvent, KilledProcess } = require('@cuties/process');
-const { ParsedJSON, Value } = require('@cuties/json');
-const { ExecutedScripts } = require('@cuties/scripts');
-const { ReadDataByPath } = require('@cuties/fs');
-const PrintedToConsolePageLogo = require('./../PrintedToConsolePageLogo');
-const ExecutedGruntBuild = require('./../ExecutedGruntBuild');
-const env = process.env.NODE_ENV || 'local';
+const { as } = require('@cuties/cutie')
+const { ParsedJSON, Value } = require('@cuties/json')
+const { ExecutedScripts } = require('@cuties/scripts')
+const { ReadDataByPath } = require('@cuties/fs')
+const PrintedToConsolePageLogo = require('./../PrintedToConsolePageLogo')
+const { ExecutedLint, ExecutedTestCoverage, ExecutedTestCoverageCheck } = require('@cuties/wall')
+const ExecutedGruntBuild = require('./../ExecutedGruntBuild')
+const env = process.env.NODE_ENV || 'local'
 
 new ParsedJSON(
   new ReadDataByPath('./config.json')
@@ -266,17 +274,34 @@ new ParsedJSON(
     new Value(as('config'), 'page.version'),
     `BUILD (${env})`
   ).after(
-    new ExecutedGruntBuild(process).after(
-      new ExecutedScripts(
-        new Value(as('config'), 'staticGenerators')
+    new ExecutedLint(process, './server').after(
+      new ExecutedLint(process, './static/js/es6').after(
+        new ExecutedLint(process, './test').after(
+          new ExecutedTestCoverageCheck(
+            new ExecutedTestCoverage(process, './test-executor.js'),
+            { 'lines': 100, 'functions': 100, 'branches': 100 }
+          ).after(
+            new ExecutedGruntBuild(process).after(
+              new ExecutedScripts(
+                new Value(as('config'), 'staticGenerators')
+              )
+            )
+          )
+        )
       )
     )
   )
-).call();
+).call()
 
 ```
 
-So, here building process just generates static pages and minified bundle js file as it's shown [here](https://github.com/Guseyn/page/blob/master/Gruntfile.js).
+So, here building process just generates static pages and minified bundle js file as it's shown [here](https://github.com/Guseyn/page/blob/master/Gruntfile.js). Also you can see static analysis of `server`, `static/js/es6` and `test` packages and test coverage of `test` package.
+
+## Static analysis and test coverage (wall)
+
+You can find information about configuring async composition of static analysis and test coverage [here](https://github.com/Guseyn/wall).
+
+Also you should init eslint via command **`./node_modules/.bin/eslint --init`**. Default configuration you can find [here](https://github.com/Guseyn/wall/blob/master/.eslintrc.json).
 
 # Running Process
 
@@ -321,27 +346,28 @@ As you can see here, we get some parameters like `post` and `host` from `config.
 I believe that the declarative code below is self-explainable, but you can anyway [submit an issue](https://github.com/Guseyn/page/issues), if something is not clear. However, it requires some knowledge in such modules like: [cutie](https://github.com/Guseyn/cutie), [cutie-if-else](https://github.com/Guseyn/cutie-if-else), [cutie-cluster](https://github.com/Guseyn/cutie-cluster), [cutie-json](https://github.com/Guseyn/cutie-json), [cutie-rest](https://github.com/Guseyn/cutie-rest), [cutie-fs](https://github.com/Guseyn/cutie-fs).
 
 ```js
-const cluster = require('cluster');
-const { as } = require('@cuties/cutie');
-const { If, Else } = require('@cuties/if-else');
-const { IsMaster, ClusterWithForkedWorkers, ClusterWithExitEvent } = require('@cuties/cluster');
-const { ParsedJSON, Value } = require('@cuties/json');
-const { Backend, RestApi, CreatedServingFilesMethod, CreatedCachedServingFilesMethod } = require('@cuties/rest');
-const { ReadDataByPath, WatcherWithEventTypeAndFilenameListener } = require('@cuties/fs');
-const CustomNotFoundMethod = require('./../CustomNotFoundMethod');
-const CustomInternalServerErrorMethod = require('./../CustomInternalServerErrorMethod');
-const CreatedCustomIndex = require('./../CreatedCustomIndex');
-const OnPageStaticJsFilesChangeEvent = require('./../OnPageStaticJsFilesChangeEvent');
-const OnStaticGeneratorsChangeEvent = require('./../OnStaticGeneratorsChangeEvent');
-const OnTemplatesChangeEvent = require('./../OnTemplatesChangeEvent');
-const ReloadedBackendOnFailedWorkerEvent = require('./../ReloadedBackendOnFailedWorkerEvent');
-const UrlToFSPathMapper = require('./../UrlToFSPathMapper');
-const PrintedToConsolePageLogo = require('./../PrintedToConsolePageLogo');
-const notFoundMethod = new CustomNotFoundMethod(new RegExp(/^\/not-found/));
-const internalServerErrorMethod = new CustomInternalServerErrorMethod();
-const numCPUs = require('os').cpus().length;
-const env = process.env.NODE_ENV || 'local';
-const dev_env = env === 'local' || env === 'dev';
+// server/app/run-app.js
+
+const cluster = require('cluster')
+const { as } = require('@cuties/cutie')
+const { If, Else } = require('@cuties/if-else')
+const { IsMaster, ClusterWithForkedWorkers, ClusterWithExitEvent } = require('@cuties/cluster')
+const { ParsedJSON, Value } = require('@cuties/json')
+const { Backend, RestApi, CreatedServingFilesMethod } = require('@cuties/rest')
+const { ReadDataByPath, WatcherWithEventTypeAndFilenameListener } = require('@cuties/fs')
+const CustomNotFoundMethod = require('./../CustomNotFoundMethod')
+const CustomInternalServerErrorMethod = require('./../CustomInternalServerErrorMethod')
+const CreatedCustomIndexMethod = require('./../CreatedCustomIndexMethod')
+const OnPageStaticJsFilesChangeEvent = require('./../OnPageStaticJsFilesChangeEvent')
+const OnStaticGeneratorsChangeEvent = require('./../OnStaticGeneratorsChangeEvent')
+const OnTemplatesChangeEvent = require('./../OnTemplatesChangeEvent')
+const ReloadedBackendOnFailedWorkerEvent = require('./../ReloadedBackendOnFailedWorkerEvent')
+const UrlToFSPathMapper = require('./../UrlToFSPathMapper')
+const PrintedToConsolePageLogo = require('./../PrintedToConsolePageLogo')
+
+const numCPUs = require('os').cpus().length
+const env = process.env.NODE_ENV || 'local'
+const devEnv = env === 'local' || env === 'dev'
 
 const launchedBackend = new Backend(
   new Value(as('config'), `${env}.protocol`),
@@ -350,19 +376,19 @@ const launchedBackend = new Backend(
   new RestApi(
     new CreatedCustomIndexMethod(
       new Value(as('config'), 'index'),
-      notFoundMethod
+      new CustomNotFoundMethod(new RegExp(/^\/not-found/))
     ),
     new CreatedServingFilesMethod(
       new RegExp(/^\/(css|html|image|js|txt)/),
       new UrlToFSPathMapper(
         new Value(as('config'), 'static')
       ),
-      notFoundMethod
+      new CustomNotFoundMethod(new RegExp(/^\/not-found/))
     ),
-    notFoundMethod,
-    internalServerErrorMethod
+    new CustomNotFoundMethod(new RegExp(/^\/not-found/)),
+    new CustomInternalServerErrorMethod()
   )
-);
+)
 
 new ParsedJSON(
   new ReadDataByPath('./config.json')
@@ -377,7 +403,7 @@ new ParsedJSON(
       `RUN (${env})`
     ).after(
       new If(
-        dev_env,
+        devEnv,
         new WatcherWithEventTypeAndFilenameListener(
           new Value(as('config'), 'staticGenerators'),
           { persistent: true, recursive: true, encoding: 'utf8' },
@@ -397,7 +423,7 @@ new ParsedJSON(
               { persistent: true, recursive: true, encoding: 'utf8' },
               new OnPageStaticJsFilesChangeEvent(
                 new Value(as('config'), 'staticJs'),
-                new Value(as('config'),'bundleJs')
+                new Value(as('config'), 'bundleJs')
               )
             )
           )
@@ -408,7 +434,7 @@ new ParsedJSON(
           new ClusterWithForkedWorkers(
             new ClusterWithExitEvent(
               cluster,
-              new ReloadedBackendOnFailedWorkerEvent()
+              new ReloadedBackendOnFailedWorkerEvent(cluster)
             ), numCPUs
           ),
           new Else(
@@ -421,13 +447,18 @@ new ParsedJSON(
       launchedBackend
     )
   )
-).call();
+).call()
+
 
 ```
 
 As you can see it's easily configurable code, so you can add and remove components due to your requirements.
 
 In few words, running process here runs server with REST API (in cluster mode by default) and adds [fs watchers](https://nodejs.org/dist/latest/docs/api/fs.html#fs_fs_watch_filename_options_listener) on `pages`, `static`, `templates` directories(in `local` and `dev` environments). Also in cluster mode failed processes restart automatically.
+
+# Test Project
+
+You can do it via **`page test`** or just **`npm test`**.
 
 # List of Libraries For Page
 
@@ -440,17 +471,17 @@ All these libraries are available on **npm** under `@page-libs` scope.
 **Warning:** If you want to use async objects from libraries that are based on [cutie](https://github.com/Guseyn/cutie) in browser, you must change their parents from `AsyncObject` in **cutie** to the `AsyncObject` from **page-cutie**. Use following function:
 
 ```js
-const AsyncObject = require('@cuties/cutie').AsyncObject;
-const PageAsyncObject = require('@page-libs/cutie').AsyncObject;
+const AsyncObject = require('@cuties/cutie').AsyncObject
+const PageAsyncObject = require('@page-libs/cutie').AsyncObject
 
 function transformedAsyncObjects(...asyncObjects) {
   for (let i = 0; i < asyncObjects.length; i++) {
     if (asyncObjects[i].prototype instanceof PageAsyncObject) {
-      Object.setPrototypeOf(asyncObjects[i].prototype, AsyncObject.prototype);
-      Object.setPrototypeOf(asyncObjects[i], AsyncObject);
+      Object.setPrototypeOf(asyncObjects[i].prototype, AsyncObject.prototype)
+      Object.setPrototypeOf(asyncObjects[i], AsyncObject)
     }
   }
-  return asyncObject;
+  return asyncObject
 }
 
 ```
@@ -467,7 +498,7 @@ new ResponseBody(
     url: 'http://localhost:8000/html/res.html',
     method: 'GET'
   })
-).call();
+).call()
 
 ```
 
@@ -498,7 +529,7 @@ new UserForm(
   new NameInput(document.getElementById('name')),
   new PasswordInput(document.getElementById('password')),
   new SubmitButton(document.getElementById('submit'))
-);
+)
 
 ```
 Full example [here](https://github.com/Guseyn/page-unit#example).
@@ -535,7 +566,7 @@ using following composition:
 ```js
 'use strict'
 
-const { SavedPage, PrettyPage, Page, Head, Body, Script, Style, TemplateWithParams, Template } = require('@page-libs/static-generator');
+const { SavedPage, PrettyPage, Page, Head, Body, Script, Style, TemplateWithParams, Template } = require('@page-libs/static-generator')
 
 new SavedPage(
   'page.html', 
@@ -561,7 +592,7 @@ new SavedPage(
       )
     )
   )
-).call();
+).call()
 
 ```
 
@@ -628,7 +659,7 @@ new ElementWithAppendedChildren(
       p('', 'text')()
     )
   )
-).call();
+).call()
 
 ```
 
