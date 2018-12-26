@@ -129,6 +129,10 @@ This directory contains static files, each type of files is stored in the corres
 
 This directory contains html tepmlates(components) for [generating pages](//TODO:add_link_here).
 
+## `test` directory
+
+This directory contains tests on async objects in `server` directory.
+
 ## `config.json`
 
 `config.json` contains all settings of **Page**. Use following async composition for retrieving values from config in the code:
