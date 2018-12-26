@@ -21,4 +21,11 @@ new StrictEqualAssertion(
     '/html/file.html',
     new UrlToFSPathMapper('static')
   ), 'static/html/file.html'
+).after(
+  new StrictEqualAssertion(
+    new FSPathByUrl(
+      '/html/file.html',
+      new UrlToFSPathMapper()
+    ), 'html/file.html'
+  )
 ).call()

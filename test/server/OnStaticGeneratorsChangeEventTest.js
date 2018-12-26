@@ -20,14 +20,14 @@ class InvokedOnStaticGeneratorsChangeEvent extends AsyncObject {
 
 new Assertion(
   new Is(
-    new OnStaticGeneratorsChangeEvent('./test/files'),
+    new OnStaticGeneratorsChangeEvent('./test/server/files'),
     Function
   )
 ).after(
   new Assertion(
     new Is(
       new InvokedOnStaticGeneratorsChangeEvent(
-        new OnStaticGeneratorsChangeEvent('./test/files'),
+        new OnStaticGeneratorsChangeEvent('./test/server/files'),
         'change', 'index.html'
       ),
       Function
@@ -36,7 +36,7 @@ new Assertion(
     new Assertion(
       new Is(
         new InvokedOnStaticGeneratorsChangeEvent(
-          new OnStaticGeneratorsChangeEvent('./test/files'),
+          new OnStaticGeneratorsChangeEvent('./test/server/files'),
           'create', 'index.html'
         ),
         Function

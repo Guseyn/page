@@ -2,9 +2,10 @@
 
 const spawn = require('child_process').spawn
 
-module.exports = (process, callback) => {
-  console.log(`Grunt build:`)
-  const grunt = spawn('grunt', {
+module.exports = (process, gruntFile, callback) => {
+  gruntFile = gruntFile || './Gruntfile.js'
+  console.log(`Grunt build (${gruntFile}):`)
+  const grunt = spawn('grunt', ['--gruntfile', gruntFile], {
     stdio: [process.stdin, process.stdout, process.stderr]
   })
   grunt.on('close', (code) => {
