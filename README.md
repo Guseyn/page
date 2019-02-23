@@ -254,6 +254,18 @@ Every environment property includes `protocol, port, host, clusterMode`. You can
 
 ```
 
+## `.eslintrc.json`
+
+It's a default config for eslint. You can customize it via command: `./node_modules/.bin/eslint --init`
+
+## `Gruntfile.js`
+
+Default cofiguration for grunt build system. You can find more information [in this section](#build-system).
+
+## `test-executor.js`
+
+This script executes all tests in the `test` directory using [this library](https://github.com/Guseyn/node-test-executor). 
+
 # Building Process
 
 The declaration of this process is in [server/app/build.js](https://github.com/Guseyn/page/blob/master/server/app/build.js) script. Here we execute static analysis (for `server`, `static/js/es6` and `test` packages), test coverage of [test-executor](https://github.com/Guseyn/page/blob/master/test-executor.js) script and [grunt build](https://github.com/Guseyn/page/blob/master/Gruntfile.js) (you can use other build system). After grunt tasks are executed we generate static pages. And that's it, you can also add some other steps in your building process.
