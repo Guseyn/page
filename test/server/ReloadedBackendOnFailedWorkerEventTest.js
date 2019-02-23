@@ -10,7 +10,7 @@ class InvokedReloadedBackendOnFailedWorkerEvent extends AsyncObject {
     super(event, worker, code, signal)
   }
 
-  definedSyncCall () {
+  syncCall () {
     return (event, worker, code, signal) => {
       event(worker, code, signal)
       return event

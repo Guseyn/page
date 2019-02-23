@@ -33,17 +33,17 @@ class CustomStream extends Duplex {
   }
 }
 
-class InvokedMethod extends AsyncObject {
+class InvokedEndpoint extends AsyncObject {
   constructor (method, request, response) {
     super(method, request, response)
   }
 
-  definedSyncCall () {
+  syncCall () {
     return (method, request, response) => {
-      method.invoke(request, response)
+      method.body.call(request, response)
       return method
     }
   }
 }
 
-module.exports = { CustomStream, InvokedMethod }
+module.exports = { CustomStream, InvokedEndpoint }

@@ -1,12 +1,9 @@
 'use strict'
 
-const { as } = require('@cuties/cutie');
-const { SavedPage, PrettyPage, Page, Head, Meta, Body, Script, Style, TemplateWithParams, Template } = require('@page-libs/static-generator');
-const { ParsedJSON, Value } = require('@cuties/json');
-const { ReadDataByPath } = require('@cuties/fs');
-const { ResponseBody, ResponseFromHttpsGetRequest } = require('@cuties/https');
-const { StringFromBuffer } = require('@cuties/buffer');
-const { HtmlFromMd } = require('@page-libs/md2html');
+const { as } = require('@cuties/cutie')
+const { SavedPage, PrettyPage, Page, Head, Meta, Body, Script, Style, Template } = require('@page-libs/static-generator')
+const { ParsedJSON, Value } = require('@cuties/json')
+const { ReadDataByPath } = require('@cuties/fs')
 
 new ParsedJSON(
   new ReadDataByPath('./config.json')
@@ -35,4 +32,4 @@ new ParsedJSON(
       )
     )
   )
-).call();
+).call()

@@ -4,7 +4,7 @@ const { AsyncObject } = require('@cuties/cutie')
 const { Assertion } = require('@cuties/assert')
 const { Is } = require('@cuties/is')
 const NotFoundErrorEvent = require('./../../server/NotFoundErrorEvent')
-const CustomNotFoundMethod = require('./../../server/CustomNotFoundMethod')
+const CustomNotFoundEndpoint = require('./../../server/CustomNotFoundEndpoint')
 const { CustomStream } = require('./common')
 
 class InvokedNotFoundErrorEvent extends AsyncObject {
@@ -12,7 +12,7 @@ class InvokedNotFoundErrorEvent extends AsyncObject {
     super(event)
   }
 
-  definedSyncCall () {
+  syncCall () {
     return (event) => {
       event()
       return event
@@ -24,7 +24,7 @@ new Assertion(
   new Is(
     new InvokedNotFoundErrorEvent(
       new NotFoundErrorEvent(
-        new CustomNotFoundMethod(new RegExp(/^\/not-found/)),
+        new CustomNotFoundEndpoint(new RegExp(/^\/not-found/)),
         new CustomStream(),
         new CustomStream()
       )

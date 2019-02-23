@@ -8,7 +8,7 @@ class OnPageStaticJsFilesChangeEvent extends AsyncObject {
     super(pageStaticJsFilesDirectory, pageBundleJsFile)
   }
 
-  definedSyncCall () {
+  syncCall () {
     return (pageStaticJsFilesDirectory, pageBundleJsFile) => {
       return (eventType, fileName) => {
         if (eventType === 'change') {

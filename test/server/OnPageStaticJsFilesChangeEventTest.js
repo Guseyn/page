@@ -10,7 +10,7 @@ class InvokedOnPageStaticJsFilesChangeEvent extends AsyncObject {
     super(event, eventType, fileName)
   }
 
-  definedSyncCall () {
+  syncCall () {
     return (event, eventType, fileName) => {
       event(eventType, fileName)
       return event
