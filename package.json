@@ -32,21 +32,6 @@
   "publishConfig": {
     "access": "public"
   },
-  "devDependencies": {
-    "@babel/core": "^7.1.2",
-    "@babel/preset-env": "^7.1.0",
-    "eslint": "^5.11.0",
-    "eslint-config-standard": "^12.0.0",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-node": "^8.0.0",
-    "eslint-plugin-promise": "^4.0.1",
-    "eslint-plugin-standard": "^4.0.0",
-    "grunt": "^1.0.3",
-    "grunt-babel": "^8.0.0",
-    "grunt-browserify": "^5.3.0",
-    "grunt-contrib-uglify-es": "^3.3.0",
-    "load-grunt-tasks": "^4.0.0"
-  },
   "dependencies": {
     "@cuties/assert": "^1.2.0",
     "@cuties/buffer": "^1.2.0",
@@ -69,5 +54,20 @@
     "@page-libs/static-generator": "^1.1.1",
     "@page-libs/unit": "^1.1.1",
     "test-executor": "^1.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0",
+    "eslint": "^5.11.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-node": "^8.0.0",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "grunt": "^1.0.3",
+    "grunt-babel": "^8.0.0",
+    "grunt-browserify": "^5.3.0",
+    "grunt-contrib-uglify-es": "^3.3.0",
+    "load-grunt-tasks": "^4.0.0"
   }
 }
