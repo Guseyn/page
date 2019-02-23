@@ -1,7 +1,3 @@
-// Thanks to:
-// https://github.com/babel/grunt-babel/issues/5,
-// https://stackoverflow.com/questions/29293083/grunt-with-babel-and-browserify
-
 module.exports = function(grunt) {
 
   require('load-grunt-tasks')(grunt);
