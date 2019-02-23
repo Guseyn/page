@@ -127,7 +127,7 @@ This directory contains server part of the application. It contains [build scrip
 
 ## `static` directory
 
-This directory contains static files, each type of files is stored in the corresponding subdirectory(`html`, `js` and so on). You can also add subdirectories for different extensions. Just don't forget to configure it in [running process](https://github.com/Guseyn/page/blob/master/server/app/run.js).
+This directory contains static files, each type of files is stored in the corresponding subdirectory(`html`, `js` and so on). You can also add subdirectories for different extensions. Just don't forget to configure it in the [running process](https://github.com/Guseyn/page/blob/master/server/app/run.js).
 
 ## `templates` directory
 
@@ -256,7 +256,7 @@ Every environment property includes `protocol, port, host, clusterMode`. You can
 
 # Building Process
 
-The declaration of this process is in [server/app/build.js](https://github.com/Guseyn/page/blob/master/server/app/build.js) script. Here we execute [grunt build](https://github.com/Guseyn/page/blob/master/Gruntfile.js) (you can use other build system). After grunt tasks are executed we generate static pages. And that's it, you can also add some other steps in your building process.
+The declaration of this process is in [server/app/build.js](https://github.com/Guseyn/page/blob/master/server/app/build.js) script. Here we execute static analysis (for `server`, `static/js/es6` and `test` packages), test coverage of [test-executor](https://github.com/Guseyn/page/blob/master/test-executor.js) script and [grunt build](https://github.com/Guseyn/page/blob/master/Gruntfile.js) (you can use other build system). After grunt tasks are executed we generate static pages. And that's it, you can also add some other steps in your building process.
 
 For building use command: **`page build [evironment]`** or **`page b [evironment]`**. `environment` is one of the following values: `local`, `prod`, `dev`, `stage`, `prod` (`local` is default).
 
@@ -299,8 +299,6 @@ new ParsedJSON(
 
 ```
 
-So, here building process just generates static pages and minified bundle js file as it's shown [here](https://github.com/Guseyn/page/blob/master/Gruntfile.js). Also you can see static analysis of `server`, `static/js/es6` and `test` packages and test coverage of [test-executor](https://github.com/Guseyn/page/blob/master/test-executor.js) script.
-
 ## Static analysis and test coverage (wall)
 
 You can find information about configuring async composition of static analysis and test coverage [here](https://github.com/Guseyn/wall).
@@ -340,11 +338,11 @@ const launchedBackend = new Backend(
 
 ```
 
-It's just an example of how it could be built and work. But, of course, you can configure it differently due to your requirements.
+It's just an example of how it could be built and worked. But, of course, you can configure it differently due to your requirements.
 
 For running use command: **`page run [evironment]`** or **`page r [evironment]`**. `environment` is one of the following values: `local`, `prod`, `dev`, `stage`, `prod` (`local` is default).
 
-As you can see here, we get some parameters like `post` and `host` from `config.json`. If look at the whole script, you can notice that it's possible to run server in [cluster mode](https://nodejs.org/dist/latest/docs/api/cluster.html).
+As you can see here, we get some parameters like `post` and `host` from `config.json`. If you look at the whole script, you can notice that it's possible to run server in [cluster mode](https://nodejs.org/dist/latest/docs/api/cluster.html).
 
 ## The Whole Declaration
 
@@ -475,8 +473,6 @@ All these libraries are available on **npm** under `@page-libs` scope.
 [This library](https://github.com/Guseyn/page-cutie) is analogue of [cutie](https://github.com/Guseyn/cutie) for using [Async Tree Pattern](https://github.com/Guseyn/async-tree-patern/blob/master/Async_Tree_Patern.pdf) in browser.
 
 You can with no problems use async object from **page-cutie** with async objects from **cutie**.
-
-```
 
 ## page-ajax (based on *page-cutie*)
 
@@ -685,12 +681,10 @@ Obviously, you can choose any other build system for your browser js code you wa
 
 # Future plans
 
-Probably having following libraries would be useful:
-
 1. **page-youtube** (inserts youtube videos(iframes) into web-page when user clicks on corresponding thumbnails)
 2. **page-google-oauth2**
 3. **page-jwt-token**
 4. **page-mobile-web-transformer**
 5. **page-templates**
 
-and so on.
+and so on...
