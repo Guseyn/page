@@ -22,14 +22,14 @@ new ParsedJSON(
     new ExecutedLint(process, './server', './static/js/es6', './test').after(
       new ExecutedTestCoverageCheck(
         new ExecutedTestCoverage(process, './test-executor.js'),
-          { 'lines': 100, 'functions': 100, 'branches': 100 }
-        ).after(
-          new ExecutedGruntBuild(process).after(
-            new ExecutedScripts(
-              new Value(as('config'), 'staticGenerators')
-            )
+        { 'lines': 100, 'functions': 100, 'branches': 100 }
+      ).after(
+        new ExecutedGruntBuild(process).after(
+          new ExecutedScripts(
+            new Value(as('config'), 'staticGenerators')
           )
         )
       )
     )
+  )
 ).call()
