@@ -119,19 +119,19 @@ First of all you need to download this repository to your local machine. You can
 
 ## `pages` directory
 
-This directory contains js scripts that generate static html pages(they are based on [page-static-generator library](https://github.com/Guseyn/page-static-generator)). Generation of static pages is contained in [building](//TODO:add_link_here) and [running](//TODO:add_link_here) processes.
+This directory contains js scripts that generate static html pages(they are based on [page-static-generator library](https://github.com/Guseyn/page-static-generator)).
 
 ## `server` directory
 
-This directory contains server part of the application. It's divided into [building](//TODO:add_link_here) and [running](//TODO:add_link_here) processes.
+This directory contains server part of the application. It contains [build script](https://github.com/Guseyn/page/blob/master/server/app/build.js) and [run script](https://github.com/Guseyn/page/blob/master/server/app/run.js).
 
 ## `static` directory
 
-This directory contains static files, each type of files is stored in the corresponding subdirectory(`html`, `js` and so on). You can also add subdirectories for different extensions. Just don't forget to configure it in [running process](//TODO:add_link_here).
+This directory contains static files, each type of files is stored in the corresponding subdirectory(`html`, `js` and so on). You can also add subdirectories for different extensions. Just don't forget to configure it in [running process](https://github.com/Guseyn/page/blob/master/server/app/run.js).
 
 ## `templates` directory
 
-This directory contains html tepmlates(components) for [generating pages](//TODO:add_link_here).
+This directory contains html tepmlates(components) for generating pages.
 
 ## `test` directory
 
@@ -182,11 +182,11 @@ This property is for location of the directory of static files.
 
 #### staticGenerators
 
-This property is for location of the directory with [static genrators](TODO://add_link_here_about_them).
+This property is for location of the directory with static genrators.
 
 #### templates
 
-This property is for location of the directory with [templates](TODO://add_link_here_about_them).
+This property is for location of the directory with templates.
 
 #### staticHtml
 
@@ -270,7 +270,7 @@ const { ReadDataByPath } = require('@cuties/fs')
 const PrintedToConsolePageLogo = require('./../PrintedToConsolePageLogo')
 const { ExecutedLint, ExecutedTestCoverage, ExecutedTestCoverageCheck } = require('@cuties/wall')
 const ExecutedGruntBuild = require('./../ExecutedGruntBuild')
-const env = process.env.NODE_ENV
+const env = process.env.NODE_ENV || 'local'
 
 new ParsedJSON(
   new ReadDataByPath('./config.json')
@@ -282,18 +282,14 @@ new ParsedJSON(
     new Value(as('config'), 'page.version'),
     `BUILD (${env})`
   ).after(
-    new ExecutedLint(process, './server').after(
-      new ExecutedLint(process, './static/js/es6').after(
-        new ExecutedLint(process, './test').after(
-          new ExecutedTestCoverageCheck(
-            new ExecutedTestCoverage(process, './test-executor.js'),
-            { 'lines': 100, 'functions': 100, 'branches': 100 }
-          ).after(
-            new ExecutedGruntBuild(process).after(
-              new ExecutedScripts(
-                new Value(as('config'), 'staticGenerators')
-              )
-            )
+    new ExecutedLint(process, './server', './static/js/es6', './test').after(
+      new ExecutedTestCoverageCheck(
+        new ExecutedTestCoverage(process, './test-executor.js'),
+        { 'lines': 100, 'functions': 100, 'branches': 100 }
+      ).after(
+        new ExecutedGruntBuild(process).after(
+          new ExecutedScripts(
+            new Value(as('config'), 'staticGenerators')
           )
         )
       )
@@ -303,13 +299,13 @@ new ParsedJSON(
 
 ```
 
-So, here building process just generates static pages and minified bundle js file as it's shown [here](https://github.com/Guseyn/page/blob/master/Gruntfile.js). Also you can see static analysis of `server`, `static/js/es6` and `test` packages and test coverage of `test` package.
+So, here building process just generates static pages and minified bundle js file as it's shown [here](https://github.com/Guseyn/page/blob/master/Gruntfile.js). Also you can see static analysis of `server`, `static/js/es6` and `test` packages and test coverage of [test-executor](https://github.com/Guseyn/page/blob/master/test-executor.js) script.
 
 ## Static analysis and test coverage (wall)
 
 You can find information about configuring async composition of static analysis and test coverage [here](https://github.com/Guseyn/wall).
 
-Also you should init eslint via command **`./node_modules/.bin/eslint --init`**. Default configuration you can find [here](https://github.com/Guseyn/wall/blob/master/.eslintrc.json).
+Also you can customize eslint config via command **`./node_modules/.bin/eslint --init`**. Default configuration you can find [here](https://github.com/Guseyn/wall/blob/master/.eslintrc.json).
 
 # Running Process
 
@@ -325,21 +321,22 @@ const launchedBackend = new Backend(
   new Value(as('config'), `${env}.port`),
   new Value(as('config'), `${env}.host`),
   new RestApi(
-    new CreatedCustomIndex(
+    new CreatedCustomIndexEndpoint(
       new Value(as('config'), 'index'),
-      notFoundMethod
+      new CustomNotFoundEndpoint(new RegExp(/^\/not-found/))
     ),
-    new CreatedServingFilesMethod(
+    new CreatedServingFilesEndpoint(
       new RegExp(/^\/(css|html|image|js|txt)/),
       new UrlToFSPathMapper(
         new Value(as('config'), 'static')
       ),
-      notFoundMethod
+      new CustomNotFoundEndpoint(new RegExp(/^\/not-found/))
     ),
-    notFoundMethod,
-    internalServerErrorMethod
+    new CustomNotFoundEndpoint(new RegExp(/^\/not-found/)),
+    new CustomInternalServerErrorEndpoint()
   )
-);
+)
+
 
 ```
 
@@ -356,16 +353,18 @@ I believe that the declarative code below is self-explainable, but you can anywa
 ```js
 // server/app/run-app.js
 
+'use strict'
+
 const cluster = require('cluster')
 const { as } = require('@cuties/cutie')
 const { If, Else } = require('@cuties/if-else')
 const { IsMaster, ClusterWithForkedWorkers, ClusterWithExitEvent } = require('@cuties/cluster')
 const { ParsedJSON, Value } = require('@cuties/json')
-const { Backend, RestApi, CreatedServingFilesMethod } = require('@cuties/rest')
+const { Backend, RestApi, CreatedServingFilesEndpoint } = require('@cuties/rest')
 const { ReadDataByPath, WatcherWithEventTypeAndFilenameListener } = require('@cuties/fs')
-const CustomNotFoundMethod = require('./../CustomNotFoundMethod')
-const CustomInternalServerErrorMethod = require('./../CustomInternalServerErrorMethod')
-const CreatedCustomIndexMethod = require('./../CreatedCustomIndexMethod')
+const CustomNotFoundEndpoint = require('./../CustomNotFoundEndpoint')
+const CustomInternalServerErrorEndpoint = require('./../CustomInternalServerErrorEndpoint')
+const CreatedCustomIndexEndpoint = require('./../CreatedCustomIndexEndpoint')
 const OnPageStaticJsFilesChangeEvent = require('./../OnPageStaticJsFilesChangeEvent')
 const OnStaticGeneratorsChangeEvent = require('./../OnStaticGeneratorsChangeEvent')
 const OnTemplatesChangeEvent = require('./../OnTemplatesChangeEvent')
@@ -382,19 +381,19 @@ const launchedBackend = new Backend(
   new Value(as('config'), `${env}.port`),
   new Value(as('config'), `${env}.host`),
   new RestApi(
-    new CreatedCustomIndexMethod(
+    new CreatedCustomIndexEndpoint(
       new Value(as('config'), 'index'),
-      new CustomNotFoundMethod(new RegExp(/^\/not-found/))
+      new CustomNotFoundEndpoint(new RegExp(/^\/not-found/))
     ),
-    new CreatedServingFilesMethod(
+    new CreatedServingFilesEndpoint(
       new RegExp(/^\/(css|html|image|js|txt)/),
       new UrlToFSPathMapper(
         new Value(as('config'), 'static')
       ),
-      new CustomNotFoundMethod(new RegExp(/^\/not-found/))
+      new CustomNotFoundEndpoint(new RegExp(/^\/not-found/))
     ),
-    new CustomNotFoundMethod(new RegExp(/^\/not-found/)),
-    new CustomInternalServerErrorMethod()
+    new CustomNotFoundEndpoint(new RegExp(/^\/not-found/)),
+    new CustomInternalServerErrorEndpoint()
   )
 )
 
@@ -457,12 +456,11 @@ new ParsedJSON(
   )
 ).call()
 
-
 ```
 
 As you can see it's easily configurable code, so you can add and remove components due to your requirements.
 
-In few words, running process here runs server with REST API (in cluster mode by default) and adds [fs watchers](https://nodejs.org/dist/latest/docs/api/fs.html#fs_fs_watch_filename_options_listener) on `pages`, `static`, `templates` directories(in `local` and `dev` environments). Also in cluster mode failed processes restart automatically.
+In few words, here running process runs server with REST API (in cluster mode by default) and adds [fs watchers](https://nodejs.org/dist/latest/docs/api/fs.html#fs_fs_watch_filename_options_listener) on `pages`, `static`, `templates` directories(in `local` and `dev` environments). Also in cluster mode failed processes restart automatically.
 
 # Test Project
 
@@ -476,21 +474,7 @@ All these libraries are available on **npm** under `@page-libs` scope.
 
 [This library](https://github.com/Guseyn/page-cutie) is analogue of [cutie](https://github.com/Guseyn/cutie) for using [Async Tree Pattern](https://github.com/Guseyn/async-tree-patern/blob/master/Async_Tree_Patern.pdf) in browser.
 
-**Warning:** If you want to use async objects from libraries that are based on [cutie](https://github.com/Guseyn/cutie) in browser, you must change their parents from `AsyncObject` in **cutie** to the `AsyncObject` from **page-cutie**. Use following function:
-
-```js
-const AsyncObject = require('@cuties/cutie').AsyncObject
-const PageAsyncObject = require('@page-libs/cutie').AsyncObject
-
-function transformedAsyncObjects(...asyncObjects) {
-  for (let i = 0; i < asyncObjects.length; i++) {
-    if (asyncObjects[i].prototype instanceof PageAsyncObject) {
-      Object.setPrototypeOf(asyncObjects[i].prototype, AsyncObject.prototype)
-      Object.setPrototypeOf(asyncObjects[i], AsyncObject)
-    }
-  }
-  return asyncObject
-}
+You can with no problems use async object from **page-cutie** with async objects from **cutie**.
 
 ```
 
