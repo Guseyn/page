@@ -8,7 +8,7 @@ class OnTemplatesChangeEvent extends AsyncObject {
     super(staticGeneratorsDirectoryPath)
   }
 
-  definedSyncCall () {
+  syncCall () {
     return (staticGeneratorsDirectoryPath) => {
       return (eventType, fileName) => {
         new ExecutedScripts(

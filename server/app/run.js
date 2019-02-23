@@ -5,11 +5,11 @@ const { as } = require('@cuties/cutie')
 const { If, Else } = require('@cuties/if-else')
 const { IsMaster, ClusterWithForkedWorkers, ClusterWithExitEvent } = require('@cuties/cluster')
 const { ParsedJSON, Value } = require('@cuties/json')
-const { Backend, RestApi, CreatedServingFilesMethod } = require('@cuties/rest')
+const { Backend, RestApi, CreatedServingFilesEndpoint } = require('@cuties/rest')
 const { ReadDataByPath, WatcherWithEventTypeAndFilenameListener } = require('@cuties/fs')
-const CustomNotFoundMethod = require('./../CustomNotFoundMethod')
-const CustomInternalServerErrorMethod = require('./../CustomInternalServerErrorMethod')
-const CreatedCustomIndexMethod = require('./../CreatedCustomIndexMethod')
+const CustomNotFoundEndpoint = require('./../CustomNotFoundEndpoint')
+const CustomInternalServerErrorEndpoint = require('./../CustomInternalServerErrorEndpoint')
+const CreatedCustomIndexEndpoint = require('./../CreatedCustomIndexEndpoint')
 const OnPageStaticJsFilesChangeEvent = require('./../OnPageStaticJsFilesChangeEvent')
 const OnStaticGeneratorsChangeEvent = require('./../OnStaticGeneratorsChangeEvent')
 const OnTemplatesChangeEvent = require('./../OnTemplatesChangeEvent')
@@ -26,19 +26,19 @@ const launchedBackend = new Backend(
   new Value(as('config'), `${env}.port`),
   new Value(as('config'), `${env}.host`),
   new RestApi(
-    new CreatedCustomIndexMethod(
+    new CreatedCustomIndexEndpoint(
       new Value(as('config'), 'index'),
-      new CustomNotFoundMethod(new RegExp(/^\/not-found/))
+      new CustomNotFoundEndpoint(new RegExp(/^\/not-found/))
     ),
-    new CreatedServingFilesMethod(
+    new CreatedServingFilesEndpoint(
       new RegExp(/^\/(css|html|image|js|txt)/),
       new UrlToFSPathMapper(
         new Value(as('config'), 'static')
       ),
-      new CustomNotFoundMethod(new RegExp(/^\/not-found/))
+      new CustomNotFoundEndpoint(new RegExp(/^\/not-found/))
     ),
-    new CustomNotFoundMethod(new RegExp(/^\/not-found/)),
-    new CustomInternalServerErrorMethod()
+    new CustomNotFoundEndpoint(new RegExp(/^\/not-found/)),
+    new CustomInternalServerErrorEndpoint()
   )
 )
 

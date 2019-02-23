@@ -9,7 +9,7 @@ class ReloadedBackendOnFailedWorkerEvent extends Event {
     this.cluster = cluster
   }
 
-  definedBody (worker, code, signal) {
+  body (worker, code, signal) {
     console.log(`worker ${worker.process.pid} died (${signal || code}). restarting...`)
     new ForkedWorker(this.cluster).call()
   }

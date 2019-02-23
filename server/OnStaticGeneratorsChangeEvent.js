@@ -9,7 +9,7 @@ class OnStaticGeneratorsChangeEvent extends AsyncObject {
     super(staticGeneratorsDirectoryPath)
   }
 
-  definedSyncCall () {
+  syncCall () {
     return (staticGeneratorsDirectoryPath) => {
       return (eventType, fileName) => {
         if (eventType === 'change') {

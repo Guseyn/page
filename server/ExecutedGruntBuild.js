@@ -9,7 +9,7 @@ class ExecutedGruntBuild extends AsyncObject {
     super(process, fileName)
   }
 
-  definedAsyncCall () {
+  asyncCall () {
     return executedGruntBuild
   }
 }

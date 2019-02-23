@@ -12,7 +12,7 @@ class PrintedToConsolePageLogo extends AsyncObject {
     super(logo, version, step)
   }
 
-  definedSyncCall () {
+  syncCall () {
     return (logo, version, step) => {
       console.log(`${logo}${version}\n\n${step}\n`)
       return logo

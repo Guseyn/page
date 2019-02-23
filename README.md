@@ -1,8 +1,12 @@
 <img src="https://github.com/Guseyn/logos/raw/master/page.svg?sanitize=true">
 
+[![NPM Version](https://img.shields.io/npm/v/@page-libs/page.svg)](https://npmjs.org/package/@page-libs/page)
+[![Build Status](https://travis-ci.org/Guseyn/page.svg?branch=master)](https://travis-ci.org/Guseyn/page)
+[![codecov](https://codecov.io/gh/Guseyn/page/branch/master/graph/badge.svg)](https://codecov.io/gh/Guseyn/page)
+
 **Page** can be described as a base for any applications on top of it with server and client on Node.js. It provides a lot of features and common scenarios for using web. It's completely based on the [Async Tree Pattern](https://github.com/Guseyn/async-tree-patern/blob/master/Async_Tree_Patern.pdf) that allows you to customize **Page** in any way you want, you can even throw it away and build other base core for your application.
 
-In another words, **Page** is just an example of how you can build your application using libraries that are based on [Cutie](https://github.com/Guseyn/cutie).
+In another words, **Page** is just an example of how you can build your application using libraries that are based on [cutie](https://github.com/Guseyn/cutie).
 
 # Contents
 
@@ -65,8 +69,8 @@ First of all you need to download this repository to your local machine. You can
 │   │   ├── **/*.js
 │   ├── server
 │   │   ├── app
-│   │   │   ├── build-app.js 
-│   │   │   ├── run-app.js
+│   │   │   ├── build.js 
+│   │   │   ├── run.js
 │   │   ├── custom-calls
 │   │   │   ├── executedGruntBuild.js
 │   │   ├── CreatedCustomIndex.js
@@ -252,7 +256,7 @@ Every environment property includes `protocol, port, host, clusterMode`. You can
 
 # Building Process
 
-The declaration of this process is in [server/app/build-app.js](https://github.com/Guseyn/page/blob/master/server/app/build-app.js) script. Here we execute [grunt build](https://github.com/Guseyn/page/blob/master/Gruntfile.js) (you can use other build system). After grunt tasks are executed we generate static pages. And that's it, you can also add some other steps in your building process.
+The declaration of this process is in [server/app/build.js](https://github.com/Guseyn/page/blob/master/server/app/build.js) script. Here we execute [grunt build](https://github.com/Guseyn/page/blob/master/Gruntfile.js) (you can use other build system). After grunt tasks are executed we generate static pages. And that's it, you can also add some other steps in your building process.
 
 For building use command: **`page build [evironment]`** or **`page b [evironment]`**. `environment` is one of the following values: `local`, `prod`, `dev`, `stage`, `prod` (`local` is default).
 
@@ -266,7 +270,7 @@ const { ReadDataByPath } = require('@cuties/fs')
 const PrintedToConsolePageLogo = require('./../PrintedToConsolePageLogo')
 const { ExecutedLint, ExecutedTestCoverage, ExecutedTestCoverageCheck } = require('@cuties/wall')
 const ExecutedGruntBuild = require('./../ExecutedGruntBuild')
-const env = process.env.NODE_ENV || 'local'
+const env = process.env.NODE_ENV
 
 new ParsedJSON(
   new ReadDataByPath('./config.json')

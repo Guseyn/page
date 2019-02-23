@@ -8,7 +8,7 @@ class UrlToFSPathMapper extends AsyncObject {
     super(staticDirectory || '')
   }
 
-  definedSyncCall () {
+  syncCall () {
     return (staticDirectory) => {
       return (url) => {
         return path.join(staticDirectory, ...url.split('/').filter(path => path !== ''))
