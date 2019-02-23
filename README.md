@@ -31,7 +31,7 @@ In another words, **Page** is just an example of how you can build your applicat
 
 2. **It's Not Easy to Start Quickly.** First of all you need to get acquainted with [Async Tree Pattern](https://github.com/Guseyn/async-tree-patern/blob/master/Async_Tree_Patern.pdf) and it's [implementation](https://github.com/Guseyn/cutie). It allows to build everything using pure approach in OOP.  Also you must know how [Node.js](https://nodejs.org/en/docs/) works and it's important to understand how non-blockinng i/o works there.
 
-3. **But It's Very Easy To Continue.** Ones you've learnt how to use [Async Tree Pattern](https://github.com/Guseyn/async-tree-patern/blob/master/Async_Tree_Patern.pdf), libraries that are based on [cutie](https://github.com/Guseyn/cutie) and libraries for **Page**, your life is never will be like before. You'll able to intoduce new changes into your code extremely fast and painless(unlike in frameworks). 
+3. **But It's Very Easy to Continue.** Ones you've learnt how to use [Async Tree Pattern](https://github.com/Guseyn/async-tree-patern/blob/master/Async_Tree_Patern.pdf), libraries that are based on [cutie](https://github.com/Guseyn/cutie) and libraries for **Page**, your life is never will be like before. You'll able to intoduce new changes into your code extremely fast and painless(unlike in frameworks). 
 
 4. **No Unnecessary Complexity.** Only *html*, *css* and *js* (*server side* and *browser*).
 
