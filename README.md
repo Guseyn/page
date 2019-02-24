@@ -273,7 +273,7 @@ The declaration of this process is in [server/app/build.js](https://github.com/G
 For building use command: **`page build [evironment]`** or **`page b [evironment]`**. `environment` is one of the following values: `local`, `prod`, `dev`, `stage`, `prod` (`local` is default).
 
 ```js
-// server/app/build-app.js
+// server/app/build.js
 
 const { as } = require('@cuties/cutie')
 const { ParsedJSON, Value } = require('@cuties/json')
@@ -361,9 +361,7 @@ As you can see here, we get some parameters like `post` and `host` from `config.
 I believe that the declarative code below is self-explainable, but you can anyway [submit an issue](https://github.com/Guseyn/page/issues), if something is not clear. However, it requires some knowledge in such modules like: [cutie](https://github.com/Guseyn/cutie), [cutie-if-else](https://github.com/Guseyn/cutie-if-else), [cutie-cluster](https://github.com/Guseyn/cutie-cluster), [cutie-json](https://github.com/Guseyn/cutie-json), [cutie-rest](https://github.com/Guseyn/cutie-rest), [cutie-fs](https://github.com/Guseyn/cutie-fs).
 
 ```js
-// server/app/run-app.js
-
-'use strict'
+// server/app/run.js
 
 const cluster = require('cluster')
 const { as } = require('@cuties/cutie')
@@ -564,7 +562,6 @@ We can build *html* page from these two templates:
 using following composition:
 
 ```js
-'use strict'
 
 const { SavedPage, PrettyPage, Page, Head, Body, Script, Style, TemplateWithParams, Template } = require('@page-libs/static-generator')
 
