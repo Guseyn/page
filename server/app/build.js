@@ -26,7 +26,7 @@ new ParsedJSON(
       ).after(
         new ExecutedGruntBuild(process).after(
           new ExecutedScripts(
-            new Value(as('config'), 'staticGenerators')
+            'node', 'js', new Value(as('config'), 'staticGenerators')
           )
         )
       )
