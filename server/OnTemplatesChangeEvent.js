@@ -12,7 +12,7 @@ class OnTemplatesChangeEvent extends AsyncObject {
     return (staticGeneratorsDirectoryPath) => {
       return (eventType, fileName) => {
         new ExecutedScripts(
-          staticGeneratorsDirectoryPath
+          'node', 'js', staticGeneratorsDirectoryPath
         ).call()
       }
     }

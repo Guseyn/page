@@ -14,6 +14,7 @@ class OnStaticGeneratorsChangeEvent extends AsyncObject {
       return (eventType, fileName) => {
         if (eventType === 'change') {
           new ExecutedScripts(
+            'node', 'js',
             new JoinedPaths(
               staticGeneratorsDirectoryPath, fileName
             )
