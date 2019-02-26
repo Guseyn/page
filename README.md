@@ -268,7 +268,7 @@ This script executes all tests in the `test` directory using [this library](http
 
 # Building Process
 
-The declaration of this process is in [server/app/build.js](https://github.com/Guseyn/page/blob/master/server/app/build.js) script. Here we execute static analysis (for `server`, `static/js/es6` and `test` packages), test coverage of [test-executor](https://github.com/Guseyn/page/blob/master/test-executor.js) script and [grunt build](https://github.com/Guseyn/page/blob/master/Gruntfile.js) (you can use other build system). After grunt tasks are executed we generate static pages. And that's it, you can also add some other steps in your building process.
+The declaration of this process is in [server/app/build.js](https://github.com/Guseyn/page/blob/master/server/app/build.js) script. Here we execute static analysis (for `pages`, `server`, `static/js/es6` and `test` packages), test coverage of [test-executor](https://github.com/Guseyn/page/blob/master/test-executor.js) script and [grunt build](https://github.com/Guseyn/page/blob/master/Gruntfile.js) (you can use other build system). After grunt tasks are executed we generate static pages. And that's it, you can also add some other steps in your building process.
 
 For building use command: **`page build [evironment]`** or **`page b [evironment]`**. `environment` is one of the following values: `local`, `prod`, `dev`, `stage`, `prod` (`local` is default).
 
@@ -294,7 +294,7 @@ new ParsedJSON(
     new Value(as('config'), 'page.version'),
     `BUILD (${env})`
   ).after(
-    new ExecutedLint(process, './server', './static/js/es6', './test').after(
+    new ExecutedLint(process, './pages', './server', './static/js/es6', './test').after(
       new ExecutedTestCoverageCheck(
         new ExecutedTestCoverage(process, './test-executor.js'),
         { 'lines': 100, 'functions': 100, 'branches': 100 }

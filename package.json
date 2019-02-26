@@ -37,7 +37,7 @@
     "@cuties/buffer": "^1.2.0",
     "@cuties/cluster": "^1.1.0",
     "@cuties/cutie": "^1.7.0",
-    "@cuties/fs": "^1.2.0",
+    "@cuties/fs": "^1.2.1",
     "@cuties/http": "^1.3.0",
     "@cuties/https": "^1.1.0",
     "@cuties/if-else": "^1.1.0",
@@ -52,7 +52,7 @@
     "@page-libs/dom": "^1.0.2",
     "@page-libs/md2html": "^1.1.1",
     "@page-libs/static-generator": "^1.1.1",
-    "@page-libs/unit": "^1.1.1",
+    "@page-libs/unit": "^1.1.2",
     "test-executor": "^1.2.0"
   },
   "devDependencies": {
