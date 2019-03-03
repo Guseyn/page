@@ -44,7 +44,7 @@
     "@cuties/is": "^1.1.0",
     "@cuties/json": "^1.1.0",
     "@cuties/path": "^1.1.0",
-    "@cuties/rest": "^1.2.4",
+    "@cuties/rest": "^1.2.5",
     "@cuties/scripts": "^1.1.0",
     "@cuties/wall": "^1.1.0",
     "@page-libs/ajax": "^1.1.3",
