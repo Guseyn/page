@@ -38,7 +38,7 @@ const launchedBackend = new Backend(
       new CustomNotFoundEndpoint(new RegExp(/^\/not-found/))
     ),
     new CustomNotFoundEndpoint(new RegExp(/^\/not-found/)),
-    new CustomInternalServerErrorEndpoint()
+    new CustomInternalServerErrorEndpoint(new RegExp(/^\/internal-server-error/))
   )
 )
 
