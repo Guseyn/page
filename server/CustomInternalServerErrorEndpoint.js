@@ -4,7 +4,7 @@ const { InternalServerErrorEndpoint } = require('@cuties/rest')
 
 class CustomInternalServerErrorEndpoint extends InternalServerErrorEndpoint {
   constructor () {
-    super()
+    super(regexpUrl)
   }
 
   body (request, response, error) {
