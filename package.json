@@ -49,7 +49,7 @@
     "@cuties/wall": "^1.1.0",
     "@page-libs/ajax": "^1.1.3",
     "@page-libs/cutie": "^1.1.1",
-    "@page-libs/dom": "^1.0.2",
+    "@page-libs/dom": "^1.1.1",
     "@page-libs/md2html": "^1.1.1",
     "@page-libs/static-generator": "^1.1.1",
     "@page-libs/unit": "^1.1.2",
