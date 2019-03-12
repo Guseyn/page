@@ -68,23 +68,12 @@ First of all you need to download this repository to your local machine. You can
 │   ├── pages
 │   │   ├── **/*.js
 │   ├── server
-│   │   ├── app
+│   │   ├── async
+│   │   ├── ├── custom-calls
+│   │   ├── endpoints
+│   │   ├── events
 │   │   │   ├── build.js 
 │   │   │   ├── run.js
-│   │   ├── custom-calls
-│   │   │   ├── executedGruntBuild.js
-│   │   ├── CreatedCustomIndex.js
-│   │   ├── CustomIndex.js
-│   │   ├── CustomIntrnalServerErrorMethod.js
-│   │   ├── CustomNotFoundMethod.js
-│   │   ├── ExecutedGruntBuild.js
-│   │   ├── NotFoundErrorEvent.js
-│   │   ├── OnPageStaticJsFilesChangeEvent.js
-│   │   ├── OnStaticGeneratorsChangeEvent.js
-│   │   ├── OnTemplatesChangeEvent.js
-│   │   ├── PrintedToConsolePageLogo.js
-│   │   ├── ReloadedBackendOnFailedWorkerEvent.js
-│   │   ├── UrlToFSPathMapper.js
 │   ├── static
 │   │   ├── css
 │   │   │   ├── **/*.css
@@ -124,6 +113,18 @@ This directory contains js scripts that generate static html pages(they are base
 ## `server` directory
 
 This directory contains server part of the application. It contains [build script](https://github.com/Guseyn/page/blob/master/server/app/build.js) and [run script](https://github.com/Guseyn/page/blob/master/server/app/run.js).
+
+## `server/async` directory
+
+This directory contains async objects that we use in `server/build.js` and `server/run.js`.
+
+## `server/endpoints`
+
+This directory contains endpoints for REST API.
+
+## `server/events`
+
+This directory contains events for different purposes.
 
 ## `static` directory
 
@@ -273,15 +274,15 @@ The declaration of this process is in [server/app/build.js](https://github.com/G
 For building use command: **`page build [evironment]`** or **`page b [evironment]`**. `environment` is one of the following values: `local`, `prod`, `dev`, `stage`, `prod` (`local` is default).
 
 ```js
-// server/app/build.js
+// server/build.js
 
 const { as } = require('@cuties/cutie')
 const { ParsedJSON, Value } = require('@cuties/json')
 const { ExecutedScripts } = require('@cuties/scripts')
 const { ReadDataByPath } = require('@cuties/fs')
-const PrintedToConsolePageLogo = require('./../PrintedToConsolePageLogo')
 const { ExecutedLint, ExecutedTestCoverage, ExecutedTestCoverageCheck } = require('@cuties/wall')
-const ExecutedGruntBuild = require('./../ExecutedGruntBuild')
+const PrintedToConsolePageLogo = require('./async/PrintedToConsolePageLogo')
+const ExecutedGruntBuild = require('./async/ExecutedGruntBuild')
 const env = process.env.NODE_ENV || 'local'
 
 new ParsedJSON(
@@ -301,7 +302,7 @@ new ParsedJSON(
       ).after(
         new ExecutedGruntBuild(process).after(
           new ExecutedScripts(
-            new Value(as('config'), 'staticGenerators')
+            'node', 'js', new Value(as('config'), 'staticGenerators')
           )
         )
       )
@@ -343,10 +344,9 @@ const launchedBackend = new Backend(
       new CustomNotFoundEndpoint(new RegExp(/^\/not-found/))
     ),
     new CustomNotFoundEndpoint(new RegExp(/^\/not-found/)),
-    new CustomInternalServerErrorEndpoint()
+    new CustomInternalServerErrorEndpoint(new RegExp(/^\/internal-server-error/))
   )
 )
-
 
 ```
 
@@ -361,7 +361,7 @@ As you can see here, we get some parameters like `post` and `host` from `config.
 I believe that the declarative code below is self-explainable, but you can anyway [submit an issue](https://github.com/Guseyn/page/issues), if something is not clear. However, it requires some knowledge in such modules like: [cutie](https://github.com/Guseyn/cutie), [cutie-if-else](https://github.com/Guseyn/cutie-if-else), [cutie-cluster](https://github.com/Guseyn/cutie-cluster), [cutie-json](https://github.com/Guseyn/cutie-json), [cutie-rest](https://github.com/Guseyn/cutie-rest), [cutie-fs](https://github.com/Guseyn/cutie-fs).
 
 ```js
-// server/app/run.js
+// server/run.js
 
 const cluster = require('cluster')
 const { as } = require('@cuties/cutie')
@@ -370,15 +370,15 @@ const { IsMaster, ClusterWithForkedWorkers, ClusterWithExitEvent } = require('@c
 const { ParsedJSON, Value } = require('@cuties/json')
 const { Backend, RestApi, CreatedServingFilesEndpoint } = require('@cuties/rest')
 const { ReadDataByPath, WatcherWithEventTypeAndFilenameListener } = require('@cuties/fs')
-const CustomNotFoundEndpoint = require('./../CustomNotFoundEndpoint')
-const CustomInternalServerErrorEndpoint = require('./../CustomInternalServerErrorEndpoint')
-const CreatedCustomIndexEndpoint = require('./../CreatedCustomIndexEndpoint')
-const OnPageStaticJsFilesChangeEvent = require('./../OnPageStaticJsFilesChangeEvent')
-const OnStaticGeneratorsChangeEvent = require('./../OnStaticGeneratorsChangeEvent')
-const OnTemplatesChangeEvent = require('./../OnTemplatesChangeEvent')
-const ReloadedBackendOnFailedWorkerEvent = require('./../ReloadedBackendOnFailedWorkerEvent')
-const UrlToFSPathMapper = require('./../UrlToFSPathMapper')
-const PrintedToConsolePageLogo = require('./../PrintedToConsolePageLogo')
+const CustomNotFoundEndpoint = require('./endpoints/CustomNotFoundEndpoint')
+const CustomInternalServerErrorEndpoint = require('./endpoints/CustomInternalServerErrorEndpoint')
+const CreatedCustomIndexEndpoint = require('./endpoints/CreatedCustomIndexEndpoint')
+const OnPageStaticJsFilesChangeEvent = require('./events/OnPageStaticJsFilesChangeEvent')
+const OnStaticGeneratorsChangeEvent = require('./events/OnStaticGeneratorsChangeEvent')
+const OnTemplatesChangeEvent = require('./events/OnTemplatesChangeEvent')
+const ReloadedBackendOnFailedWorkerEvent = require('./events/ReloadedBackendOnFailedWorkerEvent')
+const PrintedToConsolePageLogo = require('./async/PrintedToConsolePageLogo')
+const UrlToFSPathMapper = require('./async/UrlToFSPathMapper')
 
 const numCPUs = require('os').cpus().length
 const env = process.env.NODE_ENV || 'local'
@@ -401,7 +401,7 @@ const launchedBackend = new Backend(
       new CustomNotFoundEndpoint(new RegExp(/^\/not-found/))
     ),
     new CustomNotFoundEndpoint(new RegExp(/^\/not-found/)),
-    new CustomInternalServerErrorEndpoint()
+    new CustomInternalServerErrorEndpoint(new RegExp(/^\/internal-server-error/))
   )
 )
 

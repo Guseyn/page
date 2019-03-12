@@ -4,7 +4,7 @@ const { CreatedReadStream } = require('@cuties/fs')
 const { ResponseWithStatusCode, ResponseWithHeader } = require('@cuties/http')
 const { PipedReadable, ReadableWithErrorEvent } = require('@cuties/stream')
 const { IndexEndpoint } = require('@cuties/rest')
-const NotFoundErrorEvent = require('./NotFoundErrorEvent')
+const NotFoundErrorEvent = require('./../events/NotFoundErrorEvent')
 
 class CustomIndexEndpoint extends IndexEndpoint {
   constructor (page, notFoundEndpoint) {

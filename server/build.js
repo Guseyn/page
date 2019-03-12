@@ -4,9 +4,9 @@ const { as } = require('@cuties/cutie')
 const { ParsedJSON, Value } = require('@cuties/json')
 const { ExecutedScripts } = require('@cuties/scripts')
 const { ReadDataByPath } = require('@cuties/fs')
-const PrintedToConsolePageLogo = require('./../PrintedToConsolePageLogo')
 const { ExecutedLint, ExecutedTestCoverage, ExecutedTestCoverageCheck } = require('@cuties/wall')
-const ExecutedGruntBuild = require('./../ExecutedGruntBuild')
+const PrintedToConsolePageLogo = require('./async/PrintedToConsolePageLogo')
+const ExecutedGruntBuild = require('./async/ExecutedGruntBuild')
 const env = process.env.NODE_ENV || 'local'
 
 new ParsedJSON(
