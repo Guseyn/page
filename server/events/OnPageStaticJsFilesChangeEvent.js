@@ -1,7 +1,7 @@
 'use strict'
 
 const { AsyncObject } = require('@cuties/cutie')
-const ExecutedGruntBuild = require('./ExecutedGruntBuild')
+const ExecutedGruntBuild = require('./../async/ExecutedGruntBuild')
 
 class OnPageStaticJsFilesChangeEvent extends AsyncObject {
   constructor (pageStaticJsFilesDirectory, pageBundleJsFile) {

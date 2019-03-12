@@ -1,6 +1,6 @@
 'use strict'
 
-const ExecutedGruntBuild = require('./../../server/ExecutedGruntBuild')
+const ExecutedGruntBuild = require('./../../../server/async/ExecutedGruntBuild')
 const { DeepStrictEqualAssertion } = require('@cuties/assert')
 
 class FailedGrundBuild extends ExecutedGruntBuild {

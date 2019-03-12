@@ -1,9 +1,10 @@
 'use strict'
 
 const { AsyncObject } = require('@cuties/cutie')
-const OnPageStaticJsFilesChangeEvent = require('./../../server/OnPageStaticJsFilesChangeEvent')
 const { Assertion } = require('@cuties/assert')
 const { Is } = require('@cuties/is')
+
+const OnPageStaticJsFilesChangeEvent = require('./../../../server/events/OnPageStaticJsFilesChangeEvent')
 
 class InvokedOnPageStaticJsFilesChangeEvent extends AsyncObject {
   constructor (event, eventType, fileName) {

@@ -1,8 +1,8 @@
 'use strict'
 
 const { AsyncObject } = require('@cuties/cutie')
-const UrlToFSPathMapper = require('./../../server/UrlToFSPathMapper')
 const { StrictEqualAssertion } = require('@cuties/assert')
+const UrlToFSPathMapper = require('./../../../server/async/UrlToFSPathMapper')
 
 class FSPathByUrl extends AsyncObject {
   constructor (url, mapper) {

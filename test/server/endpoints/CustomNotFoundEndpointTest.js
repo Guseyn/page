@@ -1,10 +1,10 @@
 'use strict'
 
 const { NotFoundEndpoint } = require('@cuties/rest')
-const CustomNotFoundEndpoint = require('./../../server/CustomNotFoundEndpoint')
 const { Assertion } = require('@cuties/assert')
 const { Is } = require('@cuties/is')
-const { CustomStream, InvokedEndpoint } = require('./common')
+const { CustomStream, InvokedEndpoint } = require('./../common')
+const CustomNotFoundEndpoint = require('./../../../server/endpoints/CustomNotFoundEndpoint')
 
 new Assertion(
   new Is(

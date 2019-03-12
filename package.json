@@ -8,16 +8,16 @@
   },
   "scripts": {
     "test": "node test-executor",
-    "build-local": "NODE_ENV=local node server/app/build",
-    "build-dev": "NODE_ENV=dev node server/app/build",
-    "build-test": "NODE_ENV=test node server/app/build",
-    "build-stage": "NODE_ENV=stage node server/app/build",
-    "build-prod": "NODE_ENV=prod node server/app/build",
-    "run-local": "NODE_ENV=local node server/app/run",
-    "run-dev": "NODE_ENV=dev node server/app/run",
-    "run-test": "NODE_ENV=test node server/app/run",
-    "run-stage": "NODE_ENV=stage node server/app/run",
-    "run-prod": "NODE_ENV=prod node server/app/run"
+    "build-local": "NODE_ENV=local node server/build",
+    "build-dev": "NODE_ENV=dev node server/build",
+    "build-test": "NODE_ENV=test node server/build",
+    "build-stage": "NODE_ENV=stage node server/build",
+    "build-prod": "NODE_ENV=prod node server/build",
+    "run-local": "NODE_ENV=local node server/run",
+    "run-dev": "NODE_ENV=dev node server/run",
+    "run-test": "NODE_ENV=test node server/run",
+    "run-stage": "NODE_ENV=stage node server/run",
+    "run-prod": "NODE_ENV=prod node server/run"
   },
   "repository": {
     "type": "git",

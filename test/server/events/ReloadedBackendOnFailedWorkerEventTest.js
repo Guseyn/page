@@ -1,9 +1,10 @@
 'use strict'
 
 const { AsyncObject } = require('@cuties/cutie')
-const ReloadedBackendOnFailedWorkerEvent = require('./../../server/ReloadedBackendOnFailedWorkerEvent')
 const { Assertion } = require('@cuties/assert')
 const { Is } = require('@cuties/is')
+
+const ReloadedBackendOnFailedWorkerEvent = require('./../../../server/events/ReloadedBackendOnFailedWorkerEvent')
 
 class InvokedReloadedBackendOnFailedWorkerEvent extends AsyncObject {
   constructor (event, worker, code, signal) {
