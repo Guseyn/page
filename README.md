@@ -29,9 +29,9 @@ In another words, **Page** is just an example of how you can build your applicat
 
 1. **Page Is Not a Regular Framework.** Almost every framework is made with assumption that we live in ideal world, but it's very far from the truth. It's not possible to build something big and stable using *magic*, which every framework is based on. Meanwhile, **Page** allows you to control the whole behaviour of your application and apply new changes in a explicit way.
 
-2. **It's Not Easy to Start Quickly.** First of all you need to get acquainted with [Async Tree Pattern](https://github.com/Guseyn/async-tree-patern/blob/master/Async_Tree_Patern.pdf) and it's [implementation](https://github.com/Guseyn/cutie). It allows to build everything using pure approach in OOP.  Also you must know how [Node.js](https://nodejs.org/en/docs/) works and it's important to understand how non-blockinng i/o works there.
+2. **It's Not Easy to Start Quickly.** First of all you need to get acquainted with [Async Tree Pattern](https://github.com/Guseyn/async-tree-patern/blob/master/Async_Tree_Patern.pdf) and it's [implementation](https://github.com/Guseyn/cutie). It allows to build everything using pure approach in OOP.  Also, you must know how [Node.js](https://nodejs.org/en/docs/) works and it's important to understand how non-blockinng i/o works there.
 
-3. **But It's Very Easy to Continue.** Ones you've learnt how to use [Async Tree Pattern](https://github.com/Guseyn/async-tree-patern/blob/master/Async_Tree_Patern.pdf), libraries that are based on [cutie](https://github.com/Guseyn/cutie) and libraries for **Page**, your life is never will be like before. You'll able to intoduce new changes into your code extremely fast and painless(unlike in frameworks). 
+3. **But It's Very Easy to Continue.** Ones you've learnt how to use [Async Tree Pattern](https://github.com/Guseyn/async-tree-patern/blob/master/Async_Tree_Patern.pdf), libraries that are based on [cutie](https://github.com/Guseyn/cutie) and libraries for **Page**, your life will be never like before. You'll able to intoduce new changes into your code extremely fast and painless(unlike in other frameworks). 
 
 4. **No Unnecessary Complexity.** Only *html*, *css* and *js* (*server side* and *browser*).
 
