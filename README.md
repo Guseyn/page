@@ -15,7 +15,7 @@ In another words, **Page** is just an example of how you can build your applicat
 - [Project Structure](#project-structure)
 - [Building Process](#building-process)
 - [Running Process](#running-process)
-- [Test Project]()
+- [Test Project](#test-project)
 - [List Of Libraries For Page](#list-of-libraries-for-page)
   - [page-cutie](#page-cutie)
   - [page-ajax-based-on-page-cutie](#page-ajax-based-on-page-cutie)
@@ -269,7 +269,7 @@ This script executes all tests in the `test` directory using [this library](http
 
 # Building Process
 
-The declaration of this process is in [server/app/build.js](https://github.com/Guseyn/page/blob/master/server/app/build.js) script. Here we execute static analysis (for `pages`, `server`, `static/js/es6` and `test` packages), test coverage of [test-executor](https://github.com/Guseyn/page/blob/master/test-executor.js) script and [grunt build](https://github.com/Guseyn/page/blob/master/Gruntfile.js) (you can use other build system). After grunt tasks are executed we generate static pages. And that's it, you can also add some other steps in your building process.
+The declaration of this process is in [server/build.js](https://github.com/Guseyn/page/blob/master/server/build.js) script. Here we execute static analysis (for `pages`, `server`, `static/js/es6` and `test` packages), test coverage of [test-executor](https://github.com/Guseyn/page/blob/master/test-executor.js) script and [grunt build](https://github.com/Guseyn/page/blob/master/Gruntfile.js) (you can use other build system). After grunt tasks are executed we generate static pages. And that's it, you can also add some other steps in your building process.
 
 For building use command: **`page build [evironment]`** or **`page b [evironment]`**. `environment` is one of the following values: `local`, `prod`, `dev`, `stage`, `prod` (`local` is default).
 
@@ -320,7 +320,7 @@ Also you can customize eslint config via command **`./node_modules/.bin/eslint -
 
 # Running Process
 
-The declaration of this process is in [server/app/run-app.js](https://github.com/Guseyn/page/blob/master/server/app/run-app.js) script.
+The declaration of this process is in [server/run.js](https://github.com/Guseyn/page/blob/master/server/run.js) script.
 
 ## Backend (server)
 
