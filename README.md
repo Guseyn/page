@@ -563,9 +563,9 @@ We can build *html* page from these two templates:
 ```html
 <!-- outer.html -->
 <div class="outer">
-   {text}
+   {{ text }}
   <div class="place-for-inner-template">
-    {innerTemplate}
+    {{ innerTemplate }}
   </div>
 </div>
 
@@ -574,7 +574,7 @@ We can build *html* page from these two templates:
 ```html
 <!-- inner.html -->
 <div class="inner">
-   {text}
+   {{ text }}
 </div>
 
 ```
@@ -710,10 +710,6 @@ Obviously, you can choose any other build system for your browser js code you wa
 
 # Future plans
 
-1. **page-youtube** (inserts youtube videos(iframes) into web-page when user clicks on corresponding thumbnails)
-2. **page-google-oauth2**
-3. **page-jwt-token**
-4. **page-mobile-web-transformer**
-5. **page-templates**
+Just to create more little useful libs for **Page**.
 
 and so on...
