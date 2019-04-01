@@ -1,6 +1,6 @@
 {
   "page": {
-    "version": "1.1.1",
+    "version": "1.1.2",
     "logoText": "./static/txt/logo.txt",
     "logoImage": "./static/image/logo.png",
     "logoImageSrc": "/../image/logo.png"
