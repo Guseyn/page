@@ -711,5 +711,3 @@ Obviously, you can choose any other build system for your browser js code you wa
 # Future plans
 
 Just to create more little useful libs for **Page**.
-
-and so on...
