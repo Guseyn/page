@@ -332,11 +332,13 @@ const launchedBackend = new Backend(
   new Value(as('config'), `${env}.port`),
   new Value(as('config'), `${env}.host`),
   new RestApi(
-    new CreatedCustomIndexEndpoint(
+    new Created(
+      CustomIndexEndpoint,
       new Value(as('config'), 'index'),
       new CustomNotFoundEndpoint(new RegExp(/^\/not-found/))
     ),
-    new CreatedServingFilesEndpoint(
+    new Created(
+      ServingFilesEndpoint,
       new RegExp(/^\/(css|html|image|js|txt)/),
       new UrlToFSPathMapper(
         new Value(as('config'), 'static')
@@ -370,9 +372,10 @@ const { IsMaster, ClusterWithForkedWorkers, ClusterWithExitEvent } = require('@c
 const { ParsedJSON, Value } = require('@cuties/json')
 const { Backend, RestApi, CreatedServingFilesEndpoint } = require('@cuties/rest')
 const { ReadDataByPath, WatcherWithEventTypeAndFilenameListener } = require('@cuties/fs')
+const { Created } = require('@cuties/created')
 const CustomNotFoundEndpoint = require('./endpoints/CustomNotFoundEndpoint')
 const CustomInternalServerErrorEndpoint = require('./endpoints/CustomInternalServerErrorEndpoint')
-const CreatedCustomIndexEndpoint = require('./endpoints/CreatedCustomIndexEndpoint')
+const CustomIndexEndpoint = require('./endpoints/CustomIndexEndpoint')
 const OnPageStaticJsFilesChangeEvent = require('./events/OnPageStaticJsFilesChangeEvent')
 const OnStaticGeneratorsChangeEvent = require('./events/OnStaticGeneratorsChangeEvent')
 const OnTemplatesChangeEvent = require('./events/OnTemplatesChangeEvent')
@@ -389,11 +392,13 @@ const launchedBackend = new Backend(
   new Value(as('config'), `${env}.port`),
   new Value(as('config'), `${env}.host`),
   new RestApi(
-    new CreatedCustomIndexEndpoint(
+    new Created(
+      CustomIndexEndpoint,
       new Value(as('config'), 'index'),
       new CustomNotFoundEndpoint(new RegExp(/^\/not-found/))
     ),
-    new CreatedServingFilesEndpoint(
+    new Created(
+      ServingFilesEndpoint,
       new RegExp(/^\/(css|html|image|js|txt)/),
       new UrlToFSPathMapper(
         new Value(as('config'), 'static')
