@@ -15,6 +15,8 @@ In another words, **Page** is just an example of how you can build your applicat
 - [Project Structure](#project-structure)
 - [Building Process](#building-process)
 - [Running Process](#running-process)
+- [Build Project](#build-project)
+- [Run Project](#run-project)
 - [Test Project](#test-project)
 - [List Of Libraries For Page](#list-of-libraries-for-page)
   - [page-cutie](#page-cutie)
@@ -72,8 +74,10 @@ First of all you need to download this repository to your local machine. You can
 │   │   ├── ├── custom-calls
 │   │   ├── endpoints
 │   │   ├── events
-│   │   │   ├── build.js 
-│   │   │   ├── run.js
+│   │   ├── api.js
+│   │   ├── build.js
+│   │   ├── run.js
+│   │   ├── tunedWatchers.js
 │   ├── static
 │   │   ├── css
 │   │   │   ├── **/*.css
@@ -102,7 +106,7 @@ First of all you need to download this repository to your local machine. You can
 │   ├── package-lock.json
 │   ├── package.json
 │   ├── README.md
-│   ├── test-executor
+│   ├── test.js
 
 ```
 
@@ -271,30 +275,20 @@ This script executes all tests in the `test` directory using [this library](http
 
 The declaration of this process is in [server/build.js](https://github.com/Guseyn/page/blob/master/server/build.js) script. Here we execute static analysis (for `pages`, `server`, `static/js/es6` and `test` packages), test coverage of [test-executor](https://github.com/Guseyn/page/blob/master/test-executor.js) script and [grunt build](https://github.com/Guseyn/page/blob/master/Gruntfile.js) (you can use other build system). After grunt tasks are executed we generate static pages. And that's it, you can also add some other steps in your building process.
 
-For building use command: **`page build [evironment]`** or **`page b [evironment]`**. `environment` is one of the following values: `local`, `prod`, `dev`, `stage`, `prod` (`local` is default).
-
 ```js
 // server/build.js
 
 const { as } = require('@cuties/cutie')
-const { ParsedJSON, Value } = require('@cuties/json')
+const { Value } = require('@cuties/json')
 const { ExecutedScripts } = require('@cuties/scripts')
-const { ReadDataByPath } = require('@cuties/fs')
 const { ExecutedLint, ExecutedTestCoverage, ExecutedTestCoverageCheck } = require('@cuties/wall')
-const PrintedToConsolePageLogo = require('./async/PrintedToConsolePageLogo')
+const Config = require('./async/Config')
+const PrintedStage = require('./async/PrintedStage')
 const ExecutedGruntBuild = require('./async/ExecutedGruntBuild')
 const env = process.env.NODE_ENV || 'local'
 
-new ParsedJSON(
-  new ReadDataByPath('./config.json')
-).as('config').after(
-  new PrintedToConsolePageLogo(
-    new ReadDataByPath(
-      new Value(as('config'), 'page.logoText')
-    ),
-    new Value(as('config'), 'page.version'),
-    `BUILD (${env})`
-  ).after(
+new Config('./config.json').as('config').after(
+  new PrintedStage(`BUILD (${env})`).after(
     new ExecutedLint(process, './pages', './server', './static/js/es6', './test').after(
       new ExecutedTestCoverageCheck(
         new ExecutedTestCoverage(process, './test-executor.js'),
@@ -327,36 +321,60 @@ The declaration of this process is in [server/run.js](https://github.com/Guseyn/
 For building backend server with REST API we use here [cutie-rest](https://github.com/Guseyn/cutie-rest):
 
 ```js
+const { as } = require('@cuties/cutie')
+const { Value } = require('@cuties/json')
+const api = require('./api')
+
 const launchedBackend = new Backend(
   new Value(as('config'), `${env}.protocol`),
   new Value(as('config'), `${env}.port`),
   new Value(as('config'), `${env}.host`),
-  new RestApi(
-    new Created(
-      CustomIndexEndpoint,
-      new Value(as('config'), 'index'),
-      new CustomNotFoundEndpoint(new RegExp(/^\/not-found/))
-    ),
-    new Created(
-      ServingFilesEndpoint,
-      new RegExp(/^\/(css|html|image|js|txt)/),
-      new UrlToFSPathMapper(
-        new Value(as('config'), 'static')
-      ),
-      new CustomNotFoundEndpoint(new RegExp(/^\/not-found/))
-    ),
-    new CustomNotFoundEndpoint(new RegExp(/^\/not-found/)),
-    new CustomInternalServerErrorEndpoint(new RegExp(/^\/internal-server-error/))
-  )
+  api
 )
 
 ```
 
-It's just an example of how it could be built and worked. But, of course, you can configure it differently due to your requirements.
+Where `api` variable is for our REST API, which is defined in the `./api.js` script:
 
-For running use command: **`page run [evironment]`** or **`page r [evironment]`**. `environment` is one of the following values: `local`, `prod`, `dev`, `stage`, `prod` (`local` is default).
+```js
+const { as } = require('@cuties/cutie')
+const { RestApi, ServingFilesEndpoint, CachedServingFilesEndpoint } = require('@cuties/rest')
+const { Value } = require('@cuties/json')
+const { Created } = require('@cuties/created')
+const CustomIndexEndpoint = require('./endpoints/CustomIndexEndpoint')
+const CustomNotFoundEndpoint = require('./endpoints/CustomNotFoundEndpoint')
+const CustomInternalServerErrorEndpoint = require('./endpoints/CustomInternalServerErrorEndpoint')
+const UrlToFSPathMapper = require('./async/UrlToFSPathMapper')
+const env = process.env.NODE_ENV || 'local'
 
-As you can see here, we get some parameters like `post` and `host` from `config.json`. If you look at the whole script, you can notice that it's possible to run server in [cluster mode](https://nodejs.org/dist/latest/docs/api/cluster.html).
+const customNotFoundEndpoint = new Created(
+  CustomNotFoundEndpoint,
+  new RegExp(/^\/not-found/),
+  new Value(as('config'), 'notFoundPage')
+)
+
+module.exports = new RestApi(
+  new Created(
+    CustomIndexEndpoint,
+    new Value(as('config'), 'index'),
+    customNotFoundEndpoint
+  ),
+  new Created(
+    env === 'prod' ? CachedServingFilesEndpoint : ServingFilesEndpoint,
+    new RegExp(/^\/(css|html|image|js|txt)/),
+    new UrlToFSPathMapper(
+      new Value(as('config'), 'static')
+    ),
+    env === 'prod' ? { 'Cache-Control': 'cache, public, max-age=86400' } : {},
+    customNotFoundEndpoint
+  ),
+  customNotFoundEndpoint,
+  new CustomInternalServerErrorEndpoint(new RegExp(/^\/internal-server-error/))
+)
+
+```
+
+More information about declaration REST API you can find in the docs [cutie-rest](https://github.com/Guseyn/cutie-rest).
 
 ## The Whole Declaration
 
@@ -365,23 +383,19 @@ I believe that the declarative code below is self-explainable, but you can anywa
 ```js
 // server/run.js
 
+'use strict'
+
 const cluster = require('cluster')
 const { as } = require('@cuties/cutie')
 const { If, Else } = require('@cuties/if-else')
 const { IsMaster, ClusterWithForkedWorkers, ClusterWithExitEvent } = require('@cuties/cluster')
-const { ParsedJSON, Value } = require('@cuties/json')
-const { Backend, RestApi, CreatedServingFilesEndpoint } = require('@cuties/rest')
-const { ReadDataByPath, WatcherWithEventTypeAndFilenameListener } = require('@cuties/fs')
-const { Created } = require('@cuties/created')
-const CustomNotFoundEndpoint = require('./endpoints/CustomNotFoundEndpoint')
-const CustomInternalServerErrorEndpoint = require('./endpoints/CustomInternalServerErrorEndpoint')
-const CustomIndexEndpoint = require('./endpoints/CustomIndexEndpoint')
-const OnPageStaticJsFilesChangeEvent = require('./events/OnPageStaticJsFilesChangeEvent')
-const OnStaticGeneratorsChangeEvent = require('./events/OnStaticGeneratorsChangeEvent')
-const OnTemplatesChangeEvent = require('./events/OnTemplatesChangeEvent')
+const { Value } = require('@cuties/json')
+const { Backend } = require('@cuties/rest')
+const Config = require('./async/Config')
+const PrintedStage = require('./async/PrintedStage')
 const ReloadedBackendOnFailedWorkerEvent = require('./events/ReloadedBackendOnFailedWorkerEvent')
-const PrintedToConsolePageLogo = require('./async/PrintedToConsolePageLogo')
-const UrlToFSPathMapper = require('./async/UrlToFSPathMapper')
+const api = require('./api')
+const tunedWatchers = require('./tunedWatchers')
 
 const numCPUs = require('os').cpus().length
 const env = process.env.NODE_ENV || 'local'
@@ -391,63 +405,16 @@ const launchedBackend = new Backend(
   new Value(as('config'), `${env}.protocol`),
   new Value(as('config'), `${env}.port`),
   new Value(as('config'), `${env}.host`),
-  new RestApi(
-    new Created(
-      CustomIndexEndpoint,
-      new Value(as('config'), 'index'),
-      new CustomNotFoundEndpoint(new RegExp(/^\/not-found/))
-    ),
-    new Created(
-      ServingFilesEndpoint,
-      new RegExp(/^\/(css|html|image|js|txt)/),
-      new UrlToFSPathMapper(
-        new Value(as('config'), 'static')
-      ),
-      new CustomNotFoundEndpoint(new RegExp(/^\/not-found/))
-    ),
-    new CustomNotFoundEndpoint(new RegExp(/^\/not-found/)),
-    new CustomInternalServerErrorEndpoint(new RegExp(/^\/internal-server-error/))
-  )
+  api
 )
 
-new ParsedJSON(
-  new ReadDataByPath('./config.json')
-).as('config').after(
+new Config('./config.json').as('config').after(
   new If(
     new IsMaster(cluster),
-    new PrintedToConsolePageLogo(
-      new ReadDataByPath(
-        new Value(as('config'), 'page.logoText')
-      ),
-      new Value(as('config'), 'page.version'),
-      `RUN (${env})`
-    ).after(
+    new PrintedStage(`RUN (${env})`).after(
       new If(
         devEnv,
-        new WatcherWithEventTypeAndFilenameListener(
-          new Value(as('config'), 'staticGenerators'),
-          { persistent: true, recursive: true, encoding: 'utf8' },
-          new OnStaticGeneratorsChangeEvent(
-            new Value(as('config'), 'staticGenerators')
-          )
-        ).after(
-          new WatcherWithEventTypeAndFilenameListener(
-            new Value(as('config'), 'templates'),
-            { persistent: true, recursive: true, encoding: 'utf8' },
-            new OnTemplatesChangeEvent(
-              new Value(as('config'), 'staticGenerators')
-            )
-          ).after(
-            new WatcherWithEventTypeAndFilenameListener(
-              new Value(as('config'), 'staticJs'),
-              { persistent: true, recursive: true, encoding: 'utf8' },
-              new OnPageStaticJsFilesChangeEvent(
-                new Value(as('config'), 'staticJs'),
-                new Value(as('config'), 'bundleJs')
-              )
-            )
-          )
-        )
+        tunedWatchers
       ).after(
         new If(
           new Value(as('config'), `${env}.clusterMode`),
@@ -471,9 +438,19 @@ new ParsedJSON(
 
 ```
 
-As you can see it's easily configurable code, so you can add and remove components due to your requirements.
+In few words, here running process runs a server with REST API (in the cluster mode by default) and attaches [fs watchers](https://nodejs.org/dist/latest/docs/api/fs.html#fs_fs_watch_filename_options_listener) on `pages`, `static`, `templates` directories(in `local` and `dev` environments). FS watchers are declared by `tunedWatchers` variable which is defined in [this script](https://github.com/Guseyn/page/blob/master/server/tunedWatchers.js). Also in the cluster mode failed processes restart automatically.
 
-In few words, here running process runs server with REST API (in cluster mode by default) and adds [fs watchers](https://nodejs.org/dist/latest/docs/api/fs.html#fs_fs_watch_filename_options_listener) on `pages`, `static`, `templates` directories(in `local` and `dev` environments). Also in cluster mode failed processes restart automatically.
+As you can see here, we get some parameters like `post` and `host` from `config.json`. Also, you can notice that it's possible to run server in [cluster mode](https://nodejs.org/dist/latest/docs/api/cluster.html).
+
+It's just an example of how it could be built and worked. But, of course, you can configure it differently due to your requirements (it's quite configurable code).
+
+# Build Project
+
+For building use command: **`page build [evironment]`** or **`page b [evironment]`**. `environment` is one of the following values: `local`, `prod`, `dev`, `stage`, `prod` (`local` is the default environment).
+
+# Run Project
+
+For running use command: **`page run [evironment]`** or **`page r [evironment]`**. `environment` is one of the following values: `local`, `prod`, `dev`, `stage`, `prod` (`local` is the default environment).
 
 # Test Project
 

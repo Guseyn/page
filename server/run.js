@@ -4,19 +4,13 @@ const cluster = require('cluster')
 const { as } = require('@cuties/cutie')
 const { If, Else } = require('@cuties/if-else')
 const { IsMaster, ClusterWithForkedWorkers, ClusterWithExitEvent } = require('@cuties/cluster')
-const { ParsedJSON, Value } = require('@cuties/json')
-const { Backend, RestApi, ServingFilesEndpoint } = require('@cuties/rest')
-const { ReadDataByPath, WatcherWithEventTypeAndFilenameListener } = require('@cuties/fs')
-const { Created } = require('@cuties/created')
-const CustomNotFoundEndpoint = require('./endpoints/CustomNotFoundEndpoint')
-const CustomInternalServerErrorEndpoint = require('./endpoints/CustomInternalServerErrorEndpoint')
-const CustomIndexEndpoint = require('./endpoints/CustomIndexEndpoint')
-const OnPageStaticJsFilesChangeEvent = require('./events/OnPageStaticJsFilesChangeEvent')
-const OnStaticGeneratorsChangeEvent = require('./events/OnStaticGeneratorsChangeEvent')
-const OnTemplatesChangeEvent = require('./events/OnTemplatesChangeEvent')
+const { Value } = require('@cuties/json')
+const { Backend } = require('@cuties/rest')
+const Config = require('./async/Config')
+const PrintedStage = require('./async/PrintedStage')
 const ReloadedBackendOnFailedWorkerEvent = require('./events/ReloadedBackendOnFailedWorkerEvent')
-const PrintedToConsolePageLogo = require('./async/PrintedToConsolePageLogo')
-const UrlToFSPathMapper = require('./async/UrlToFSPathMapper')
+const api = require('./api')
+const tunedWatchers = require('./tunedWatchers')
 
 const numCPUs = require('os').cpus().length
 const env = process.env.NODE_ENV || 'local'
@@ -26,63 +20,16 @@ const launchedBackend = new Backend(
   new Value(as('config'), `${env}.protocol`),
   new Value(as('config'), `${env}.port`),
   new Value(as('config'), `${env}.host`),
-  new RestApi(
-    new Created(
-      CustomIndexEndpoint,
-      new Value(as('config'), 'index'),
-      new CustomNotFoundEndpoint(new RegExp(/^\/not-found/))
-    ),
-    new Created(
-      ServingFilesEndpoint,
-      new RegExp(/^\/(css|html|image|js|txt)/),
-      new UrlToFSPathMapper(
-        new Value(as('config'), 'static')
-      ),
-      new CustomNotFoundEndpoint(new RegExp(/^\/not-found/))
-    ),
-    new CustomNotFoundEndpoint(new RegExp(/^\/not-found/)),
-    new CustomInternalServerErrorEndpoint(new RegExp(/^\/internal-server-error/))
-  )
+  api
 )
 
-new ParsedJSON(
-  new ReadDataByPath('./config.json')
-).as('config').after(
+new Config('./config.json').as('config').after(
   new If(
     new IsMaster(cluster),
-    new PrintedToConsolePageLogo(
-      new ReadDataByPath(
-        new Value(as('config'), 'page.logoText')
-      ),
-      new Value(as('config'), 'page.version'),
-      `RUN (${env})`
-    ).after(
+    new PrintedStage(`RUN (${env})`).after(
       new If(
         devEnv,
-        new WatcherWithEventTypeAndFilenameListener(
-          new Value(as('config'), 'staticGenerators'),
-          { persistent: true, recursive: true, encoding: 'utf8' },
-          new OnStaticGeneratorsChangeEvent(
-            new Value(as('config'), 'staticGenerators')
-          )
-        ).after(
-          new WatcherWithEventTypeAndFilenameListener(
-            new Value(as('config'), 'templates'),
-            { persistent: true, recursive: true, encoding: 'utf8' },
-            new OnTemplatesChangeEvent(
-              new Value(as('config'), 'staticGenerators')
-            )
-          ).after(
-            new WatcherWithEventTypeAndFilenameListener(
-              new Value(as('config'), 'staticJs'),
-              { persistent: true, recursive: true, encoding: 'utf8' },
-              new OnPageStaticJsFilesChangeEvent(
-                new Value(as('config'), 'staticJs'),
-                new Value(as('config'), 'bundleJs')
-              )
-            )
-          )
-        )
+        tunedWatchers
       ).after(
         new If(
           new Value(as('config'), `${env}.clusterMode`),
