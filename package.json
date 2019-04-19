@@ -7,7 +7,7 @@
     "example": "example"
   },
   "scripts": {
-    "test": "node test-executor",
+    "test": "node test",
     "build-local": "NODE_ENV=local node server/build",
     "build-dev": "NODE_ENV=dev node server/build",
     "build-test": "NODE_ENV=test node server/build",
