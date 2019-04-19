@@ -267,13 +267,13 @@ It's a default config for eslint. You can customize it via command: `./node_modu
 
 Default cofiguration for grunt build system. You can find more information [in this section](#build-system).
 
-## `test-executor.js`
+## `test.js`
 
 This script executes all tests in the `test` directory using [this library](https://github.com/Guseyn/node-test-executor). 
 
 # Building Process
 
-The declaration of this process is in [server/build.js](https://github.com/Guseyn/page/blob/master/server/build.js) script. Here we execute static analysis (for `pages`, `server`, `static/js/es6` and `test` packages), test coverage of [test-executor](https://github.com/Guseyn/page/blob/master/test-executor.js) script and [grunt build](https://github.com/Guseyn/page/blob/master/Gruntfile.js) (you can use other build system). After grunt tasks are executed we generate static pages. And that's it, you can also add some other steps in your building process.
+The declaration of this process is in [server/build.js](https://github.com/Guseyn/page/blob/master/server/build.js) script. Here we execute static analysis (for `pages`, `server`, `static/js/es6` and `test` packages), test coverage of [test](https://github.com/Guseyn/page/blob/master/test.js) script and [grunt build](https://github.com/Guseyn/page/blob/master/Gruntfile.js) (you can use other build system). After grunt tasks are executed we generate static pages. And that's it, you can also add some other steps in your building process.
 
 ```js
 // server/build.js
@@ -291,7 +291,7 @@ new Config('./config.json').as('config').after(
   new PrintedStage(`BUILD (${env})`).after(
     new ExecutedLint(process, './pages', './server', './static/js/es6', './test').after(
       new ExecutedTestCoverageCheck(
-        new ExecutedTestCoverage(process, './test-executor.js'),
+        new ExecutedTestCoverage(process, './test.js'),
         { 'lines': 100, 'functions': 100, 'branches': 100 }
       ).after(
         new ExecutedGruntBuild(process).after(

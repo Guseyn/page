@@ -13,7 +13,7 @@ new Config('./config.json').as('config').after(
   new PrintedStage(`BUILD (${env})`).after(
     new ExecutedLint(process, './pages', './server', './static/js/es6', './test').after(
       new ExecutedTestCoverageCheck(
-        new ExecutedTestCoverage(process, './test-executor.js'),
+        new ExecutedTestCoverage(process, './test.js'),
         { 'lines': 100, 'functions': 100, 'branches': 100 }
       ).after(
         new ExecutedGruntBuild(process).after(
