@@ -1,9 +1,9 @@
 'use strict'
 
 const { AsyncObject } = require('@cuties/cutie')
-const ExecutedGruntBuild = require('./../async/ExecutedGruntBuild')
+const { SpawnedCommand } = require('@cuties/spawn')
 
-class OnPageStaticJsFilesChangeEvent extends AsyncObject {
+class OnStaticJsFilesChangeEvent extends AsyncObject {
   constructor (pageStaticJsFilesDirectory, pageBundleJsFile) {
     super(pageStaticJsFilesDirectory, pageBundleJsFile)
   }
@@ -12,11 +12,11 @@ class OnPageStaticJsFilesChangeEvent extends AsyncObject {
     return (pageStaticJsFilesDirectory, pageBundleJsFile) => {
       return (eventType, fileName) => {
         if (eventType === 'change') {
-          new ExecutedGruntBuild(process).call()
+          new SpawnedCommand('grunt').call()
         }
       }
     }
   }
 }
 
-module.exports = OnPageStaticJsFilesChangeEvent
+module.exports = OnStaticJsFilesChangeEvent
