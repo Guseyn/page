@@ -4,7 +4,7 @@ const { AsyncObject, as } = require('@cuties/cutie')
 const { ReadDataByPath } = require('@cuties/fs')
 const { Value } = require('@cuties/json')
 
-class PrintedToConsolePageLogo extends AsyncObject {
+class PrintedLogo extends AsyncObject {
   constructor (logo, version, step) {
     super(logo, version, step)
   }
@@ -18,13 +18,13 @@ class PrintedToConsolePageLogo extends AsyncObject {
 }
 
 class PrintedStage {
-  constructor (stage) {
-    return new PrintedToConsolePageLogo(
+  constructor (config, packageJSON, message) {
+    return new PrintedLogo(
       new ReadDataByPath(
-        new Value(as('config'), 'page.logoText')
+        new Value(config, 'page.logoText')
       ),
-      new Value(as('config'), 'page.version'),
-      stage
+      new Value(packageJSON, 'version'),
+      message
     )
   }
 }

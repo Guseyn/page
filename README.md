@@ -67,15 +67,14 @@ First of all you need to download this repository to your local machine. You can
 
 ```bash
 ├── ProjectName
+│   ├── async
 │   ├── pages
 │   │   ├── **/*.js
 │   ├── server
 │   │   ├── async
-│   │   ├── ├── custom-calls
 │   │   ├── endpoints
 │   │   ├── events
 │   │   ├── api.js
-│   │   ├── build.js
 │   │   ├── run.js
 │   │   ├── tunedWatchers.js
 │   ├── static
@@ -99,6 +98,7 @@ First of all you need to download this repository to your local machine. You can
 ├── ├── ├── ├── **/*.js
 │   ├── .babelrc
 │   ├── .eslintrc.json
+│   ├── build.js
 │   ├── .gitignore
 │   ├── config.json
 │   ├── Gruntfile.js
@@ -109,6 +109,10 @@ First of all you need to download this repository to your local machine. You can
 │   ├── test.js
 
 ```
+
+## `async` directory
+
+This directory contains async objects for the whole application.
 
 ## `pages` directory
 
@@ -273,30 +277,32 @@ This script executes all tests in the `test` directory using [this library](http
 
 # Building Process
 
-The declaration of this process is in [server/build.js](https://github.com/Guseyn/page/blob/master/server/build.js) script. Here we execute static analysis (for `pages`, `server`, `static/js/es6` and `test` packages), test coverage of [test](https://github.com/Guseyn/page/blob/master/test.js) script and [grunt build](https://github.com/Guseyn/page/blob/master/Gruntfile.js) (you can use other build system). After grunt tasks are executed we generate static pages. And that's it, you can also add some other steps in your building process.
+The declaration of this process is in [server/build.js](https://github.com/Guseyn/page/blob/master/build.js) script. Here we execute static analysis (for `pages`, `server`, `static/js/es6` and `test` packages), test coverage of [test](https://github.com/Guseyn/page/blob/master/test.js) script and [grunt build](https://github.com/Guseyn/page/blob/master/Gruntfile.js) (you can use other build system). After grunt tasks are executed we generate static pages. And that's it, you can also add some other steps in your building process.
 
 ```js
-// server/build.js
+// build.js
 
 const { as } = require('@cuties/cutie')
 const { Value } = require('@cuties/json')
 const { ExecutedScripts } = require('@cuties/scripts')
+const { SpawnedCommand } = require('@cuties/spawn')
 const { ExecutedLint, ExecutedTestCoverage, ExecutedTestCoverageCheck } = require('@cuties/wall')
 const Config = require('./async/Config')
 const PrintedStage = require('./async/PrintedStage')
-const ExecutedGruntBuild = require('./async/ExecutedGruntBuild')
 const env = process.env.NODE_ENV || 'local'
 
 new Config('./config.json').as('config').after(
-  new PrintedStage(`BUILD (${env})`).after(
-    new ExecutedLint(process, './pages', './server', './static/js/es6', './test').after(
-      new ExecutedTestCoverageCheck(
-        new ExecutedTestCoverage(process, './test.js'),
-        { 'lines': 100, 'functions': 100, 'branches': 100 }
-      ).after(
-        new ExecutedGruntBuild(process).after(
-          new ExecutedScripts(
-            'node', 'js', new Value(as('config'), 'staticGenerators')
+  new Config('./package.json').as('packageJSON').after(
+    new PrintedStage(as('config'), as('packageJSON'), `BUILD (${env})`).after(
+      new ExecutedLint(process, './pages', './server', './static/js/es6', './test').after(
+        new ExecutedTestCoverageCheck(
+          new ExecutedTestCoverage(process, './test.js'),
+          { 'lines': 100, 'functions': 100, 'branches': 100 }
+        ).after(
+          new SpawnedCommand('grunt').after(
+            new ExecutedScripts(
+              'node', 'js', new Value(as('config'), 'staticGenerators')
+            )
           )
         )
       )
@@ -321,56 +327,74 @@ The declaration of this process is in [server/run.js](https://github.com/Guseyn/
 For building backend server with REST API we use here [cutie-rest](https://github.com/Guseyn/cutie-rest):
 
 ```js
-const { as } = require('@cuties/cutie')
-const { Value } = require('@cuties/json')
-const api = require('./api')
+// server/async/LaunchedBackend.js
 
-const launchedBackend = new Backend(
-  new Value(as('config'), `${env}.protocol`),
-  new Value(as('config'), `${env}.port`),
-  new Value(as('config'), `${env}.host`),
-  api
-)
+const { Backend } = require('@cuties/rest')
+const { Value } = require('@cuties/json')
+const Api = require('./Api')
+const env = process.env.NODE_ENV || 'local'
+
+module.exports = class {
+  constructor (config) {
+    return new Backend(
+      new Value(config, `${env}.protocol`),
+      new Value(config, `${env}.port`),
+      new Value(config, `${env}.host`),
+      new Api(config)
+    )
+  }
+}
 
 ```
 
-Where `api` variable is for our REST API, which is defined in the `./api.js` script:
+Where `Api` object is for our REST API, which is defined in the `./server/async/Api.js` script:
 
 ```js
-const { as } = require('@cuties/cutie')
+// server/async/Api.js
+
 const { RestApi, ServingFilesEndpoint, CachedServingFilesEndpoint } = require('@cuties/rest')
 const { Value } = require('@cuties/json')
 const { Created } = require('@cuties/created')
-const CustomIndexEndpoint = require('./endpoints/CustomIndexEndpoint')
-const CustomNotFoundEndpoint = require('./endpoints/CustomNotFoundEndpoint')
-const CustomInternalServerErrorEndpoint = require('./endpoints/CustomInternalServerErrorEndpoint')
-const UrlToFSPathMapper = require('./async/UrlToFSPathMapper')
+const CustomIndexEndpoint = require('./../endpoints/CustomIndexEndpoint')
+const CustomNotFoundEndpoint = require('./../endpoints/CustomNotFoundEndpoint')
+const CustomInternalServerErrorEndpoint = require('./../endpoints/CustomInternalServerErrorEndpoint')
+const UrlToFSPathMapper = require('./UrlToFSPathMapper')
 const env = process.env.NODE_ENV || 'local'
+const headers = env === 'prod' ? { 'Cache-Control': 'cache, public, max-age=86400' } : {}
+const servingFilesEndpoint = env === 'prod' ? CachedServingFilesEndpoint : ServingFilesEndpoint
 
-const customNotFoundEndpoint = new Created(
-  CustomNotFoundEndpoint,
-  new RegExp(/^\/not-found/),
-  new Value(as('config'), 'notFoundPage')
-)
+class CreatedCustomNotFoundEndpoint {
+  constructor (config) {
+    return new Created(
+      CustomNotFoundEndpoint,
+      new RegExp(/^\/not-found/),
+      new Value(config, 'notFoundPage')
+    )
+  }
+}
 
-module.exports = new RestApi(
-  new Created(
-    CustomIndexEndpoint,
-    new Value(as('config'), 'index'),
-    customNotFoundEndpoint
-  ),
-  new Created(
-    env === 'prod' ? CachedServingFilesEndpoint : ServingFilesEndpoint,
-    new RegExp(/^\/(css|html|image|js|txt)/),
-    new UrlToFSPathMapper(
-      new Value(as('config'), 'static')
-    ),
-    env === 'prod' ? { 'Cache-Control': 'cache, public, max-age=86400' } : {},
-    customNotFoundEndpoint
-  ),
-  customNotFoundEndpoint,
-  new CustomInternalServerErrorEndpoint(new RegExp(/^\/internal-server-error/))
-)
+module.exports = class {
+  constructor (config) {
+    return new RestApi(
+      new Created(
+        CustomIndexEndpoint,
+        new Value(config, 'index'),
+        new CreatedCustomNotFoundEndpoint(config)
+      ),
+      new Created(
+        servingFilesEndpoint,
+        new RegExp(/^\/(css|html|image|js|txt)/),
+        new UrlToFSPathMapper(
+          new Value(config, 'static')
+        ),
+        headers,
+        new CreatedCustomNotFoundEndpoint(config)
+      ),
+      new CreatedCustomNotFoundEndpoint(config),
+      new CustomInternalServerErrorEndpoint(new RegExp(/^\/internal-server-error/))
+    )
+  }
+}
 
 ```
 
@@ -383,62 +407,54 @@ I believe that the declarative code below is self-explainable, but you can anywa
 ```js
 // server/run.js
 
-'use strict'
-
 const cluster = require('cluster')
 const { as } = require('@cuties/cutie')
 const { If, Else } = require('@cuties/if-else')
 const { IsMaster, ClusterWithForkedWorkers, ClusterWithExitEvent } = require('@cuties/cluster')
 const { Value } = require('@cuties/json')
-const { Backend } = require('@cuties/rest')
-const Config = require('./async/Config')
-const PrintedStage = require('./async/PrintedStage')
+const Config = require('./../async/Config')
+const PrintedStage = require('./../async/PrintedStage')
 const ReloadedBackendOnFailedWorkerEvent = require('./events/ReloadedBackendOnFailedWorkerEvent')
-const api = require('./api')
-const tunedWatchers = require('./tunedWatchers')
+const LaunchedBackend = require('./async/LaunchedBackend')
+const TunedWatchers = require('./async/TunedWatchers')
 
 const numCPUs = require('os').cpus().length
 const env = process.env.NODE_ENV || 'local'
 const devEnv = env === 'local' || env === 'dev'
 
-const launchedBackend = new Backend(
-  new Value(as('config'), `${env}.protocol`),
-  new Value(as('config'), `${env}.port`),
-  new Value(as('config'), `${env}.host`),
-  api
-)
-
 new Config('./config.json').as('config').after(
-  new If(
-    new IsMaster(cluster),
-    new PrintedStage(`RUN (${env})`).after(
-      new If(
-        devEnv,
-        tunedWatchers
-      ).after(
+  new Config('./package.json').as('packageJSON').after(
+    new If(
+      new IsMaster(cluster),
+      new PrintedStage(as('config'), as('packageJSON'), `RUN (${env})`).after(
         new If(
-          new Value(as('config'), `${env}.clusterMode`),
-          new ClusterWithForkedWorkers(
-            new ClusterWithExitEvent(
-              cluster,
-              new ReloadedBackendOnFailedWorkerEvent(cluster)
-            ), numCPUs
-          ),
-          new Else(
-            launchedBackend
+          devEnv,
+          new TunedWatchers(as('config'))
+        ).after(
+          new If(
+            new Value(as('config'), `${env}.clusterMode`),
+            new ClusterWithForkedWorkers(
+              new ClusterWithExitEvent(
+                cluster,
+                new ReloadedBackendOnFailedWorkerEvent(cluster)
+              ), numCPUs
+            ),
+            new Else(
+              new LaunchedBackend(as('config'))
+            )
           )
         )
+      ),
+      new Else(
+        new LaunchedBackend(as('config'))
       )
-    ),
-    new Else(
-      launchedBackend
     )
   )
 ).call()
 
 ```
 
-In few words, here running process runs a server with REST API (in the cluster mode by default) and attaches [fs watchers](https://nodejs.org/dist/latest/docs/api/fs.html#fs_fs_watch_filename_options_listener) on `pages`, `static`, `templates` directories(in `local` and `dev` environments). FS watchers are declared by `tunedWatchers` variable which is defined in [this script](https://github.com/Guseyn/page/blob/master/server/tunedWatchers.js). Also in the cluster mode failed processes restart automatically.
+In few words, here running process runs a server with REST API (in the cluster mode by default) and attaches [fs watchers](https://nodejs.org/dist/latest/docs/api/fs.html#fs_fs_watch_filename_options_listener) on `pages`, `static`, `templates` directories(in `local` and `dev` environments). FS watchers are declared by `TunedWatchers` object which is defined in [this script](https://github.com/Guseyn/page/blob/master/server/async/TunedWatchers.js). Also in the cluster mode failed processes restart automatically.
 
 As you can see here, we get some parameters like `post` and `host` from `config.json`. Also, you can notice that it's possible to run server in [cluster mode](https://nodejs.org/dist/latest/docs/api/cluster.html).
 

@@ -1,6 +1,6 @@
 {
   "page": {
-    "version": "1.1.7",
+    "version": "1.1.8",
     "logoText": "./static/txt/logo.txt",
     "logoImage": "./static/image/logo.png",
     "logoImageSrc": "/../image/logo.png"
@@ -11,7 +11,7 @@
   "staticGenerators": "./pages",
   "templates": "./templates",
   "staticHtml": "./static/html",
-  "staticJs": "./static/js/es6",
+  "staticJs": "./static/js/src",
   "outStaticJs": "./static/js/out",
   "bundle": "./static/js/bundle.js",
   "bundleHref": "/../js/bundle.js",
