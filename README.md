@@ -480,27 +480,16 @@ All these libraries are available on **npm** under `@page-libs` scope.
 
 [This library](https://github.com/Guseyn/page-cutie) is analogue of [cutie](https://github.com/Guseyn/cutie) for using [Async Tree Pattern](https://github.com/Guseyn/async-tree-patern/blob/master/Async_Tree_Patern.pdf) in browser.
 
-You can use async object from **page-cutie** with async objects from **cutie** on the server(Node.js programm) with no problems. But if you want to use mixed async objects in browser, you must transform **cutie** async objects to **page-cutie** async objects. Use following function:
+You can use async object from **page-cutie** with async objects from **cutie** on the server(Node.js programm) with no problems. But if you want to use mixed async objects in the browser, you must transform **cutie** async objects to **page-cutie** async objects. Use following function:
 
 ```js
-const PageAsyncObject = require('@page-libs/cutie').AsyncObject
-const { AsyncObject1, AsyncObject2, AsyncObject3 } = require('some-lib')
+const { browserified } = require('@page-libs/cutie')
+const { AsyncObject1, AsyncObject2, AsyncObject3 } = browserified(require('@cuties/some-lib'))
 
-// ...asyncObjects extend AsyncObject from cutie
-function transformAsyncObjects(...asyncObjects) {
-  for (let i = 0; i < asyncObjects.length; i++) {
-    if (asyncObjects[i].prototype instanceof PageAsyncObject) {
-      Object.setPrototypeOf(asyncObjects[i].prototype, PageAsyncObject.prototype);
-      Object.setPrototypeOf(asyncObjects[i], PageAsyncObject);
-    }
-  }
-}
-
-transformAsyncObjects(AsyncObject1, AsyncObject2, AsyncObject3)
+// Now you can use AsyncObject1, AsyncObject2, AsyncObject3 which are based on @cuties/cutie 
+// with with async objects which are based on @page-libs/cutie in the browser
 
 ```
-
-Also, it's possible to create variation of library from **@cuties** for **@page-libs**. 
 
 ## page-ajax (based on *page-cutie*)
 
