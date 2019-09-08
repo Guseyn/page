@@ -20,7 +20,7 @@ In another words, **Page** is just an example of how you can build your applicat
 - [Test Project](#test-project)
 - [List Of Libraries For Page](#list-of-libraries-for-page)
   - [page-cutie](#page-cutie)
-  - [page-ajax-based-on-page-cutie](#page-ajax-based-on-page-cutie)
+  - [page-ajax](#page-ajax-based-on-page-cutie)
   - [page-unit](#page-unit)
   - [page-static-generator](#page-static-generator-based-on-cutie)
   - [page-md2html](#page-md2html-based-on-cutie)
