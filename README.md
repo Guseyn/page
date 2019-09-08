@@ -294,7 +294,7 @@ const env = process.env.NODE_ENV || 'local'
 new Config('./config.json').as('config').after(
   new Config('./package.json').as('packageJSON').after(
     new PrintedStage(as('config'), as('packageJSON'), `BUILD (${env})`).after(
-      new ExecutedLint(process, './pages', './server', './static/js/es6', './test').after(
+      new ExecutedLint(process, './pages', './server', './static/js/src', './test').after(
         new ExecutedTestCoverageCheck(
           new ExecutedTestCoverage(process, './test.js'),
           { 'lines': 100, 'functions': 100, 'branches': 100 }
@@ -681,7 +681,7 @@ However, this example is not the case, obviously. I think that creating element 
 
 ## `babel`
 
-We recommend to write code in `es6` style and keep your code in `static/js/es6`. Babel takes this code, convert it into JavaScript that browsers can understand and put it in `static/js/out`.
+Babel takes code from `static/js/src`, convert it into JavaScript that browsers can understand and put it in `static/js/out`.
 
 ## `browserify`
 
