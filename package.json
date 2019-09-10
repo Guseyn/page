@@ -45,7 +45,7 @@
     "@cuties/is": "^1.1.2",
     "@cuties/json": "^1.1.1",
     "@cuties/path": "^1.1.1",
-    "@cuties/rest": "^1.2.11",
+    "@cuties/rest": "^1.2.17",
     "@cuties/scripts": "^1.1.1",
     "@cuties/spawn": "^1.0.2",
     "@cuties/wall": "^1.1.2",
