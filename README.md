@@ -63,6 +63,18 @@ First of all you need to download this repository to your local machine. You can
 1. Go to your project directory: **`cd <project_name>`**
 2. Run tests: **`page test`** (it runs **`npm test`**)
 
+## Build Instructions
+
+**`page build [environment]`** or **`page b [environment]`** (`environment` is `local` by default)
+
+## Run Instructions
+
+**`page run [environment]`** or **`page r [environment]`** (`environment` is `local` by default)
+
+## Build&Run
+
+**`page br [environment]`** (`environment` is `local` by default)
+
 # Project Structure
 
 ```bash
@@ -462,11 +474,11 @@ It's just an example of how it could be built and worked. But, of course, you ca
 
 # Build Project
 
-For building use command: **`page build [evironment]`** or **`page b [evironment]`**. `environment` is one of the following values: `local`, `prod`, `dev`, `stage`, `prod` (`local` is the default environment).
+For building use command: **`page build [environment]`** or **`page b [environment]`**. `environment` is one of the following values: `local`, `prod`, `dev`, `stage`, `prod` (`local` is the default environment).
 
 # Run Project
 
-For running use command: **`page run [evironment]`** or **`page r [evironment]`**. `environment` is one of the following values: `local`, `prod`, `dev`, `stage`, `prod` (`local` is the default environment).
+For running use command: **`page run [environment]`** or **`page r [environment]`**. `environment` is one of the following values: `local`, `prod`, `dev`, `stage`, `prod` (`local` is the default environment).
 
 # Test Project
 
