@@ -499,7 +499,7 @@ const { browserified } = require('@page-libs/cutie')
 const { AsyncObject1, AsyncObject2, AsyncObject3 } = browserified(require('@cuties/some-lib'))
 
 // Now you can use AsyncObject1, AsyncObject2, AsyncObject3 which are based on @cuties/cutie 
-// with with async objects which are based on @page-libs/cutie in the browser
+// with async objects which are based on @page-libs/cutie in the browser
 
 ```
 
