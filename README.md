@@ -3,6 +3,7 @@
 [![NPM Version](https://img.shields.io/npm/v/@page-libs/page.svg)](https://npmjs.org/package/@page-libs/page)
 [![Build Status](https://travis-ci.org/Guseyn/page.svg?branch=master)](https://travis-ci.org/Guseyn/page)
 [![codecov](https://codecov.io/gh/Guseyn/page/branch/master/graph/badge.svg)](https://codecov.io/gh/Guseyn/page)
+[![Coverage Status](https://coveralls.io/repos/github/Guseyn/page/badge.svg?branch=master)](https://coveralls.io/github/Guseyn/page?branch=master)
 
 **Page** can be described as a base for any applications on top of it with server and client in Node.js. It provides a lot of features and common scenarios for using web. It's completely based on the [Async Tree Pattern](https://guseyn.com/pdf/Async_Tree_Pattern.pdf) that allows you to customize **Page** in any way you want, you can even throw it away and build other base core for your application.
 

@@ -7,7 +7,7 @@ install: |-
 script: |-
   npm run build-prod || travis_terminate 1
   ./node_modules/.bin/nyc report --reporter=lcov
-  codecov
+  ./node_modules/coveralls/bin/coveralls.js
   log=$(git log $TRAVIS_COMMIT_RANGE --oneline)
   echo $'Commit message: '$TRAVIS_COMMIT_MESSAGE
   echo $'**Change log:**<br/>'${log//$'\n'/<br/>}
