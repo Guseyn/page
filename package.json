@@ -1,6 +1,6 @@
 {
   "name": "@page-libs/page",
-  "version": "1.1.13",
+  "version": "1.1.14",
   "description": "UI framework with pure OOP approach in design.  Has no unnecessary complexity: only html, css and js. It's based on the Async Tree Pattern.",
   "main": "index.js",
   "directories": {
