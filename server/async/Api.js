@@ -1,6 +1,6 @@
 'use strict'
 
-const { RestApi, ServingFilesEndpoint, CachedServingFilesEndpoint } = require('@cuties/rest')
+const { RestApi, ServingFilesEndpoint } = require('@cuties/rest')
 const { Value } = require('@cuties/json')
 const { Created } = require('@cuties/created')
 const CustomIndexEndpoint = require('./../endpoints/CustomIndexEndpoint')
@@ -9,7 +9,6 @@ const CustomInternalServerErrorEndpoint = require('./../endpoints/CustomInternal
 const UrlToFSPathMapper = require('./UrlToFSPathMapper')
 const env = process.env.NODE_ENV || 'local'
 const headers = env === 'prod' ? { 'Cache-Control': 'cache, public, max-age=86400' } : {}
-const servingFilesEndpoint = env === 'prod' ? CachedServingFilesEndpoint : ServingFilesEndpoint
 
 class CreatedCustomNotFoundEndpoint {
   constructor (config) {
@@ -30,7 +29,7 @@ module.exports = class {
         new CreatedCustomNotFoundEndpoint(config)
       ),
       new Created(
-        servingFilesEndpoint,
+        ServingFilesEndpoint,
         new RegExp(/^\/(css|html|image|js|txt)/),
         new UrlToFSPathMapper(
           new Value(config, 'static')

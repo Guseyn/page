@@ -11,12 +11,6 @@
   "staticGenerators": "./pages",
   "templates": "./templates",
   "staticHtml": "./static/html",
-  "staticJs": "./static/js/src",
-  "outStaticJs": "./static/js/out",
-  "bundle": "./static/js/bundle.js",
-  "bundleHref": "/../js/bundle.js",
-  "minBundle": "./static/js/bundle.min.js",
-  "minBundleHref": "/../js/bundle.min.js",
   "local": {
     "protocol": "http",
     "port": 8000,

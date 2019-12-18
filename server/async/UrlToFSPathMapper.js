@@ -11,7 +11,15 @@ class UrlToFSPathMapper extends AsyncObject {
   syncCall () {
     return (staticDirectory) => {
       return (url) => {
-        return path.join(staticDirectory, ...url.split('/').filter(path => path !== ''))
+        let fileLocation
+        // without version of file
+        url = url.replace(/\?v=([0-9]{1,3}).([0-9]{1,3}).([0-9]{1,3})$/, '')
+        if (staticDirectory) {
+          fileLocation = path.join(staticDirectory, ...url.split('/').filter(path => path !== ''))
+        } else {
+          fileLocation = path.join(...url.split('/').filter(path => path !== ''))
+        }
+        return fileLocation
       }
     }
   }
