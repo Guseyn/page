@@ -59,7 +59,7 @@ For running use command: **`page run [environment]`** or **`page r [environment]
 
 ## Build&Run Project
 
-**`page br [environment]`** (`environment` is `local` by default)
+You can build and run the project just by one command: **`page br [environment]`** (`environment` is `local` by default).
 
 ## Test Project
 
