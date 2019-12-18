@@ -15,21 +15,12 @@ In another words, **Page** is just an example of how you can build your applicat
 - [Project Structure](#project-structure)
 - [Building Process](#building-process)
 - [Running Process](#running-process)
-- [Build Project](#build-project)
-- [Run Project](#run-project)
-- [Test Project](#test-project)
-- [List Of Libraries For Page](#list-of-libraries-for-page)
-  - [page-cutie](#page-cutie)
-  - [page-ajax](#page-ajax-based-on-page-cutie)
-  - [page-unit](#page-unit)
-  - [page-static-generator](#page-static-generator-based-on-cutie)
-  - [page-md2html](#page-md2html-based-on-cutie)
-- [Build System](#build-system)
-- [Future plans](#future-plans)
+- [EHTML](#ehtml)
+- [Static Generator](#static-generator)
 
 # Basic Concepts
 
-1. **Page Is Not a Regular Framework.** Almost every framework is made with assumption that we live in ideal world, but it's very far from the truth. It's not possible to build something big and stable using *magic*, which every framework is based on. Meanwhile, **Page** allows you to control the whole behaviour of your application and apply new changes in a explicit way.
+1. **Page Is Not a Regular Framework.** Almost every framework is made with an assumption that we live in ideal world, but it's very far from the truth. It's not possible to build something big and stable using *magic*, which every framework is based on. Meanwhile, **Page** allows you to control the whole behaviour of your application and apply new changes in a explicit way.
 
 2. **It's Not Easy to Start Quickly.** First of all you need to get acquainted with [Async Tree Pattern](https://github.com/Guseyn/async-tree-patern/blob/master/Async_Tree_Patern.pdf) and it's [implementation](https://github.com/Guseyn/cutie). It allows to build everything using pure approach in OOP.  Also, you must know how [Node.js](https://nodejs.org/en/docs/) works and it's important to understand how non-blockinng i/o works there.
 
@@ -41,13 +32,13 @@ In another words, **Page** is just an example of how you can build your applicat
 
 # How To Start (page-cli)
 
-First of all you need to download this repository to your local machine. You can do it via github or **page-cli**. We suggest you to use the last option, because it also makes building and running of your application much easier.
+First of all you need to download this repository to your local machine. You can do it via github or **page-cli**. We suggest you to use the last option because it also makes building and running of your application much easier.
 
 ## Installation Instructions
 
 1. Install [page-cli](https://github.com/Guseyn/page-cli): **`npm install @page-libs/cli -g`**
 5. Go to the workspace where you want to create your project: **`cd ../<my-projects>`**
-6. Create project: **`page create`**
+6. Create a project: **`page create`**
 7. Then you'll have to enter some information about your project (`Project name`, `Version`, `Author`, `Description`, `License`), you'll get this repository with changed *package.json* and removed *.git* directory (so you can bind it to your project on github).
 8. Go to your project directory: **`cd <projectName>`**
 9. Install dependencies: **`npm install`**
@@ -58,22 +49,22 @@ First of all you need to download this repository to your local machine. You can
 2. Update version of framework: **`page update`**, this command just updates versions of components in your *package.json*
 3. Install new dependencies: **`npm install`**
 
-## Test Instructions
+## Build Project
+
+For building use command: **`page build [environment]`** or **`page b [environment]`**. `environment` is one of the following values: `local`, `prod`, `dev`, `stage`, `prod` (`local` is the default environment).
+
+## Run Project
+
+For running use command: **`page run [environment]`** or **`page r [environment]`**. `environment` is one of the following values: `local`, `prod`, `dev`, `stage`, `prod` (`local` is the default environment).
+
+## Build&Run Project
+
+**`page br [environment]`** (`environment` is `local` by default)
+
+## Test Project
 
 1. Go to your project directory: **`cd <project_name>`**
 2. Run tests: **`page test`** (it runs **`npm test`**)
-
-## Build Instructions
-
-**`page build [environment]`** or **`page b [environment]`** (`environment` is `local` by default)
-
-## Run Instructions
-
-**`page run [environment]`** or **`page r [environment]`** (`environment` is `local` by default)
-
-## Build&Run
-
-**`page br [environment]`** (`environment` is `local` by default)
 
 # Project Structure
 
@@ -108,12 +99,10 @@ First of all you need to download this repository to your local machine. You can
 │   ├── ├── ├── files
 │   ├── ├── ├── ├── **/*.{html, js}
 ├── ├── ├── ├── **/*.js
-│   ├── .babelrc
 │   ├── .eslintrc.json
 │   ├── build.js
 │   ├── .gitignore
 │   ├── config.json
-│   ├── Gruntfile.js
 │   ├── LICENSE
 │   ├── package-lock.json
 │   ├── package.json
@@ -168,12 +157,12 @@ const { ReadDataByPath } = require('@cuties/fs')
 
 new ParsedJSON(
   new ReadDataByPath('./config.json')
-).as('config').after(
+).as('CONFIG').after(
   /* 
     now you can use following composition 
       for retrieving concrete value from config
   */
-  new Value(as('config'), 'somePropertyName')
+  new Value(as('CONFIG'), 'somePropertyName')
 ).call()
 
 ```
@@ -191,7 +180,7 @@ new ParsedJSON(
 }
 ```
 
-This property contains object with information about **Page**: current version, path to the logo in the text format and image format, also image address of the logo.
+This property contains an object with information about **Page**: current version, path to the logo in the text format and image format, also image address of the logo.
 
 #### index, indexHref
 
@@ -212,30 +201,6 @@ This property is for location of the directory with templates.
 #### staticHtml
 
 This property is for location of the directory of static files with `html` extension.
-
-#### staticJs
-
-This property is for location of the directory of static files with `js` extension (*es6*).
-
-#### outStaticJs
-
-This property is for location of the directory of static files with `js` extension(for using in a browser).
-
-#### bundle
-
-This property is for location of the bundle file that is generated from `outStaticJs` directory.
-
-#### bundleHref
-
-This property is for link of the bundle file.
-
-#### minBundle
-
-This property is for location of the minified version of the bundle file.
-
-#### minBundleHref
-
-This property is for link of the minified bundle file.
 
 #### enviroments(local, prod, dev, stage, prod)
 
@@ -279,10 +244,6 @@ Every environment property includes `protocol, port, host, clusterMode`. You can
 
 It's a default config for eslint. You can customize it via command: `./node_modules/.bin/eslint --init`
 
-## `Gruntfile.js`
-
-Default cofiguration for grunt build system. You can find more information [in this section](#build-system).
-
 ## `test.js`
 
 This script executes all tests in the `test` directory using [this library](https://github.com/Guseyn/node-test-executor). 
@@ -297,24 +258,21 @@ The declaration of this process is in [server/build.js](https://github.com/Gusey
 const { as } = require('@cuties/cutie')
 const { Value } = require('@cuties/json')
 const { ExecutedScripts } = require('@cuties/scripts')
-const { SpawnedCommand } = require('@cuties/spawn')
 const { ExecutedLint, ExecutedTestCoverage, ExecutedTestCoverageCheck } = require('@cuties/wall')
 const Config = require('./async/Config')
 const PrintedStage = require('./async/PrintedStage')
 const env = process.env.NODE_ENV || 'local'
 
-new Config('./config.json').as('config').after(
-  new Config('./package.json').as('packageJSON').after(
-    new PrintedStage(as('config'), as('packageJSON'), `BUILD (${env})`).after(
-      new ExecutedLint(process, './pages', './server', './static/js/src', './test').after(
+new Config('./config.json').as('CONFIG').after(
+  new Config('./package.json').as('PACKAGE_JSON').after(
+    new PrintedStage(as('CONFIG'), as('PACKAGE_JSON'), `BUILD (${env})`).after(
+      new ExecutedLint(process, './pages', './server', './test').after(
         new ExecutedTestCoverageCheck(
           new ExecutedTestCoverage(process, './test.js'),
           { 'lines': 100, 'functions': 100, 'branches': 100 }
         ).after(
-          new SpawnedCommand('grunt').after(
-            new ExecutedScripts(
-              'node', 'js', new Value(as('config'), 'staticGenerators')
-            )
+          new ExecutedScripts(
+            'node', 'js', new Value(as('CONFIG'), 'staticGenerators')
           )
         )
       )
@@ -364,7 +322,7 @@ Where `Api` object is for our REST API, which is defined in the `./server/async/
 ```js
 // server/async/Api.js
 
-const { RestApi, ServingFilesEndpoint, CachedServingFilesEndpoint } = require('@cuties/rest')
+const { RestApi, ServingFilesEndpoint } = require('@cuties/rest')
 const { Value } = require('@cuties/json')
 const { Created } = require('@cuties/created')
 const CustomIndexEndpoint = require('./../endpoints/CustomIndexEndpoint')
@@ -373,7 +331,6 @@ const CustomInternalServerErrorEndpoint = require('./../endpoints/CustomInternal
 const UrlToFSPathMapper = require('./UrlToFSPathMapper')
 const env = process.env.NODE_ENV || 'local'
 const headers = env === 'prod' ? { 'Cache-Control': 'cache, public, max-age=86400' } : {}
-const servingFilesEndpoint = env === 'prod' ? CachedServingFilesEndpoint : ServingFilesEndpoint
 
 class CreatedCustomNotFoundEndpoint {
   constructor (config) {
@@ -394,7 +351,7 @@ module.exports = class {
         new CreatedCustomNotFoundEndpoint(config)
       ),
       new Created(
-        servingFilesEndpoint,
+        ServingFilesEndpoint,
         new RegExp(/^\/(css|html|image|js|txt)/),
         new UrlToFSPathMapper(
           new Value(config, 'static')
@@ -434,17 +391,17 @@ const numCPUs = require('os').cpus().length
 const env = process.env.NODE_ENV || 'local'
 const devEnv = env === 'local' || env === 'dev'
 
-new Config('./config.json').as('config').after(
-  new Config('./package.json').as('packageJSON').after(
+new Config('./config.json').as('CONFIG').after(
+  new Config('./package.json').as('PACKAGE_JSON').after(
     new If(
       new IsMaster(cluster),
-      new PrintedStage(as('config'), as('packageJSON'), `RUN (${env})`).after(
+      new PrintedStage(as('CONFIG'), as('PACKAGE_JSON'), `RUN (${env})`).after(
         new If(
           devEnv,
-          new TunedWatchers(as('config'))
+          new TunedWatchers(as('CONFIG'))
         ).after(
           new If(
-            new Value(as('config'), `${env}.clusterMode`),
+            new Value(as('CONFIG'), `${env}.clusterMode`),
             new ClusterWithForkedWorkers(
               new ClusterWithExitEvent(
                 cluster,
@@ -452,13 +409,13 @@ new Config('./config.json').as('config').after(
               ), numCPUs
             ),
             new Else(
-              new LaunchedBackend(as('config'))
+              new LaunchedBackend(as('CONFIG'))
             )
           )
         )
       ),
       new Else(
-        new LaunchedBackend(as('config'))
+        new LaunchedBackend(as('CONFIG'))
       )
     )
   )
@@ -472,88 +429,13 @@ As you can see here, we get some parameters like `post` and `host` from `config.
 
 It's just an example of how it could be built and worked. But, of course, you can configure it differently due to your requirements (it's quite configurable code).
 
-# Build Project
+# EHTML
 
-For building use command: **`page build [environment]`** or **`page b [environment]`**. `environment` is one of the following values: `local`, `prod`, `dev`, `stage`, `prod` (`local` is the default environment).
+**Page** supports the idea of [EHTML](https://github.com/Guseyn/EHTML) for building the front-end.
 
-# Run Project
+# Static Generator
 
-For running use command: **`page run [environment]`** or **`page r [environment]`**. `environment` is one of the following values: `local`, `prod`, `dev`, `stage`, `prod` (`local` is the default environment).
-
-# Test Project
-
-You can do it via **`page test`** or just **`npm test`**.
-
-# List of Libraries For Page
-
-All these libraries are available on **npm** under `@page-libs` scope.
-
-## page-cutie
-
-[This library](https://github.com/Guseyn/page-cutie) is analogue of [cutie](https://github.com/Guseyn/cutie) for using [Async Tree Pattern](https://github.com/Guseyn/async-tree-patern/blob/master/Async_Tree_Patern.pdf) in browser.
-
-You can use async object from **page-cutie** with async objects from **cutie** on the server(Node.js programm) with no problems. But if you want to use mixed async objects in the browser, you must transform **cutie** async objects to **page-cutie** async objects. Use following function:
-
-```js
-const { browserified } = require('@page-libs/cutie')
-const { AsyncObject1, AsyncObject2, AsyncObject3 } = browserified(require('@cuties/some-lib'))
-
-// Now you can use AsyncObject1, AsyncObject2, AsyncObject3 which are based on @cuties/cutie 
-// with async objects which are based on @page-libs/cutie in the browser
-
-```
-
-## page-ajax (based on *page-cutie*)
-
-[This library](https://github.com/Guseyn/page-cutie) allows you to use ajax in very conviniet way. It works like external request objects in [cutie-http](https://github.com/Guseyn/cutie-http) or [cutie-https](https://github.com/Guseyn/cutie-https).
-
-### Example
-
-```js
-new ResponseBody(
-  new ResponseFromAjaxRequest({
-    url: 'http://localhost:8000/html/res.html',
-    method: 'GET'
-  })
-).call()
-
-```
-
-So, as you can see here, it's possible wrap async request with just one object using [Async Tree Pattern](https://github.com/Guseyn/async-tree-patern/blob/master/Async_Tree_Patern.pdf).
-
-## page-unit
-
-[This library](https://github.com/Guseyn/page-unit) allows you to represent *html code* as *js code*, so you can encapsulate entire behaviour of DOM elements in objects.
-
-### Example
-
-We can represent following html code:
-
-```html
-<div id="user-form">
-  <input id ="name">
-  <input id ="password">
-  <button id="submit">Sign in</button>
-</div>
-
-```
-
-like this composition:
-
-```js
-new UserForm(
-  document.getElementById('user-form'), 
-  new NameInput(document.getElementById('name')),
-  new PasswordInput(document.getElementById('password')),
-  new SubmitButton(document.getElementById('submit'))
-)
-
-```
-Full example [here](https://github.com/Guseyn/page-unit#example).
-
-## page-static-generator (based on *cutie*)
-
-[This library](https://github.com/Guseyn/page-static-generator) is simple tool for generating *html* pages from different templates combining them.
+[This library](https://github.com/Guseyn/page-static-generator) is very simple tool for generating *html* pages from different templates combining them.
 
 ### Example
 
@@ -643,70 +525,3 @@ The result is
 ```
 
 You can find more information about usage [here](https://github.com/Guseyn/page-static-generator#usage).
-
-## page-md2html (based on *cutie*)
-
-[This library](https://github.com/Guseyn/page-static-generator) is simple tool for transforming text from *markdown* to the *html*.
-Based on [this lib](https://github.com/showdownjs/showdown).
-
-### Example
-
-```js
-
-new HtmlFromMd(markdownText).call();
-
-```
-## page-dom (based on *page-cutie*)
-
-[This library](https://github.com/Guseyn/page-dom) is set of async objects for creating DOM elements.
-
-### Example
-
-This simple example just shows the way of declaration in this lib:
-
-```js
-new ElementWithAppendedChildren(
-  document.createElement('div'),
-  div('class="div" id="div1"')(
-    h1()(), 
-    a('href="guseyn.com"')(),
-    div('class="div" id="div2"')(
-      img('src="image.png"')(),
-      p('', 'text')()
-    )
-  )
-).call()
-
-```
-
-[Here](https://github.com/Guseyn/page-dom#async-objects) you can find more examples.
-
-### Common Sense
-
-I don't think that it makes sense to wrap every static function in browser js with objects. In my opinion, it's overhead. It's better to use [page-unit](https://github.com/Guseyn/page-unit) with procedural code in events(like in `onclick` methods). Actually, procedural code is clear, if amount of it is not big. Probably some *heavy* stuff will be written in OOP style in other libs for *Page*, but for simple things it's better use good old procedural js. 
-
-However, this example is not the case, obviously. I think that creating element in DOM in declarative style is much better than the same code in procedural style.
-
-# Build System
-
-**Page** uses [grunt](https://gruntjs.com/). If you look at [Gruntfile.js](https://github.com/Guseyn/page/blob/master/Gruntfile.js), you'll see 3 tasks: `babel`, `browserify`, `uglify`.
-
-## `babel`
-
-Babel takes code from `static/js/src`, convert it into JavaScript that browsers can understand and put it in `static/js/out`.
-
-## `browserify`
-
-We need this step because browsers don't understand `require()`. Using browserify we make module system work in browser, so use also can use `node_modules` in your project. It generates `static\js\bundle.js`.
-
-## `uglify`
-
-It just minifies `static\js\bundle.js` into `static\js\bundle.min.js`.
-
-## It's Your Choice
-
-Obviously, you can choose any other build system for your browser js code you want. It's just an example of how it could be.
-
-# Future plans
-
-Just to create more little useful libs for **Page**.

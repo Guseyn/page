@@ -15,17 +15,17 @@ const numCPUs = require('os').cpus().length
 const env = process.env.NODE_ENV || 'local'
 const devEnv = env === 'local' || env === 'dev'
 
-new Config('./config.json').as('config').after(
-  new Config('./package.json').as('packageJSON').after(
+new Config('./config.json').as('CONFIG').after(
+  new Config('./package.json').as('PACKAGE_JSON').after(
     new If(
       new IsMaster(cluster),
-      new PrintedStage(as('config'), as('packageJSON'), `RUN (${env})`).after(
+      new PrintedStage(as('CONFIG'), as('PACKAGE_JSON'), `RUN (${env})`).after(
         new If(
           devEnv,
-          new TunedWatchers(as('config'))
+          new TunedWatchers(as('CONFIG'))
         ).after(
           new If(
-            new Value(as('config'), `${env}.clusterMode`),
+            new Value(as('CONFIG'), `${env}.clusterMode`),
             new ClusterWithForkedWorkers(
               new ClusterWithExitEvent(
                 cluster,
@@ -33,13 +33,13 @@ new Config('./config.json').as('config').after(
               ), numCPUs
             ),
             new Else(
-              new LaunchedBackend(as('config'))
+              new LaunchedBackend(as('CONFIG'))
             )
           )
         )
       ),
       new Else(
-        new LaunchedBackend(as('config'))
+        new LaunchedBackend(as('CONFIG'))
       )
     )
   )
