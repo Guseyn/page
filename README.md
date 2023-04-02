@@ -1,3 +1,5 @@
+**The project has been archived. It would be better to check out my blog for a good example of using the Async Tree Pattern.**
+
 <img src="https://github.com/Guseyn/logos/raw/master/page.svg?sanitize=true">
 
 [![NPM Version](https://img.shields.io/npm/v/@page-libs/page.svg)](https://npmjs.org/package/@page-libs/page)
